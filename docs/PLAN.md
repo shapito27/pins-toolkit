@@ -18,7 +18,7 @@ Sources: [Plugin structure](https://claude.com/docs/plugins/build),
 | One plugin or two (pins + keywords) | **One plugin**, add the keywords server to `.mcp.json` in a later version | Pin copy and keyword research are one workflow. Skills can use keyword tools when they exist and fall back gracefully when they don't. One listing, one install. |
 | Plugin `name` | `insightpins` (permanent, never change) | Must be your own brand. Putting "pinterest" in `name`/`displayName` risks a **"Name matches a known brand"** reviewer hold. Mention Pinterest only descriptively in `description`/README. |
 | `displayName` | `InsightPins` | Can be changed later. |
-| Repo layout | Plugin at repo root | Simplest for the validator. Subfolder plugins get stricter script checks (we have no scripts, but root avoids surprises). A separate `marketplace.json` for team testing can live in another repo or be added later. |
+| Repo layout | Plugin in `plugins/insightpins/`, repo root holds `docs/`, `evals/` and a `marketplace.json` | Users install only the plugin folder, so plan docs, eval fixtures (a shell script and a JPEG) don't ship and can't trigger reviewer holds. The marketplace lets teams install from GitHub before the listing is live. (Changed in Phase 3; was repo root.) |
 | Components | `.mcp.json` + skills + 1-2 commands. **No** hooks, agents, scripts, `bin/` | Skills, commands and remote MCP load on all surfaces (chat, Cowork, Claude Code). `bin/` would block claude.ai/Cowork install entirely. No executable code = no "Scripts the validator couldn't follow" holds and an easy security scan. |
 | License | MIT (or your choice) via `LICENSE` + `license` field | Required to publish. |
 | Connector | **Also submit the MCP server as an MCP connector** listing | Docs recommend submitting your own remote server separately. Use the exact same URL in `.mcp.json` so users with both see one set of tools. |
@@ -37,42 +37,32 @@ Implication: the skills must never hardcode the template/palette list as truth (
 They should call `list_templates` / `list_styles` and use our references as *selection guidance*
 keyed by category and mood, so new templates still work.
 
-## 3. Repository layout (target)
+## 3. Repository layout
 
 ```
 pins-toolkit/
 ├── .claude-plugin/
-│   └── plugin.json
-├── .mcp.json
-├── skills/
-│   ├── create-pin/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       ├── template-selection.md
-│   │       └── style-selection.md
-│   ├── pin-design/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       └── design-checklist.md
-│   ├── pin-copy/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       ├── title-formulas.md
-│   │       └── description-and-seo.md
-│   ├── review-pin/
-│   │   ├── SKILL.md
-│   │   └── references/
-│   │       └── scoring-rubric.md
-│   ├── optimize-pin/
-│   │   └── SKILL.md
-│   └── remake-pin/
-│       └── SKILL.md
-├── commands/
-│   ├── pin.md              # /insightpins:pin <url>
-│   └── pin-variations.md   # /insightpins:pin-variations <url> [n]
-├── evals/                  # claude plugin eval cases (or keep outside plugin folder)
+│   └── marketplace.json        # install from GitHub: /plugin marketplace add shapito27/pins-toolkit
+├── plugins/
+│   └── insightpins/            # the plugin = the folder submitted to the directory
+│       ├── .claude-plugin/plugin.json
+│       ├── .mcp.json
+│       ├── skills/
+│       │   ├── create-pin/      (SKILL.md, references/template-selection.md, style-selection.md)
+│       │   ├── pin-design/      (SKILL.md, references/design-checklist.md)
+│       │   ├── pin-copy/        (SKILL.md, references/title-formulas.md, description-and-seo.md)
+│       │   ├── review-pin/      (SKILL.md, references/scoring-rubric.md)
+│       │   ├── optimize-pin/    (SKILL.md)
+│       │   └── remake-pin/      (SKILL.md)
+│       ├── commands/
+│       │   ├── pin.md              # /insightpins:pin <url>
+│       │   └── pin-variations.md   # /insightpins:pin-variations <url> [n]
+│       ├── README.md
+│       └── LICENSE
+├── evals/                      # claude plugin eval suite, mocked MCP (not shipped)
 ├── docs/
-│   └── PLAN.md
+│   ├── PLAN.md
+│   └── TEST-REPORT.md
 ├── README.md
 └── LICENSE
 ```
@@ -223,7 +213,7 @@ Possible later skills (not MVP): `seasonal-planning` (Pinterest seasonality - pi
 ### Phase 1 - scaffold (v0.1.0) (done)
 - [x] `plugin.json`, `.mcp.json`, `README.md` (>= 40 words outside code blocks), `LICENSE`.
 - [x] README sections: what it does, how to use, components, **data handling** (what is sent to app.insightpins.com: page URLs, text, image URLs; rendered images hosted for 7 days; nothing else sent anywhere), photo licensing note.
-- [x] `claude plugin validate .` passes.
+- [x] `claude plugin validate ./plugins/insightpins` passes.
 
 ### Phase 2 - skills and commands (done)
 - [x] Write `create-pin`, `pin-design`, `pin-copy` + references.
@@ -231,17 +221,18 @@ Possible later skills (not MVP): `seasonal-planning` (Pinterest seasonality - pi
 - [x] Write the two commands (`pin`, `pin-variations`).
 - [x] Keep every file < 256 KiB, text only, valid YAML frontmatter, `description` a single string.
 
-### Phase 3 - evaluate
-- [ ] Local: `claude --plugin-dir .` in Claude Code; `/mcp` shows server connected.
-- [ ] claude.ai/Cowork: zip, **Customize > Plugins > Upload**, connect connector, run real prompts.
-- [ ] Eval set (~10-15 cases) with `claude plugin eval`, comparing with vs without plugin: blog post, listicle with a number, product with price, recipe, quote, page with poor images, no-URL request, quota-low situation, "make 3 variations", "text is too small".
-- [ ] Rubric: correct template category, custom fields filled from content, headline <= ~8 words, separate SEO title/description present, at most 1 unnecessary re-render, full report (links, edit_url, expiry, photo source).
+### Phase 3 - evaluate (done, see [TEST-REPORT.md](TEST-REPORT.md))
+- [x] Claude Code loads all 8 skills/commands (`claude -p --plugin-dir`).
+- [x] Live run against the real MCP: 10 renders on 4 public pages (create, fix loop, review, optimize, remake, variations). 9 findings fed back into the skills; 7 requests for the server.
+- [x] Eval suite (`evals/`, 6 cases, mocked MCP): all cases 1.00 with the plugin.
+- [ ] claude.ai/Cowork: zip `plugins/insightpins`, **Customize > Plugins > Upload**, connect connector, try a few real prompts (needs you, in the browser).
+- [ ] More eval cases later: no-URL request, "text is too small" follow-up, remake, optimize with numbers.
 
 ### Phase 4 - connector submission (if not already listed)
 - [ ] Developer portal -> **Submit new -> MCP connector** for `https://app.insightpins.com/mcp`.
 
 ### Phase 5 - plugin submission
-- [ ] Portal: **Submit new -> Plugin bundle**, repository `shapito27/pins-toolkit`, path empty, tracked branch `main`.
+- [ ] Portal: **Submit new -> Plugin bundle**, repository `shapito27/pins-toolkit`, plugin path `plugins/insightpins`, tracked branch `main`.
 - [ ] **Validate**, fix Blocking findings, re-validate.
 - [ ] Data handling answers: personal data - no (URLs and marketing copy only); sends data only to declared connector; retention - rendered images 7 days; under-18 - no.
 - [ ] Compliance step, keep **GitHub push webhook**, submit.

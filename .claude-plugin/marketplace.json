@@ -1,0 +1,17 @@
+{
+  "name": "insightpins",
+  "owner": {
+    "name": "InsightPins",
+    "url": "https://insightpins.com"
+  },
+  "metadata": {
+    "description": "InsightPins plugin for Claude: create, review and optimize Pinterest pins."
+  },
+  "plugins": [
+    {
+      "name": "insightpins",
+      "source": "./plugins/insightpins",
+      "description": "Create, review and optimize Pinterest pins from any article, product or recipe URL with InsightPins templates and pin design best practices."
+    }
+  ]
+}
