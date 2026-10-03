@@ -27,7 +27,8 @@ works about that pin's style and fixes what doesn't.
    palette and font pairing. Say in one line how close the match is ("closest layout is
    `split-horizontal`; the reference has a curved divider we don't have").
 
-4. **Get the content and photo.** Call `extract_url` on the destination URL. Choose a photo that
+4. **Get the content and photo.** Call `extract_url` on the destination URL and check that the page
+   really loaded, as in `create-pin` step 1 (bot-check pages come back without an error). Choose a photo that
    fits the reference's look (similar framing and brightness) and the `pin-design` rules.
    An image uploaded into the chat can't be used as the pin photo (the tool needs a URL), and the
    reference pin can't be used as a background because its text is baked in.

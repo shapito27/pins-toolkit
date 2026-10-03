@@ -54,14 +54,14 @@ still draft the copy without it.
    - skip tracking pixels and tiny files (`.gif?`, `1x1`, `pixel`), logos, favicons, icons, footer or
      banner graphics, author headshots, ads, and thumbnails (sizes like `200x200` or `150x150` in the name);
    - skip **animated GIFs**: they're usually demo clips with captions baked in, and get cropped badly;
-   - skip images that likely contain text: names with `infographic`, `pin`, `collage`, `chart`,
-     `before-after`, `screenshot`, `quote`;
+   - skip images that likely contain text: names with `infographic`, `collage`, `chart`,
+     `before-after`, `screenshot`, `quote`, or marked as a Pinterest graphic (`-pin.jpg`, `pinterest`);
    - a size in the file name hints at orientation (`689x1024` is vertical, `1200x628` horizontal).
    **Match the photo to the template:** full-bleed templates (photo fills the whole pin, such as
    `bold-title`, `gradient-wave`, `corner-badge`, `travel-overlay`, `destination-card`) need a
    vertical photo, or heads and products get cut off. For a horizontal, square or unknown-shape photo,
-   use a template that puts the photo in a panel (`split-horizontal`, `recipe-card`, `image-focus`,
-   `minimal-clean`, `product-spotlight`, `story-card`).
+   use a template that puts the photo in a wide panel: `split-horizontal`, `recipe-card` or
+   `product-spotlight` (tested), or `minimal-clean`.
    Use `additional_image_urls` only for collage templates, with photos that clearly belong together.
 
 7. **Check quota before more than one render.** Call `get_quota` when making variations or when a
@@ -71,8 +71,9 @@ still draft the copy without it.
    `description` (only on templates that support it), `site_name`, `image_url`, and a CTA that fits
    the content ("Get the Recipe", "Read the Guide", "Shop Now", "See the List"; 30 characters max).
    **Set `text_size` on the first render**; the template default (100) is usually too small at
-   thumbnail size. Headlines up to ~7 words: 130-160. Longer headlines or quotes: 120-140. Very long
-   text: 100-110 (or shorten it). On templates with a subtitle, keep `description_size` at 100-115.
+   thumbnail size. Headlines up to ~7 words: 130-160. Headlines of 8-12 words: 120-140. Quotes on
+   `centered-quote`: 140-150. Very long text: 100-110 (or shorten it). On templates with a subtitle,
+   keep `description_size` at 100-115.
 
 9. **Check the preview** against the `pin-design` checklist. The preview image is about 200x300,
    which is roughly how the pin looks in a phone feed, so use it as the thumbnail test: if you
@@ -95,7 +96,8 @@ still draft the copy without it.
 
 When asked for several pins for one page (or via `/insightpins:pin-variations`), make each pin
 different in a way that matters: a different photo, a different template category and a different
-headline angle (see `pin-copy` angles). Changing only the color is not a variation. Present a short
+headline angle (see `pin-copy` angles). If the page has only one usable photo, reuse it and vary the
+template and angle, and say so. Changing only the color is not a variation. Present a short
 table: pin, angle, template, link. Suggest posting them over several days or weeks, not all at once.
 
 ## When a limit is hit

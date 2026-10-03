@@ -38,7 +38,7 @@ A pin competes in a crowded grid, mostly on phones, where each pin is shown smal
 - A big empty area with small text in it (raise the text size to fill it).
 - Text baked into the photo (captions in GIFs or screenshots) showing through or cut off by the crop.
 - Text over a busy or same-colored part of the photo.
-- A template placeholder left in (default price, "TOP 10", "Featured") that doesn't match the content.
+- A field showing a value that isn't true for the content (a guessed price, count or cook time).
 - Photo cropped badly: subject cut in half, heads cut off, product off-frame.
 - Low-resolution, blurry, or stretched photo; a photo with its own text or watermark.
 - Colors that blend into the photo; subtitle that's too long to read.

@@ -32,8 +32,9 @@ submissions are published by an Anthropic reviewer by default).
 - [ ] **Merge PR #1 into `main`.** The directory follows the tracked branch, so the plugin must be on `main`.
 - [ ] **Confirm the connector URL is exactly `https://app.insightpins.com/mcp`**, the same as in
       `plugins/insightpins/.mcp.json`, so users with both see one set of tools.
-- [ ] **Privacy policy:** make sure insightpins.com has a public privacy policy page. Send me its
-      URL and I'll link it from the plugin README (it currently says "on insightpins.com").
+- [ ] **Update the privacy policy and terms to cover the Claude connector** (see the section
+      below). Both pages exist and the plugin README now links them, but neither mentions the MCP
+      connector, and the terms don't mention the Pin Generator at all.
 - [ ] **Check the security item** in [MCP-IMPROVEMENTS.md](MCP-IMPROVEMENTS.md) (URL fetching
       can't reach internal addresses). The security scan reads the plugin, but reviewers also use the connector.
 - [ ] **Free tier works for a new account**, so a reviewer can sign in and render a pin.
@@ -43,6 +44,34 @@ submissions are published by an Anthropic reviewer by default).
       Enterprise plans, an Owner must submit.
 - [ ] **Repository visibility:** it can stay private while validating and in review (the Claude
       GitHub App is installed). It **must be public before publishing**.
+
+## Privacy policy and terms: what's missing
+
+Checked on 2026-10-03: [privacy.html](https://insightpins.com/privacy.html) (updated 29.09.2026)
+and [terms-of-use.html](https://insightpins.com/terms-of-use.html) (updated 09.08.2026).
+
+- The privacy policy covers the extension, the website and the Pin Generator web app, but **not the
+  MCP connector used by Claude**. Reviewers compare the policy with what the connector does.
+- The terms list the extension, the Keyword Explorer, the free keyword tool and the website. They
+  **don't cover the Pin Generator or the connector**.
+
+Suggested privacy policy section. Check every bracketed part against what your server really does
+before publishing; I don't know your server's internals:
+
+> **The InsightPins connector for Claude (app.insightpins.com/mcp)**
+> When you connect InsightPins to Claude, you sign in with [your InsightPins account / email]
+> through OAuth. We receive [your email address and an account identifier] to identify you and
+> count your daily renders.
+> When Claude makes a pin for you, it sends us the page URL you asked about, the pin text (headline,
+> subtitle, button text and site name), the image URLs and your design choices. We fetch the page to
+> read its title, description and images, and do not keep the extracted content after responding.
+> Rendered pin images are stored for 7 days so you can download them, then deleted. We keep
+> [a count of renders per account per day / render logs for N days] for limits and abuse prevention.
+> We do not receive your Claude conversation, files you upload to Claude, or anything other than what
+> the connector's tools send.
+
+Suggested addition to the terms: name the Pin Generator and the Claude connector in the list of
+Services in section 1, with their daily render limits.
 
 ## Portal steps and answers
 

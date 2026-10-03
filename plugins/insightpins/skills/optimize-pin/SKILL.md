@@ -25,13 +25,15 @@ the InsightPins connector, each designed to test one change.
 
 3. **Plan 2-3 variants** (check `get_quota` first and tell the user how many renders this uses).
    Each variant changes one main lever, so the user learns what works:
-   - **A - Headline angle**: same layout and photo, stronger headline using a different `pin-copy` angle.
+   - **A - Headline angle**: the closest layout and the same photo (when you have its URL), with a
+     stronger headline using a different `pin-copy` angle.
    - **B - Layout and readability**: a template that puts text on a solid panel or uses a bigger
      title, with higher contrast and larger `text_size`.
    - **C - Photo and color**: a different, stronger photo from the page and a palette that
      contrasts more with it.
    Keep every variant compliant with the `pin-design` essentials. If the user has only 1 render left,
-   make the single version that fixes the top problems together.
+   make the single version that fixes the top problems together. If none are left, don't render:
+   deliver the review, the copy and the settings (see the last section) and say when the limit resets.
 
 4. **Render** each variant with `render_pin` (call `extract_url` on the destination URL for photos,
    `list_templates` and `list_styles` for current options). Check each preview; re-render only for a

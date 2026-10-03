@@ -11,6 +11,8 @@ Write for a person first. Pinterest understands natural language; keyword lists 
 
 ### Examples
 
+Every detail in these examples is assumed to come from the page; don't copy details the page doesn't state.
+
 Recipe:
 > Easy chicken dinner recipes for busy weeknights, all ready in 30 minutes or less. These 17
 > family-friendly meals use simple pantry ingredients, from one-pan lemon chicken to creamy Tuscan
@@ -23,7 +25,7 @@ Home:
 
 Product:
 > A minimalist leather wallet that holds 8 cards and still fits a front pocket. Slim, RFID-blocking
-> and handmade from full-grain leather. A great gift for him. Shop the wallet on our site.
+> and handmade from full-grain leather. Shop the wallet on our site.
 
 ## Alt text
 

@@ -70,8 +70,14 @@ through the connector:
 
 Rendered pin images are hosted by InsightPins and the image links expire after 7 days. Pins you
 upload for review or remakes are read by Claude in the conversation and are not sent to InsightPins.
-The plugin sends no data to any other service. See the InsightPins privacy policy on
-insightpins.com for how your account data is handled.
+The plugin sends no data to any other service. See the InsightPins
+[privacy policy](https://insightpins.com/privacy.html) and
+[terms of service](https://insightpins.com/terms-of-use.html).
+
+## Support
+
+Email [pin.analyzer@gmail.com](mailto:pin.analyzer@gmail.com) or see
+[insightpins.com/contacts.html](https://insightpins.com/contacts.html).
 
 ## Images and copyright
 

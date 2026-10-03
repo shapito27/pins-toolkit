@@ -47,8 +47,8 @@ InsightPins call is needed, so a review uses none of the user's render limit.
    If title/description were given, add a short "Copy" section with an improved title and
    description, following the `pin-copy` skill.
 
-6. **Offer the next step**: render improved versions with `/insightpins:optimize-pin`, or a new pin
-   in a similar style for their own page with the `remake-pin` skill.
+6. **Offer the next step**: render improved versions (the `optimize-pin` skill), or a new pin in a
+   similar style for their own page (the `remake-pin` skill).
 
 ## Tone
 
