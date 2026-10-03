@@ -17,12 +17,16 @@ still draft the copy without it.
 
 1. **Get the source.**
    - URL given: call `extract_url`. Note the title, description, site name and every image.
-   - **Check that the page really loaded.** Many large sites block automated requests. Treat it as a
-     failure when `extract_url` errors ("Access denied", 404) **or** returns a bot-check page: a title
-     like "Client Challenge", "Just a moment...", "One moment, please", "Access denied", "Attention
-     Required", "Verify you are human", usually with no images. Don't build a pin from that. Tell the
-     user the site blocked the request and ask for the page title (or a short summary) and a direct
-     image URL, then continue.
+   - **Check that the page really loaded.** Many large sites block automated requests. Errors start
+     with a code:
+     - `[BOT_CHALLENGE]`: the site blocks automated readers. Tell the user, and ask for the page
+       title (or a short summary) and a direct image URL, then continue.
+     - `[NOT_FOUND]`: the page doesn't exist. Ask the user to check the link.
+     - `[FETCH_FAILED]` or anything else: the page couldn't be read. Ask the user to check the link,
+       or to give the title and an image URL instead.
+     As a fallback, also treat a result as blocked when its title looks like a bot check ("Client
+     Challenge", "Just a moment...", "One moment, please", "Access denied", "Verify you are human")
+     and it has no images. Never build a pin from such a page.
    - The page's description is often a chatty intro, not a summary. Write your own copy from what the
      page is about.
    - No URL: ask for the topic, the headline idea, an image URL and the site name. Don't invent a site name.

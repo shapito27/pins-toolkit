@@ -17,7 +17,8 @@ run's workspace. Results go to `results/` (git-ignored).
 | - | - | - |
 | `recipe-from-url` | URL -> pin; photo choice among logo, tracking pixel, headshot, thumbnail and real photos | picks the vertical food photo, sets `text_size` >= 120, invents no cook time/servings/price, full report (links, 7-day expiry, photo source, title/description/alt text) |
 | `listicle-number` | "17 Easy Chicken Dinners" page | the real number 17 reaches the pin; no other list number |
-| `blocked-page` | `extract_url` returns a "Just a moment..." bot-check page | no render; tells the user and asks for title/image |
+| `blocked-page` | `extract_url` returns a "Just a moment..." bot-check page as a success (older servers) | no render; tells the user and asks for title/image |
+| `blocked-page-error` | `extract_url` returns a `[BOT_CHALLENGE]` error (current server) | no render; tells the user and asks for title/image |
 | `variations-low-quota` | 3 variations requested, 1 render left | checks quota before rendering, renders at most 1, explains the limit and reset |
 | `copy-only` | Pinterest text for a blog post, no MCP | headline, title, description, alt text, board all present; keyword-led title; no invented claims |
 | `review-uploaded-pin` | review of a weak quote pin (`resources/quote-pin.jpg`) | finds the real problems (contrast, thin/small text, empty space, vague CTA), gives a score and ranked fixes |

@@ -34,8 +34,8 @@ submissions are published by an Anthropic reviewer by default).
       `plugins/insightpins/.mcp.json`, so users with both see one set of tools.
 - [x] **Privacy policy and terms cover the Claude connector** (both updated 03.10.2026; the
       plugin README matches the privacy policy).
-- [ ] **Check the security item** in [MCP-IMPROVEMENTS.md](MCP-IMPROVEMENTS.md) (URL fetching
-      can't reach internal addresses). The security scan reads the plugin, but reviewers also use the connector.
+- [x] **Security item** in [MCP-IMPROVEMENTS.md](MCP-IMPROVEMENTS.md): fix deployed 2026-10-03;
+      internal addresses refused from outside. Cover redirects and `render_pin` image URLs in server tests.
 - [ ] **Free tier works for a new account**, so a reviewer can sign in and render a pin.
 - [ ] **Optional: test on claude.ai.** Zip `plugins/insightpins`, then go to **Customize > Plugins >
       Add > Upload plugin**, connect InsightPins and make one pin.

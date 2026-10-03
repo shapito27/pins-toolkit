@@ -31,8 +31,8 @@ Keep these as they are:
 
 | # | Improvement | Area | Evidence | Impact | Effort | When |
 | - | - | - | - | - | - | - |
-| 1 | Verify URL fetching can't reach internal addresses (SSRF) | Security | Inferred | Critical if vulnerable | S | **Now** |
-| 2 | `extract_url`: report blocked and bot-check pages as errors | Functions | Observed | High | S | **Now** (cheap) |
+| 1 | Verify URL fetching can't reach internal addresses (SSRF) | Security | Inferred | Critical if vulnerable | S | **Done** (deployed 2026-10-03, see below) |
+| 2 | `extract_url`: report blocked and bot-check pages as errors | Functions | Observed | High | S | **Done** (deployed 2026-10-03) |
 | 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | Next |
 | 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | Next |
 | 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | Next |
@@ -57,7 +57,18 @@ the biggest quality wins. "Later" means growth features.
 
 ## Details
 
-### 1. Security check of URL fetching (now)
+### 1. Security check of URL fetching (done)
+
+**Status, checked from outside on 2026-10-03:** after the deploy, `extract_url` refused the cloud
+metadata address, `127.0.0.1` and `10.0.0.1`. Before the deploy it already refused those plus
+loopback in decimal, hex and IPv6 forms, `0.0.0.0`, `192.168.1.1` and DNS names that resolve to
+loopback; those variants weren't re-run after the deploy. Non-HTTP schemes are refused with "Only
+HTTP and HTTPS protocols are allowed". Not checked from outside (cover them in server
+tests): redirects from a public URL to an internal one, and internal addresses in `render_pin`
+image URLs. Internal addresses return the generic `[FETCH_FAILED]`, so from outside a deliberate block
+can't be told apart from a failed connection; a distinct code such as `[URL_NOT_ALLOWED]` would make
+this testable without revealing anything useful.
+
 
 `extract_url` fetches any URL the user gives, and `render_pin` fetches any `image_url`. If the
 server doesn't block private and internal addresses, someone could make it request internal
@@ -70,7 +81,12 @@ I did **not** test this against your server. Please verify:
 
 Directory reviewers and security scans look at this kind of risk for connectors.
 
-### 2. Report blocked and bot-check pages as errors (now)
+### 2. Report blocked and bot-check pages as errors (done)
+
+**Status after deploy (2026-10-03):** nomadicmatt.com (SiteGround "One moment, please"), wikihow.com
+and allrecipes.com now return `[BOT_CHALLENGE] ... This site blocks automated readers ...`; a missing
+page returns `[NOT_FOUND]`; normal pages still work. The `create-pin` skill now uses these codes.
+
 
 **Observed:** wikihow.com came back as a success titled "Client Challenge", and nomadicmatt.com as
 "One moment, please...Loader", both with no images. Other sites correctly returned "Access denied".
@@ -271,7 +287,7 @@ Mainly a speed and convenience win; quota should count each image.
 
 ## Suggested order of work
 
-1. **This week:** item 1 (security check) and item 2 (bot-check errors).
+1. ~~**This week:** item 1 (security check) and item 2 (bot-check errors).~~ Done 2026-10-03.
 2. **First improvement round:** items 3, 4, 5, 6, 7. These fix every bad pin seen in testing.
    Then 8, 9 and 11 (template side).
 3. **Before paid plans:** items 10 and 12 (brand kit, quota and plan errors).
