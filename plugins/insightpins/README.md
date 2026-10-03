@@ -51,7 +51,8 @@ In Claude Code the connector loads with the plugin; run `/mcp` to sign in.
 
 ## Usage limits
 
-Each rendered pin counts against your InsightPins daily render limit, which resets at 00:00 UTC.
+Each rendered pin counts against your InsightPins daily render limit (currently 50 free renders per
+account per day), which resets at 00:00 UTC.
 Claude checks your remaining renders before making several pins and only re-renders when you ask
 for a change or the preview has a real defect. Plans with higher limits may be offered on
 insightpins.com; see the website for current plans.
@@ -66,16 +67,23 @@ through the connector:
 
 - the page URLs you ask it to turn into pins (the server fetches the page to read its title, description and images)
 - the pin text (headline, subtitle, button text, site name) and the image URLs chosen for the pin
-- your template, palette, font and text size choices
+- your template, palette, font and text size choices, and template fields such as a price or cook time
 
-Signing in with Google creates an InsightPins account with your email address, Google account ID,
-name (if your Google account has one), the date the account was created and, if you close it, the
-date it was closed. InsightPins
-uses it to identify you and count your daily renders. It doesn't get your Google password or any
-other Google data.
+The server fetches the page and the images to draw the pin, and doesn't keep the page content.
+It never receives your conversation or files you upload to Claude: pins you upload for review or
+remakes are read by Claude in the conversation only.
 
-Rendered pin images are hosted by InsightPins and the image links expire after 7 days. Pins you
-upload for review or remakes are read by Claude in the conversation and are not sent to InsightPins.
+What InsightPins keeps:
+
+- **Your account.** Signing in with Google gives InsightPins your email address, name and Google
+  account ID, which identify you. It never sees your Google password and doesn't store your
+  profile picture.
+- **The connection.** Which app is connected, when, and a hashed copy of its access token. Claude
+  never gets your Google sign-in. Unused connections expire after 30 days.
+- **Render records.** For each pin: the time, template, colors, font, image format and size, and the
+  headline. They count your daily limit and list your recent pins, and stay as long as your account.
+- **Rendered images**, for 7 days. Anyone with an image's link can open it, so share links with care.
+- **Server logs**, including failed page fetches or renders with your account ID and the URL involved.
 The plugin sends no data to any other service. See the InsightPins
 [privacy policy](https://insightpins.com/privacy.html) and
 [terms of service](https://insightpins.com/terms-of-use.html).

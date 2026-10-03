@@ -32,9 +32,8 @@ submissions are published by an Anthropic reviewer by default).
 - [ ] **Merge PR #1 into `main`.** The directory follows the tracked branch, so the plugin must be on `main`.
 - [ ] **Confirm the connector URL is exactly `https://app.insightpins.com/mcp`**, the same as in
       `plugins/insightpins/.mcp.json`, so users with both see one set of tools.
-- [ ] **Update the privacy policy and terms to cover the Claude connector** (see the section
-      below). Both pages exist and the plugin README now links them, but neither mentions the MCP
-      connector, and the terms don't mention the Pin Generator at all.
+- [x] **Privacy policy and terms cover the Claude connector** (both updated 03.10.2026; the
+      plugin README matches the privacy policy).
 - [ ] **Check the security item** in [MCP-IMPROVEMENTS.md](MCP-IMPROVEMENTS.md) (URL fetching
       can't reach internal addresses). The security scan reads the plugin, but reviewers also use the connector.
 - [ ] **Free tier works for a new account**, so a reviewer can sign in and render a pin.
@@ -95,7 +94,7 @@ Services in section 1, with their daily render limits.
    | - | - | - |
    | Does the plugin read or store personal data? | **Yes** | The plugin files store nothing, but signing in to the connector creates an InsightPins account with the user's email, Google account ID, name and account dates. Answering Yes and describing this is safer than a No that a reviewer could see contradicted by the sign-in screen and privacy policy. Pin content sent (page URLs, pin text, image URLs) isn't personal data. |
    | Does it send data to services other than its declared connectors? | **No** | Only `app.insightpins.com` (declared in `.mcp.json`). |
-   | How long is data kept? | Account data (email, Google account ID, name) until the user closes the account; rendered images for 7 days; extracted page content is not kept. | Matches the README and the suggested privacy section. |
+   | How long is data kept? | Account data (email, Google account ID, name) and render records (time, design choices, headline) as long as the account exists; rendered images 7 days; unused connections expire after 30 days; extracted page content is not kept. | Matches the README and the privacy policy updated 03.10.2026. |
    | Intended for people under 18? | **No** | |
 
 5. **Compliance:** contact email `ruslan@insightpins.com`, and select all four acknowledgements.
