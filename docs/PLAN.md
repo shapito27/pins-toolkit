@@ -295,7 +295,6 @@ Planned: paid plans with higher limits for renders and keyword lookups. How this
 | Hardcoded template lists drift | Reference files give guidance by category; always call `list_templates`/`list_styles` |
 | Skills don't trigger | Descriptions written as user situations ("make a pin", "pin this", "Pinterest graphic"); verify in evals |
 | Pinterest best practices change | Keep them in `references/` so updates are a doc change + version bump |
-
 | Name review: "InsightPins" is your product name but not a registered trademark | Fine for the directory; reviewers check it doesn't impersonate others. README includes a "not affiliated with Pinterest" disclaimer |
 | Remaking someone else's pin = copying | `remake-pin` treats others' pins as style inspiration only; original copy and photos |
 
