@@ -1,0 +1,230 @@
+# InsightPins plugin for Claude - plan
+
+Goal: publish a Claude plugin in Anthropic's directory that (1) connects Claude to the
+InsightPins MCP server (`https://app.insightpins.com/mcp`) and (2) ships skills that teach
+Claude how to make a good Pinterest pin, not just a rendered one. Later, (3) add a Pinterest
+keywords MCP server so titles and descriptions are built on real search data.
+
+Sources: [Plugin structure](https://claude.com/docs/plugins/build),
+[Pre-submission checklist](https://claude.com/docs/plugins/pre-submission-checklist),
+[Submit / withdraw / delist](https://claude.com/docs/plugins/submit).
+
+---
+
+## 1. Key decisions
+
+| Decision | Recommendation | Why |
+| - | - | - |
+| One plugin or two (pins + keywords) | **One plugin**, add the keywords server to `.mcp.json` in a later version | Pin copy and keyword research are one workflow. Skills can use keyword tools when they exist and fall back gracefully when they don't. One listing, one install. |
+| Plugin `name` | `insightpins` (permanent, never change) | Must be your own brand. Putting "pinterest" in `name`/`displayName` risks a **"Name matches a known brand"** reviewer hold. Mention Pinterest only descriptively in `description`/README. |
+| `displayName` | `InsightPins` | Can be changed later. |
+| Repo layout | Plugin at repo root | Simplest for the validator. Subfolder plugins get stricter script checks (we have no scripts, but root avoids surprises). A separate `marketplace.json` for team testing can live in another repo or be added later. |
+| Components | `.mcp.json` + skills + 1-2 commands. **No** hooks, agents, scripts, `bin/` | Skills, commands and remote MCP load on all surfaces (chat, Cowork, Claude Code). `bin/` would block claude.ai/Cowork install entirely. No executable code = no "Scripts the validator couldn't follow" holds and an easy security scan. |
+| License | MIT (or your choice) via `LICENSE` + `license` field | Required to publish. |
+| Connector | **Also submit the MCP server as an MCP connector** listing | Docs recommend submitting your own remote server separately. Use the exact same URL in `.mcp.json` so users with both see one set of tools. |
+
+## 2. What the MCP server gives us (current tool surface)
+
+| Tool | Notes for skills |
+| - | - |
+| `extract_url` | Title, description, site name, up to 10 images from a page |
+| `list_templates` | 30 templates in 6 categories: blog, product, list, quote, recipe, creative. Each says `supports_subtitle` and `custom_fields` (price, cookTime, servings, listNumber, listPrefix, categoryLabel) |
+| `list_styles` | 15 palettes (5 color families) + 10 font pairings |
+| `render_pin` | 1000x1500 JPEG; title <= 200, description <= 500, CTA <= 30 chars; `text_size` 70-250 plus per-element sizes; up to 2 extra images; returns preview, 7-day link and `edit_url` |
+| `get_quota` | Daily render limit, resets 00:00 UTC |
+
+Implication: the skills must never hardcode the template/palette list as truth (it will change).
+They should call `list_templates` / `list_styles` and use our references as *selection guidance*
+keyed by category and mood, so new templates still work.
+
+## 3. Repository layout (target)
+
+```
+pins-toolkit/
+├── .claude-plugin/
+│   └── plugin.json
+├── .mcp.json
+├── skills/
+│   ├── create-pin/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── template-selection.md
+│   │       └── style-selection.md
+│   ├── pin-design/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       └── design-checklist.md
+│   └── pin-copy/
+│       ├── SKILL.md
+│       └── references/
+│           ├── title-formulas.md
+│           └── description-and-seo.md
+├── commands/
+│   ├── pin.md              # /insightpins:pin <url>
+│   └── pin-variations.md   # /insightpins:pin-variations <url> [n]
+├── evals/                  # claude plugin eval cases (or keep outside plugin folder)
+├── docs/
+│   └── PLAN.md
+├── README.md
+└── LICENSE
+```
+
+`.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "insightpins": {
+      "type": "http",
+      "url": "https://app.insightpins.com/mcp"
+    }
+  }
+}
+```
+
+No API keys in any file. Auth must be the server's OAuth flow (users connect from the plugin's
+**Connectors** tab). If the server ever needs a key instead, use `userConfig` with
+`sensitive: true` and `${user_config.KEY}` - never a literal key, never `$ENV_VAR`.
+
+`plugin.json`:
+
+```json
+{
+  "name": "insightpins",
+  "displayName": "InsightPins",
+  "version": "0.1.0",
+  "description": "Design and render Pinterest pins from any article, product or recipe URL, with built-in best practices for layout, readable text and search-friendly titles and descriptions.",
+  "author": { "name": "InsightPins", "url": "https://insightpins.com" },
+  "homepage": "https://insightpins.com",
+  "license": "MIT"
+}
+```
+
+## 4. Skills design
+
+Principle: the MCP server's own instructions already cover the *mechanics* (extract, list, render,
+report). Skills add the *judgement*: what makes a pin perform, which template fits which content,
+how to write copy, when to re-render, how to save quota. Each `SKILL.md` stays short; detail lives in
+`references/` and is loaded only when needed.
+
+### 4.1 `create-pin` (orchestrator)
+
+**description (trigger):** Use when the user wants a Pinterest pin, pin image or pin graphic for a
+URL, blog post, product, recipe, list or quote, or asks to "make a pin" / "pin this".
+
+Workflow:
+1. Get the source: URL -> `extract_url`; no URL -> ask for title, image and site name.
+2. Classify content: blog / how-to, listicle, product, recipe, quote, travel/lifestyle.
+3. Write copy using `pin-copy` rules (on-image title is short; Pinterest title/description are separate, longer, keyword-rich).
+4. Choose template via `references/template-selection.md` (content type -> 2-3 candidate templates, filled custom fields such as `listNumber` taken from the content, e.g. "17 easy dinners" -> 17).
+5. Choose palette + font via `references/style-selection.md` (niche/mood -> palette family, and pick a palette that contrasts with the photo's dominant colors).
+6. Pick the image: vertical or crop-safe, subject not in the text area, no text already baked in, highest resolution from `extract_url`.
+7. `get_quota` before batch work; render once.
+8. Inspect the preview against `pin-design` checklist; re-render only for real defects (unreadable text, wrong photo, cut-off title), adjusting `text_size`/`title_size` rather than switching everything.
+9. Report: image link, `edit_url`, template/palette/font used, link expires in 7 days, photo source + licensing note, plus ready-to-paste **Pinterest title, description, alt text and suggested board**.
+
+### 4.2 `pin-design` (visual best practices)
+
+**description:** Use when choosing or judging how a Pinterest pin looks: layout, text overlay,
+readability, colors, fonts, image choice, or when reviewing a pin before publishing.
+
+Content (checklist in `references/design-checklist.md`):
+- 2:3 vertical (1000x1500) - already the render default; never suggest other ratios.
+- Thumbnail test: most viewers see the pin at ~200-250 px wide on mobile. On-image title readable at that size -> roughly 3-8 words, large weight, high contrast.
+- One focal point; text in a calm area or on a solid band; avoid busy backgrounds behind text.
+- Max 2 fonts (the font pairings already enforce this); bold sans or serif for headline.
+- Brand consistency: same site name, consistent palette per site; `site_name` on every pin.
+- Lifestyle/real-context photos beat plain product shots for most niches; faces optional.
+- Avoid: tiny text, more than ~2 lines of subtitle, low-res or watermarked photos, clickbait claims, misleading imagery.
+- Multiple pins per URL are fine and encouraged (fresh pins), but vary image + template + headline, not just color.
+
+### 4.3 `pin-copy` (titles, descriptions, SEO)
+
+**description:** Use when writing a Pinterest pin title, on-image headline, pin description, alt text,
+or choosing keywords and boards for a pin.
+
+Content:
+- Three different texts: on-image headline (short, benefit-led), Pinterest pin title (up to 100 chars, keyword first), pin description (up to 500 chars, first ~50 chars carry the keyword, natural sentences, 2-4 related keywords, soft CTA).
+- Headline formulas in `references/title-formulas.md`: number + outcome ("15 Cozy Fall Dinners Under 30 Minutes"), how-to, mistake-avoidance, before/after, "for [audience]".
+- Alt text: literal description of the image for accessibility.
+- No hashtag stuffing; no keyword lists; no promises the page doesn't deliver.
+- Board suggestion: keyword-named board, not "My stuff".
+- **Keywords hook (v2):** "If a keyword research tool is connected (InsightPins keywords), call it with the topic first and use the top relevant terms; otherwise derive keywords from the page title and description." This lets v1 ship now and v2 light up without rewriting skills.
+
+### 4.4 Commands
+
+- `/insightpins:pin <url>` - runs `create-pin` end to end for one pin.
+- `/insightpins:pin-variations <url> [n=3]` - checks quota, then makes n distinct pins (different template category, image, headline angle), and returns a comparison table.
+
+Possible later skills (not MVP): `pin-audit` (review an existing pin image the user uploads),
+`seasonal-planning` (Pinterest seasonality - pin 30-45+ days ahead of holidays/seasons),
+`brand-kit` (remember a site's preferred palette/font across pins).
+
+## 5. Phases
+
+### Phase 0 - decisions and prerequisites
+- [ ] Confirm the plugin name `insightpins` and that you own/represent the InsightPins brand.
+- [ ] Confirm license and author details.
+- [ ] Confirm the MCP server uses OAuth (works on claude.ai/Cowork Connectors tab) and has a privacy policy URL.
+- [ ] Decide whether the MCP server is (or will be) submitted as an MCP connector listing.
+- [ ] Paid Claude plan; on Team/Enterprise an Owner must submit. GitHub connected on claude.ai for that org.
+
+### Phase 1 - scaffold (v0.1.0)
+- [ ] `plugin.json`, `.mcp.json`, `README.md` (>= 40 words outside code blocks), `LICENSE`.
+- [ ] README sections: what it does, how to use, components, **data handling** (what is sent to app.insightpins.com: page URLs, text, image URLs; rendered images hosted for 7 days; nothing else sent anywhere), photo licensing note.
+- [ ] `claude plugin validate .` passes.
+
+### Phase 2 - skills and commands
+- [ ] Write `create-pin`, `pin-design`, `pin-copy` + references.
+- [ ] Write the two commands.
+- [ ] Keep every file < 256 KiB, text only, valid YAML frontmatter, `description` a single string.
+
+### Phase 3 - evaluate
+- [ ] Local: `claude --plugin-dir .` in Claude Code; `/mcp` shows server connected.
+- [ ] claude.ai/Cowork: zip, **Customize > Plugins > Upload**, connect connector, run real prompts.
+- [ ] Eval set (~10-15 cases) with `claude plugin eval`, comparing with vs without plugin: blog post, listicle with a number, product with price, recipe, quote, page with poor images, no-URL request, quota-low situation, "make 3 variations", "text is too small".
+- [ ] Rubric: correct template category, custom fields filled from content, headline <= ~8 words, separate SEO title/description present, at most 1 unnecessary re-render, full report (links, edit_url, expiry, photo source).
+
+### Phase 4 - connector submission (if not already listed)
+- [ ] Developer portal -> **Submit new -> MCP connector** for `https://app.insightpins.com/mcp`.
+
+### Phase 5 - plugin submission
+- [ ] Portal: **Submit new -> Plugin bundle**, repository `shapito27/pins-toolkit`, path empty, tracked branch `main`.
+- [ ] **Validate**, fix Blocking findings, re-validate.
+- [ ] Data handling answers: personal data - no (URLs and marketing copy only); sends data only to declared connector; retention - rendered images 7 days; under-18 - no.
+- [ ] Compliance step, keep **GitHub push webhook**, submit.
+- [ ] Repo can stay private during review (requires Claude GitHub App + source upload consent), must be **public before publishing**.
+- [ ] After pass: **Publish**.
+
+### Phase 6 - keywords MCP (v0.2.0 / v1.x)
+- [ ] Add second entry to `.mcp.json`, e.g. `"insightpins-keywords": { "type": "http", "url": "https://.../mcp" }` (or expose keyword tools from the same server - then no plugin change needed beyond skills).
+- [ ] Update `pin-copy` with explicit tool names and flow: topic -> keywords -> pick primary + 2-4 secondary -> title/description/board.
+- [ ] Possibly new skill `pin-keyword-research` (find keywords, trends, seasonality for a niche).
+- [ ] Update README data-handling section; bump `version`; add evals. Submit the keywords server as a connector too.
+- [ ] Note: a new remote destination may be looked at closely by the security scan - it must be declared in `.mcp.json` and the README.
+
+### Phase 7 - maintenance
+- [ ] Bump `version` on every release; merging to `main` triggers scan and publish per auto-publish setting.
+- [ ] Track installs/errors on the portal **Usage** tab.
+- [ ] If template/style IDs change on the server, skills keep working because they read the live lists.
+- [ ] Withdraw (before publish) or **Delist plugin** (after publish) from the portal page; relist is a request.
+
+## 6. Risks and mitigations
+
+| Risk | Mitigation |
+| - | - |
+| Brand hold for "Pinterest" naming | Keep "Pinterest" out of `name`/`displayName`/`author.name` |
+| Skills duplicate server instructions or conflict with them | Skills reference the server flow and add judgement only; same reporting rules (links, edit_url, 7-day expiry, photo source) |
+| Quota burn from re-renders/variations | `get_quota` before batches; re-render only on defects; prefer `text_size` tweaks |
+| Photo copyright | Always say where the image came from; recommend own images or licensed stock |
+| Hardcoded template lists drift | Reference files give guidance by category; always call `list_templates`/`list_styles` |
+| Skills don't trigger | Descriptions written as user situations ("make a pin", "pin this", "Pinterest graphic"); verify in evals |
+| Pinterest best practices change | Keep them in `references/` so updates are a doc change + version bump |
+
+## 7. Open questions for you
+
+1. Do you own the InsightPins brand/domain, and what author name/URL should appear?
+2. License: MIT OK?
+3. Is `app.insightpins.com/mcp` OAuth-based and already (or soon) a directory connector?
+4. Will keywords be tools on the same server or a separate MCP URL?
+5. Any brand voice or niche focus (food, home, travel, e-commerce) to bias defaults?
