@@ -44,7 +44,7 @@ the right skill.
 ## Setup
 
 1. Install the plugin from the Claude directory.
-2. Open the plugin's **Connectors** tab and connect **InsightPins**. You sign in with your InsightPins account (OAuth). No API key is needed.
+2. Open the plugin's **Connectors** tab and connect **InsightPins**. You sign in with your Google account (OAuth). No API key is needed.
 3. Ask Claude to make a pin.
 
 In Claude Code the connector loads with the plugin; run `/mcp` to sign in.
@@ -68,6 +68,12 @@ through the connector:
 - the pin text (headline, subtitle, button text, site name) and the image URLs chosen for the pin
 - your template, palette, font and text size choices
 
+Signing in with Google creates an InsightPins account with your email address, Google account ID,
+name (if your Google account has one), the date the account was created and, if you close it, the
+date it was closed. InsightPins
+uses it to identify you and count your daily renders. It doesn't get your Google password or any
+other Google data.
+
 Rendered pin images are hosted by InsightPins and the image links expire after 7 days. Pins you
 upload for review or remakes are read by Claude in the conversation and are not sent to InsightPins.
 The plugin sends no data to any other service. See the InsightPins
@@ -76,7 +82,7 @@ The plugin sends no data to any other service. See the InsightPins
 
 ## Support
 
-Email [pin.analyzer@gmail.com](mailto:pin.analyzer@gmail.com) or see
+Email [ruslan@insightpins.com](mailto:ruslan@insightpins.com) or see
 [insightpins.com/contacts.html](https://insightpins.com/contacts.html).
 
 ## Images and copyright

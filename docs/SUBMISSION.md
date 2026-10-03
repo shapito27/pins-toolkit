@@ -55,18 +55,22 @@ and [terms-of-use.html](https://insightpins.com/terms-of-use.html) (updated 09.0
 - The terms list the extension, the Keyword Explorer, the free keyword tool and the website. They
   **don't cover the Pin Generator or the connector**.
 
-Suggested privacy policy section. Check every bracketed part against what your server really does
-before publishing; I don't know your server's internals:
+Suggested privacy policy section. The account data matches what you told me the sign-in collects;
+check the two bracketed parts against what your server really does before publishing:
 
 > **The InsightPins connector for Claude (app.insightpins.com/mcp)**
-> When you connect InsightPins to Claude, you sign in with [your InsightPins account / email]
-> through OAuth. We receive [your email address and an account identifier] to identify you and
-> count your daily renders.
+> When you connect InsightPins to Claude, you sign in with your Google account. This creates an
+> InsightPins account with: your email address, your Google account ID (which identifies you), your
+> name (which can be empty), the date the account was created and, if you close it, the date it was
+> closed. We use this to identify you and count your daily renders. We don't receive your Google
+> password or access to your Google data beyond these details.
+> [When you close your account, we delete your email address, name and Google account ID and keep
+> only the creation and closing dates.]
 > When Claude makes a pin for you, it sends us the page URL you asked about, the pin text (headline,
 > subtitle, button text and site name), the image URLs and your design choices. We fetch the page to
 > read its title, description and images, and do not keep the extracted content after responding.
 > Rendered pin images are stored for 7 days so you can download them, then deleted. We keep
-> [a count of renders per account per day / render logs for N days] for limits and abuse prevention.
+> [a count of renders per account per day] for limits and abuse prevention.
 > We do not receive your Claude conversation, files you upload to Claude, or anything other than what
 > the connector's tools send.
 
@@ -89,13 +93,12 @@ Services in section 1, with their daily render limits.
 
    | Question | Answer | Why |
    | - | - | - |
-   | Does the plugin read or store personal data? | **No** | The plugin is instructions plus a connector reference. It sends page URLs, pin text and image URLs; it stores nothing. Account data is handled by the InsightPins connector under its own privacy policy. |
+   | Does the plugin read or store personal data? | **Yes** | The plugin files store nothing, but signing in to the connector creates an InsightPins account with the user's email, Google account ID, name and account dates. Answering Yes and describing this is safer than a No that a reviewer could see contradicted by the sign-in screen and privacy policy. Pin content sent (page URLs, pin text, image URLs) isn't personal data. |
    | Does it send data to services other than its declared connectors? | **No** | Only `app.insightpins.com` (declared in `.mcp.json`). |
-   | How long is data kept? | The plugin keeps nothing. InsightPins hosts rendered images for 7 days. | Matches the README. |
+   | How long is data kept? | Account data (email, Google account ID, name) until the user closes the account; rendered images for 7 days; extracted page content is not kept. | Matches the README and the suggested privacy section. |
    | Intended for people under 18? | **No** | |
 
-5. **Compliance:** check the contact email (use an address you read, ideally a support or business
-   address), and select all four acknowledgements.
+5. **Compliance:** contact email `ruslan@insightpins.com`, and select all four acknowledgements.
 6. **Review and submit**
    - How new versions arrive: keep **GitHub push webhook** (needs admin on the repo). Then select
      **Set up push updates** on the next page.
