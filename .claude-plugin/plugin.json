@@ -1,0 +1,14 @@
+{
+  "name": "insightpins",
+  "displayName": "InsightPins",
+  "version": "0.1.0",
+  "description": "Create, review and optimize Pinterest pins from any article, product or recipe URL. Renders 1000x1500 pins from InsightPins templates and applies pin design and copywriting best practices.",
+  "author": {
+    "name": "InsightPins",
+    "url": "https://insightpins.com"
+  },
+  "homepage": "https://insightpins.com",
+  "repository": "https://github.com/shapito27/pins-toolkit",
+  "license": "MIT",
+  "keywords": ["pinterest", "pins", "pin design", "marketing", "content marketing", "social media", "seo"]
+}

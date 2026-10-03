@@ -54,14 +54,24 @@ pins-toolkit/
 │   │   ├── SKILL.md
 │   │   └── references/
 │   │       └── design-checklist.md
-│   └── pin-copy/
-│       ├── SKILL.md
-│       └── references/
-│           ├── title-formulas.md
-│           └── description-and-seo.md
+│   ├── pin-copy/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       ├── title-formulas.md
+│   │       └── description-and-seo.md
+│   ├── review-pin/
+│   │   ├── SKILL.md
+│   │   └── references/
+│   │       └── scoring-rubric.md
+│   ├── optimize-pin/
+│   │   └── SKILL.md
+│   └── remake-pin/
+│       └── SKILL.md
 ├── commands/
 │   ├── pin.md              # /insightpins:pin <url>
-│   └── pin-variations.md   # /insightpins:pin-variations <url> [n]
+│   ├── pin-variations.md   # /insightpins:pin-variations <url> [n]
+│   ├── review-pin.md       # /insightpins:review-pin
+│   └── optimize-pin.md     # /insightpins:optimize-pin
 ├── evals/                  # claude plugin eval cases (or keep outside plugin folder)
 ├── docs/
 │   └── PLAN.md
@@ -151,32 +161,76 @@ Content:
 - Board suggestion: keyword-named board, not "My stuff".
 - **Keywords hook (v2):** "If a keyword research tool is connected (InsightPins keywords), call it with the topic first and use the top relevant terms; otherwise derive keywords from the page title and description." This lets v1 ship now and v2 light up without rewriting skills.
 
-### 4.4 Commands
+### 4.4 `review-pin` (uploaded pin -> scored review)
+
+**description:** Use when the user uploads or links a pin image and asks for feedback, a review, a
+score, or "what's wrong with this pin" / "is this pin good".
+
+- Claude reads the image itself (vision); no MCP call needed, no render quota used.
+- Scores 1-10 on a fixed rubric (`references/scoring-rubric.md`): thumbnail readability, contrast,
+  headline strength, focal point/layout, image quality and relevance, branding (site name, consistency),
+  clarity of promise/CTA, Pinterest-fit (vertical 2:3, not an ad-looking banner).
+- Output: overall score, top 3 fixes ranked by expected impact, what to keep, and a rewritten headline.
+- Also reviews pin copy (title/description) if the user pastes it.
+
+### 4.5 `optimize-pin` (review -> improved versions)
+
+**description:** Use when the user wants to improve a pin's performance: more clicks, saves,
+impressions, conversion, or to make it more noticeable / eye-catching.
+
+- Runs the `review-pin` rubric first, then rebuilds: stronger headline (2-3 angles), better template
+  for the content type, higher-contrast palette, larger `text_size`, better photo if a source URL is given.
+- Renders 2-3 improved variants (quota-checked) designed as an A/B test: each variant changes one main
+  lever (headline angle / layout / color) so the user learns what works.
+- Also outputs optimized Pinterest title, description, alt text, and posting tips (fresh pins,
+  seasonality, keyword boards).
+
+### 4.6 `remake-pin` (uploaded pin -> similar but better)
+
+**description:** Use when the user uploads a pin and wants one like it, a better version of it, or a
+pin in the same style for their own content.
+
+- Claude analyzes the uploaded pin: layout type, text hierarchy, color mood, font style, content type.
+- Maps it to the closest InsightPins template + palette + font (from the live lists).
+- **Image problem:** `render_pin` needs an image URL, and an image uploaded into chat has no URL. So the
+  new pin's photo comes from: the user's own page (`extract_url`), an image URL the user gives, or the
+  user's own pin if they confirm it's theirs and give its URL. Never reuse the uploaded pin as the
+  background (it has text baked in).
+- If it's someone else's pin: use it only as style inspiration, write original copy, don't copy their
+  photo or wording.
+- Then applies `pin-design` + `pin-copy` improvements, renders, and explains what was improved vs the original.
+- **Server feature request:** an `upload_image` tool (or accepting base64 images) on the MCP would let
+  users render with a photo they upload in chat. Worth adding to the server.
+
+### 4.7 Commands
 
 - `/insightpins:pin <url>` - runs `create-pin` end to end for one pin.
 - `/insightpins:pin-variations <url> [n=3]` - checks quota, then makes n distinct pins (different template category, image, headline angle), and returns a comparison table.
+- `/insightpins:review-pin` - reviews the uploaded pin.
+- `/insightpins:optimize-pin` - reviews and renders improved versions.
 
-Possible later skills (not MVP): `pin-audit` (review an existing pin image the user uploads),
-`seasonal-planning` (Pinterest seasonality - pin 30-45+ days ahead of holidays/seasons),
+Possible later skills (not MVP): `seasonal-planning` (Pinterest seasonality - pin 30-45+ days ahead of holidays/seasons),
 `brand-kit` (remember a site's preferred palette/font across pins).
 
 ## 5. Phases
 
-### Phase 0 - decisions and prerequisites
-- [ ] Confirm the plugin name `insightpins` and that you own/represent the InsightPins brand.
-- [ ] Confirm license and author details.
-- [ ] Confirm the MCP server uses OAuth (works on claude.ai/Cowork Connectors tab) and has a privacy policy URL.
-- [ ] Decide whether the MCP server is (or will be) submitted as an MCP connector listing.
+### Phase 0 - decisions and prerequisites (done)
+- [x] Plugin name `insightpins`; you own the InsightPins product and website.
+- [x] License MIT; author "InsightPins", https://insightpins.com.
+- [x] MCP server uses OAuth.
+- [x] MCP connector already created.
+- [ ] Make sure insightpins.com has a public privacy policy (the README points to it).
 - [ ] Paid Claude plan; on Team/Enterprise an Owner must submit. GitHub connected on claude.ai for that org.
 
-### Phase 1 - scaffold (v0.1.0)
-- [ ] `plugin.json`, `.mcp.json`, `README.md` (>= 40 words outside code blocks), `LICENSE`.
-- [ ] README sections: what it does, how to use, components, **data handling** (what is sent to app.insightpins.com: page URLs, text, image URLs; rendered images hosted for 7 days; nothing else sent anywhere), photo licensing note.
-- [ ] `claude plugin validate .` passes.
+### Phase 1 - scaffold (v0.1.0) (done)
+- [x] `plugin.json`, `.mcp.json`, `README.md` (>= 40 words outside code blocks), `LICENSE`.
+- [x] README sections: what it does, how to use, components, **data handling** (what is sent to app.insightpins.com: page URLs, text, image URLs; rendered images hosted for 7 days; nothing else sent anywhere), photo licensing note.
+- [x] `claude plugin validate .` passes.
 
 ### Phase 2 - skills and commands
 - [ ] Write `create-pin`, `pin-design`, `pin-copy` + references.
-- [ ] Write the two commands.
+- [ ] Write `review-pin` (+ rubric), `optimize-pin`, `remake-pin`.
+- [ ] Write the four commands.
 - [ ] Keep every file < 256 KiB, text only, valid YAML frontmatter, `description` a single string.
 
 ### Phase 3 - evaluate
@@ -197,7 +251,11 @@ Possible later skills (not MVP): `pin-audit` (review an existing pin image the u
 - [ ] After pass: **Publish**.
 
 ### Phase 6 - keywords MCP (v0.2.0 / v1.x)
-- [ ] Add second entry to `.mcp.json`, e.g. `"insightpins-keywords": { "type": "http", "url": "https://.../mcp" }` (or expose keyword tools from the same server - then no plugin change needed beyond skills).
+- [ ] Keywords will live on the insightpins.com domain. Best option: add keyword tools to the **same**
+  `app.insightpins.com/mcp` server - one OAuth sign-in, one connector, no `.mcp.json` change, no new
+  destination for the security scan. If it must be a separate endpoint, add a second `.mcp.json` entry
+  (e.g. `"insightpins-keywords": { "type": "http", "url": "https://app.insightpins.com/keywords/mcp" }`)
+  and register it as a connector too.
 - [ ] Update `pin-copy` with explicit tool names and flow: topic -> keywords -> pick primary + 2-4 secondary -> title/description/board.
 - [ ] Possibly new skill `pin-keyword-research` (find keywords, trends, seasonality for a niche).
 - [ ] Update README data-handling section; bump `version`; add evals. Submit the keywords server as a connector too.
@@ -209,7 +267,24 @@ Possible later skills (not MVP): `pin-audit` (review an existing pin image the u
 - [ ] If template/style IDs change on the server, skills keep working because they read the live lists.
 - [ ] Withdraw (before publish) or **Delist plugin** (after publish) from the portal page; relist is a request.
 
-## 6. Risks and mitigations
+## 6. Paid plans (pins and keyword explorer)
+
+Planned: paid plans with higher limits for renders and keyword lookups. How this fits the plugin:
+
+- Billing lives entirely on insightpins.com, never inside the plugin or the chat. The plugin stays free
+  and MIT; it only gets more useful with a paid account.
+- The server should return clear, structured errors when a limit is hit, e.g. `quota_exceeded` with
+  `resets_at` and an `upgrade_url`. Skills will say: limit reached, resets at X UTC, higher limits are
+  available at the upgrade link. One mention, no pushy upselling (directory policy and user trust).
+- `get_quota` should report plan name and limits for both renders and keyword lookups, so skills can plan
+  batches (variations, optimize) within what's left.
+- Keep a usable free tier so reviewers and new users can test the plugin end to end. Consider giving
+  Anthropic reviewers a test account if the free tier is very small.
+- README "Usage limits" section must be updated when plans launch (mention paid plans and link to
+  pricing). Any change that sends data somewhere new must be declared in README + `.mcp.json`.
+- `review-pin` uses no quota (vision only) - a good free hook into the product.
+
+## 7. Risks and mitigations
 
 | Risk | Mitigation |
 | - | - |
@@ -221,10 +296,11 @@ Possible later skills (not MVP): `pin-audit` (review an existing pin image the u
 | Skills don't trigger | Descriptions written as user situations ("make a pin", "pin this", "Pinterest graphic"); verify in evals |
 | Pinterest best practices change | Keep them in `references/` so updates are a doc change + version bump |
 
-## 7. Open questions for you
+| Name review: "InsightPins" is your product name but not a registered trademark | Fine for the directory; reviewers check it doesn't impersonate others. README includes a "not affiliated with Pinterest" disclaimer |
+| Remaking someone else's pin = copying | `remake-pin` treats others' pins as style inspiration only; original copy and photos |
 
-1. Do you own the InsightPins brand/domain, and what author name/URL should appear?
-2. License: MIT OK?
-3. Is `app.insightpins.com/mcp` OAuth-based and already (or soon) a directory connector?
-4. Will keywords be tools on the same server or a separate MCP URL?
-5. Any brand voice or niche focus (food, home, travel, e-commerce) to bias defaults?
+## 8. Open questions
+
+1. Any brand voice or niche focus (food, home, travel, e-commerce) to bias defaults?
+2. Can the server add an `upload_image` tool so users can use photos they upload in chat?
+3. Can `get_quota` / limit errors return plan info and an upgrade URL (for paid plans)?
