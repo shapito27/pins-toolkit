@@ -25,10 +25,21 @@ point, a strong headline and search-friendly copy.
 | - | - |
 | `/insightpins:pin <url>` | Create one pin for a page |
 | `/insightpins:pin-variations <url> [count]` | Create several different pins for one page |
-| `/insightpins:review-pin` | Review an uploaded pin |
-| `/insightpins:optimize-pin` | Review an uploaded pin and render improved versions |
+| `/insightpins:review-pin` | Review and score an uploaded pin (uses no renders) |
+| `/insightpins:optimize-pin` | Review a pin and render improved versions to A/B test |
+| `/insightpins:remake-pin` | Make a new pin in the style of an uploaded one, but better |
 
-In claude.ai chat the commands work as skills: just describe what you want.
+In claude.ai chat and Cowork you don't need commands: just describe what you want and Claude uses
+the right skill.
+
+## Skills
+
+- **create-pin** - the full workflow from a URL to a finished pin and ready-to-paste copy
+- **pin-design** - visual best practices: readability at phone size, layout, photo, color, branding
+- **pin-copy** - headlines, Pinterest titles, descriptions, alt text, boards and keywords
+- **review-pin** - scores a pin on an 8-point rubric and ranks the fixes
+- **optimize-pin** - turns a review into 2-3 improved variants, each testing one change
+- **remake-pin** - recreates a pin's style for your content, with original photo and copy
 
 ## Setup
 

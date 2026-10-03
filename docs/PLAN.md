@@ -69,9 +69,7 @@ pins-toolkit/
 │       └── SKILL.md
 ├── commands/
 │   ├── pin.md              # /insightpins:pin <url>
-│   ├── pin-variations.md   # /insightpins:pin-variations <url> [n]
-│   ├── review-pin.md       # /insightpins:review-pin
-│   └── optimize-pin.md     # /insightpins:optimize-pin
+│   └── pin-variations.md   # /insightpins:pin-variations <url> [n]
 ├── evals/                  # claude plugin eval cases (or keep outside plugin folder)
 ├── docs/
 │   └── PLAN.md
@@ -206,8 +204,8 @@ pin in the same style for their own content.
 
 - `/insightpins:pin <url>` - runs `create-pin` end to end for one pin.
 - `/insightpins:pin-variations <url> [n=3]` - checks quota, then makes n distinct pins (different template category, image, headline angle), and returns a comparison table.
-- `/insightpins:review-pin` - reviews the uploaded pin.
-- `/insightpins:optimize-pin` - reviews and renders improved versions.
+- Skills are invocable as slash commands too (`/insightpins:review-pin`, `/insightpins:optimize-pin`,
+  `/insightpins:remake-pin`), so they get no separate command files (same names would clash).
 
 Possible later skills (not MVP): `seasonal-planning` (Pinterest seasonality - pin 30-45+ days ahead of holidays/seasons),
 `brand-kit` (remember a site's preferred palette/font across pins).
@@ -227,11 +225,11 @@ Possible later skills (not MVP): `seasonal-planning` (Pinterest seasonality - pi
 - [x] README sections: what it does, how to use, components, **data handling** (what is sent to app.insightpins.com: page URLs, text, image URLs; rendered images hosted for 7 days; nothing else sent anywhere), photo licensing note.
 - [x] `claude plugin validate .` passes.
 
-### Phase 2 - skills and commands
-- [ ] Write `create-pin`, `pin-design`, `pin-copy` + references.
-- [ ] Write `review-pin` (+ rubric), `optimize-pin`, `remake-pin`.
-- [ ] Write the four commands.
-- [ ] Keep every file < 256 KiB, text only, valid YAML frontmatter, `description` a single string.
+### Phase 2 - skills and commands (done)
+- [x] Write `create-pin`, `pin-design`, `pin-copy` + references.
+- [x] Write `review-pin` (+ rubric), `optimize-pin`, `remake-pin`.
+- [x] Write the two commands (`pin`, `pin-variations`).
+- [x] Keep every file < 256 KiB, text only, valid YAML frontmatter, `description` a single string.
 
 ### Phase 3 - evaluate
 - [ ] Local: `claude --plugin-dir .` in Claude Code; `/mcp` shows server connected.
