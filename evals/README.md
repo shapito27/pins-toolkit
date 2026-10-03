@@ -29,18 +29,25 @@ mostly measures "no connector", not the skills. The meaningful skill-vs-plain-Cl
 `copy-only` and `review-uploaded-pin`. For the MCP cases, look at the with-plugin scores on the
 specific graders (photo choice, text size, honesty, quota handling).
 
-## Latest results (2026-10-03, 2 runs per arm; copy-only re-run with 3)
+## Latest results (2026-10-03, v1.0.0, 2 runs per arm; re-runs with 3)
 
 | Case | With plugin | Without | Delta |
 | - | - | - | - |
 | recipe-from-url | 1.00 | 0.17 | +0.83 |
 | listicle-number | 1.00 | 0.33 | +0.67 |
-| blocked-page | 1.00 | 1.00 | 0.00 |
+| blocked-page | 1.00 | 0.83 | +0.17 |
 | variations-low-quota | 1.00 | 0.50 | +0.50 |
 | copy-only | 1.00 | 0.33 | +0.67 |
-| review-uploaded-pin | 1.00 | 1.00 | 0.00 |
+| review-uploaded-pin | 1.00 | 0.83 | +0.17 |
 
-`copy-only` first scored 0.83: one run added claims the post didn't make ("no remodel", "renters").
-The `pin-copy` skill now has a "facts only from the source" rule; after it, 3/3 runs pass.
-Plain Claude already reviews an obviously weak pin well, so `review-uploaded-pin` shows no delta; the
-skill's value there is the consistent rubric and format.
+History:
+- `copy-only` first scored 0.83: one run added claims the post didn't make ("no remodel",
+  "renters"). `pin-copy` got a "facts only from the source" rule; 3/3 since.
+- `recipe-from-url` had one judge failure for giving an expiry date instead of "7 days" (grader now
+  accepts a date). The same run's copy said "ready in one pan", which the page didn't state;
+  `create-pin` now repeats the facts-only rule in its copy step.
+- `variations-low-quota` had a mock bug (render result said 45 renders left after quota said 1);
+  the case now has its own consistent `render_pin` mock.
+
+Plain Claude already reviews an obviously weak pin well, so `review-uploaded-pin` shows little
+delta; the skill's value there is the consistent rubric and format.

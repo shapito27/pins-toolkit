@@ -232,6 +232,7 @@ Possible later skills (not MVP): `seasonal-planning` (Pinterest seasonality - pi
 - [ ] Developer portal -> **Submit new -> MCP connector** for `https://app.insightpins.com/mcp`.
 
 ### Phase 5 - plugin submission
+Full checklist and portal answers: [SUBMISSION.md](SUBMISSION.md). Local checks all pass; version 1.0.0.
 - [ ] Portal: **Submit new -> Plugin bundle**, repository `shapito27/pins-toolkit`, plugin path `plugins/insightpins`, tracked branch `main`.
 - [ ] **Validate**, fix Blocking findings, re-validate.
 - [ ] Data handling answers: personal data - no (URLs and marketing copy only); sends data only to declared connector; retention - rendered images 7 days; under-18 - no.

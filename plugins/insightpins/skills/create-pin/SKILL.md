@@ -34,6 +34,8 @@ still draft the copy without it.
 
 3. **Write the copy** using the `pin-copy` skill: a short on-image headline (3-8 words, ideally),
    an optional subtitle, and separately the Pinterest title, description and alt text.
+   Use only facts the page states: don't add selling points like "one-pan", "ready in 20 minutes"
+   or "kid-friendly" unless the page says so.
 
 4. **Pick the template.** Call `list_templates` (the list changes over time) and choose with
    [references/template-selection.md](references/template-selection.md). Fill `custom_fields` from
