@@ -45,6 +45,8 @@ Image links expire on 2026-10-10.
 
 ## Requests for the InsightPins server
 
+Full, ranked version with proposals: [MCP-IMPROVEMENTS.md](MCP-IMPROVEMENTS.md).
+
 1. **Flag bot-check pages in `extract_url`.** Return an error (or a `blocked: true` flag) when the
    fetched page is a challenge page, instead of a "successful" result titled "Client Challenge".
 2. **Return image metadata from `extract_url`**: width, height (or orientation) and whether it's
