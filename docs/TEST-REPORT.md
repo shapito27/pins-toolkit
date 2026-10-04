@@ -62,3 +62,21 @@ Full, ranked version with proposals: [MCP-IMPROVEMENTS.md](MCP-IMPROVEMENTS.md).
    keyword lookups; limit errors with `resets_at` and an `upgrade_url`.
 7. **Smart default text size.** Templates' default text size is often too small for short
    headlines; auto-fitting the headline to its area would help every client, not just Claude.
+
+## Re-test after the October 4 server deploy
+
+4 renders on 2026-10-04 (links expire 2026-10-11). Details and follow-ups:
+[MCP-IMPROVEMENTS.md, "Check of the October 4 deploy"](MCP-IMPROVEMENTS.md#check-of-the-october-4-deploy).
+
+| # | Test | Result |
+| - | - | - |
+| 11 | Repeat of #10 (wide photo in `bold-title`) | Warnings `IMAGE_CROPPED` (47% visible) and `IMAGE_UPSCALED` (3.1x). [image](https://pins.insightpins.com/mcp/2026-10-04/b194d561-d6ea-43f7-a726-1762244cdf81.jpg) |
+| 12 | #11 with `image_focus: "left"` | Head back in view; `IMAGE_CROPPED` still reported (the crop itself is unchanged). [image](https://pins.insightpins.com/mcp/2026-10-04/5d4cb418-c4cb-4f37-9d9c-20d7e0df237f.jpg) |
+| 13 | Repeat of #1 with cook time and servings from `structured` | Fields shown; title still small at default size, and no `TITLE_SMALL` warning. [image](https://pins.insightpins.com/mcp/2026-10-04/e2124f2f-48b5-49fb-a59f-ad7cc8c2ac2c.jpg) |
+| 14 | #13 with `text_size: "auto"` | Title fills its area; no warnings. [image](https://pins.insightpins.com/mcp/2026-10-04/ae000eba-db78-4ed0-82e3-19d457aee953.jpg) |
+
+Skill changes from this round: `create-pin` uses `image_details`, `primary_image` and `structured`,
+`text_size: "auto"` by default, the photo controls, and the new `references/render-warnings.md`
+(what each warning means, when to re-render, and not to loop on `IMAGE_CROPPED`); the template guide
+covers the 8 new templates and `uses_photo` / `uses_extra_images`.
+

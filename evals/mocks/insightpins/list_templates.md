@@ -9,6 +9,8 @@ type: fixed
   "category": "blog",
   "description": "Full-bleed image with bold title overlay",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -17,6 +19,8 @@ type: fixed
   "category": "blog",
   "description": "Large image with title strip at bottom",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -25,6 +29,8 @@ type: fixed
   "category": "blog",
   "description": "Padded image with clean text below",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -33,6 +39,8 @@ type: fixed
   "category": "blog",
   "description": "Clean layout with decorative dashed line accents",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -41,6 +49,8 @@ type: fixed
   "category": "blog",
   "description": "Classic bordered layout with category label and large image",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": [
    {
     "id": "listPrefix",
@@ -68,6 +78,8 @@ type: fixed
   "category": "product",
   "description": "Centered product with CTA button",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -76,6 +88,8 @@ type: fixed
   "category": "product",
   "description": "Product with prominent price display",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": [
    {
     "id": "price",
@@ -86,11 +100,23 @@ type: fixed
   ]
  },
  {
+  "id": "side-rail",
+  "name": "Side Rail",
+  "category": "product",
+  "description": "Editorial layout with a vertical site-name rail beside title and image",
+  "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
+  "custom_fields": []
+ },
+ {
   "id": "numbered-steps",
   "name": "Numbered Steps",
   "category": "list",
   "description": "Numbered list with supporting image",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -99,6 +125,8 @@ type: fixed
   "category": "list",
   "description": "Checkbox-style list layout",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -107,6 +135,8 @@ type: fixed
   "category": "list",
   "description": "Large number badge for listicle-style content",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": [
    {
     "id": "listNumber",
@@ -122,6 +152,8 @@ type: fixed
   "category": "quote",
   "description": "Large centered quote with decorative marks",
   "supports_subtitle": false,
+  "uses_photo": false,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -130,7 +162,43 @@ type: fixed
   "category": "quote",
   "description": "Quote paired with background image",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
+ },
+ {
+  "id": "vine-corners",
+  "name": "Vine Corners",
+  "category": "quote",
+  "description": "Text-only pin with a budding vine in two corners and soft blobs in the others",
+  "supports_subtitle": true,
+  "uses_photo": false,
+  "uses_extra_images": false,
+  "custom_fields": [
+   {
+    "id": "categoryLabel",
+    "label": "Category",
+    "default_value": "Featured",
+    "max_length": 30
+   }
+  ]
+ },
+ {
+  "id": "tulip-frame",
+  "name": "Tulip Frame",
+  "category": "quote",
+  "description": "Text-only bordered card with tulips in two corners",
+  "supports_subtitle": true,
+  "uses_photo": false,
+  "uses_extra_images": false,
+  "custom_fields": [
+   {
+    "id": "categoryLabel",
+    "label": "Category",
+    "default_value": "Featured",
+    "max_length": 30
+   }
+  ]
  },
  {
   "id": "recipe-card",
@@ -138,6 +206,8 @@ type: fixed
   "category": "recipe",
   "description": "Food image with recipe details",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": [
    {
     "id": "cookTime",
@@ -154,11 +224,23 @@ type: fixed
   ]
  },
  {
+  "id": "photo-stack",
+  "name": "Photo Stack",
+  "category": "recipe",
+  "description": "Four staggered photos under a title with a handwritten accent line",
+  "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": true,
+  "custom_fields": []
+ },
+ {
   "id": "framed-bold",
   "name": "Framed Bold",
   "category": "creative",
   "description": "Gallery-style thick frame with bold title",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -167,6 +249,8 @@ type: fixed
   "category": "creative",
   "description": "Dynamic diagonal edge separating image and color",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -175,6 +259,8 @@ type: fixed
   "category": "creative",
   "description": "Full image with large corner title badge",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -183,6 +269,8 @@ type: fixed
   "category": "creative",
   "description": "Clean 50/50 split with text top, image bottom",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -191,6 +279,8 @@ type: fixed
   "category": "creative",
   "description": "Elegant double border with glass-effect title",
   "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -199,6 +289,8 @@ type: fixed
   "category": "creative",
   "description": "Organic wavy gradient over full image",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -207,6 +299,8 @@ type: fixed
   "category": "creative",
   "description": "Editorial style with bold caps and stripe",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": [
    {
     "id": "categoryLabel",
@@ -222,6 +316,8 @@ type: fixed
   "category": "creative",
   "description": "Typography hero with small image accent",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -230,6 +326,8 @@ type: fixed
   "category": "creative",
   "description": "Geometric grid with image and color blocks",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -238,6 +336,8 @@ type: fixed
   "category": "creative",
   "description": "Vertical split with overlapping story card",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -246,6 +346,8 @@ type: fixed
   "category": "creative",
   "description": "Eye-catching starburst shape over image background",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -254,6 +356,8 @@ type: fixed
   "category": "creative",
   "description": "Elegant arch-shaped window frame for images",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": []
  },
  {
@@ -262,6 +366,8 @@ type: fixed
   "category": "creative",
   "description": "Vertical image strips framing centered content",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": [
    {
     "id": "listNumber",
@@ -277,6 +383,8 @@ type: fixed
   "category": "creative",
   "description": "Full-bleed image with text overlay boxes and colored border",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": [
    {
     "id": "listPrefix",
@@ -298,6 +406,8 @@ type: fixed
   "category": "creative",
   "description": "Multi-image collage with elegant typography",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": true,
   "custom_fields": [
    {
     "id": "listNumber",
@@ -313,6 +423,8 @@ type: fixed
   "category": "creative",
   "description": "Full-bleed image with elegant card overlay and mixed typography",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
   "custom_fields": [
    {
     "id": "listNumber",
@@ -323,11 +435,79 @@ type: fixed
   ]
  },
  {
+  "id": "grid-lines",
+  "name": "Grid Lines",
+  "category": "creative",
+  "description": "Full-bleed image under a line grid, with a centre title block and two round badges",
+  "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": false,
+  "custom_fields": [
+   {
+    "id": "badgeTop",
+    "label": "Top badge",
+    "default_value": "NEW ON THE BLOG",
+    "max_length": 20
+   },
+   {
+    "id": "badgeBottom",
+    "label": "Bottom badge",
+    "default_value": "SAVE FOR LATER",
+    "max_length": 20
+   }
+  ]
+ },
+ {
+  "id": "overlap-collage",
+  "name": "Overlap Collage",
+  "category": "creative",
+  "description": "Three overlapping photos above a script word and a large bold title",
+  "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": true,
+  "custom_fields": []
+ },
+ {
+  "id": "photo-quad",
+  "name": "Photo Quad",
+  "category": "creative",
+  "description": "Four photos in an even grid with a heart at the centre, two script labels and the title underneath",
+  "supports_subtitle": false,
+  "uses_photo": true,
+  "uses_extra_images": true,
+  "custom_fields": [
+   {
+    "id": "photoLabelTop",
+    "label": "Top photo label",
+    "default_value": "Elegance",
+    "max_length": 16
+   },
+   {
+    "id": "photoLabelBottom",
+    "label": "Bottom photo label",
+    "default_value": "Beauty",
+    "max_length": 16
+   }
+  ]
+ },
+ {
+  "id": "vertical-title",
+  "name": "Vertical Title",
+  "category": "creative",
+  "description": "A large title turned to read bottom to top on a side panel, beside a full-height photo",
+  "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": false,
+  "custom_fields": []
+ },
+ {
   "id": "fitness-grid",
   "name": "Fitness Grid",
   "category": "list",
   "description": "Bold grid layout with highlighted title band",
   "supports_subtitle": true,
+  "uses_photo": true,
+  "uses_extra_images": true,
   "custom_fields": [
    {
     "id": "listNumber",

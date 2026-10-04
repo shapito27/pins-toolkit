@@ -1,6 +1,6 @@
 ---
 plugins: ["../../plugins/insightpins"]
-description: URL to finished pin; tests photo choice, text size, no invented fields and the full report
+description: URL to finished pin; tests photo choice from image_details (not the wide primary_image), text size, recipe data from structured, and the full report
 tags: [mcp, create]
 max_turns: 25
 allowed_tools: [Skill]

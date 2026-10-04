@@ -16,7 +16,8 @@ still draft the copy without it.
 ## Workflow
 
 1. **Get the source.**
-   - URL given: call `extract_url`. Note the title, description, site name and every image.
+   - URL given: call `extract_url`. Note the title, description, site name, the images with their
+     `image_details`, `primary_image`, and `structured` data when the page has it.
    - **Check that the page really loaded.** Many large sites block automated requests. Errors start
      with a code:
      - `[BOT_CHALLENGE]`: the site blocks automated readers. Tell the user, and ask for the page
@@ -34,7 +35,10 @@ still draft the copy without it.
 
 2. **Classify the content**: how-to/blog post, listicle (has a number), product, recipe, quote,
    travel/destination, or lifestyle/inspiration. Pull out facts the templates can show: the list
-   number, price, cook time, servings, category.
+   number, price, cook time, servings, category. `structured` gives them directly when the page
+   publishes them: for a `Recipe`, `cook_time` (or `total_time` if there's no cook time) for
+   `cookTime` and `servings` for `servings` (write "4 servings"); for a `Product`, `price` for
+   `price`. Use these values as given; they come from the page itself.
 
 3. **Write the copy** using the `pin-copy` skill: a short on-image headline (3-8 words, ideally),
    an optional subtitle, and separately the Pinterest title, description and alt text.
@@ -52,21 +56,26 @@ still draft the copy without it.
    [references/style-selection.md](references/style-selection.md). If the user or their site has
    colors already used on earlier pins, keep them for brand consistency.
 
-6. **Pick the photo** from the extracted images. You can't see them before rendering, so judge by the
-   URL and file name too:
-   - relevant to the headline, sharp, large, ideally vertical (2:3);
-   - skip tracking pixels and tiny files (`.gif?`, `1x1`, `pixel`), logos, favicons, icons, footer or
-     banner graphics, author headshots, ads, and thumbnails (sizes like `200x200` or `150x150` in the name);
-   - skip **animated GIFs**: they're usually demo clips with captions baked in, and get cropped badly;
-   - skip images that likely contain text: names with `infographic`, `collage`, `chart`,
-     `before-after`, `screenshot`, `quote`, or marked as a Pinterest graphic (`-pin.jpg`, `pinterest`);
-   - a size in the file name hints at orientation (`689x1024` is vertical, `1200x628` horizontal).
+6. **Pick the photo.** You can't see the images before rendering, so use `image_details`: each entry
+   has `width`, `height`, `orientation` (portrait, landscape, square), `animated`, `alt` text,
+   `source` (og, content, json-ld) and `low_resolution`.
+   - Choose a photo whose `alt` matches the headline, prefer `portrait`, and skip `animated` and
+     `low_resolution` ones.
+   - `primary_image` is the page's share image. It is a good default, but not always the best photo:
+     check its `alt` and shape like any other.
+   - Skip photos whose `alt` or file name points to text or a person rather than the subject:
+     "infographic", "chart", "before and after", "screenshot", "quote", author headshots and logos.
+   - If a page gives no `image_details` (older responses), judge by file name: a size like
+     `689x1024` hints at orientation, and `.gif`, `pixel`, `logo` or `200x200` mean skip.
    **Match the photo to the template:** full-bleed templates (photo fills the whole pin, such as
    `bold-title`, `gradient-wave`, `corner-badge`, `travel-overlay`, `destination-card`) need a
-   vertical photo, or heads and products get cut off. For a horizontal, square or unknown-shape photo,
-   use a template that puts the photo in a wide panel: `split-horizontal`, `recipe-card` or
-   `product-spotlight` (tested), or `minimal-clean`.
-   Use `additional_image_urls` only for collage templates, with photos that clearly belong together.
+   portrait photo, or heads and products get cut off. For a landscape or square photo, use a template
+   that puts the photo in a wide panel: `split-horizontal`, `recipe-card` or `product-spotlight`
+   (tested), or `minimal-clean`. If a full-bleed template is still the right choice, set
+   `image_focus` to the subject (see step 8).
+   `list_templates` marks templates with no photo (`uses_photo: false`) and collage templates that
+   take extra photos (`uses_extra_images: true`, up to 3 in `additional_image_urls`). Use extra
+   photos only with those templates, and only photos that clearly belong together.
 
 7. **Check quota before more than one render.** Call `get_quota` when making variations or when a
    render failed for limits. Tell the user how many renders a plan will use if they're running low.
@@ -74,18 +83,27 @@ still draft the copy without it.
 8. **Render** with `render_pin`: template, palette, font, headline as `title`, subtitle as
    `description` (only on templates that support it), `site_name`, `image_url`, and a CTA that fits
    the content ("Get the Recipe", "Read the Guide", "Shop Now", "See the List"; 30 characters max).
-   **Set `text_size` on the first render**; the template default (100) is usually too small at
-   thumbnail size. Headlines up to ~7 words: 130-160. Headlines of 8-12 words: 120-140. Quotes on
-   `centered-quote`: 140-150. Very long text: 100-110 (or shorten it). On templates with a subtitle,
-   keep `description_size` at 100-115.
+   **Set the text size on the first render**; the template default (100) is usually too small at
+   thumbnail size. Use `text_size: "auto"`: it fits the title to its area (never smaller than
+   normal) and keeps the other text at its size. It can't be combined with `title_size`. Use a number
+   instead when the whole pin's text should change: 120-140 for headlines of 8-12 words, 100-110 for
+   very long text (or shorten it). On templates with a subtitle, keep `description_size` at 100-115.
+   **Photo controls**, for single-photo templates: `image_focus` keeps a part in view when the photo
+   is cropped (`top`, `bottom`, `left`, `right`, `center`, or `{ "x": 0.3, "y": 0.2 }`, 0 to 1 from
+   left/top); `image_zoom` 100-200 enlarges a small product in a big frame (it softens a small
+   photo); `image_fit: "contain"` shows the whole photo with bars in the palette's secondary color.
+   Set `image_focus` up front when you already know where the subject is, for example `top` for a
+   person in a wide photo.
 
-9. **Check the preview** against the `pin-design` checklist. The preview image is about 200x300,
-   which is roughly how the pin looks in a phone feed, so use it as the thumbnail test: if you
-   struggle to read the headline in the preview, so will users. Re-render only for a real defect:
-   unreadable or cut-off text, a badly cropped photo (cut-off heads, text baked into the photo cut in
-   half), a wrong photo, or a field showing a value that isn't true.
-   Fix the one thing that's wrong (usually `text_size`, `title_size` or the photo) and keep the rest.
-   Don't re-render for taste alone unless the user asks.
+9. **Check the preview and the warnings.** The preview image is about 200x300, roughly how the pin
+   looks in a phone feed, so use it as the thumbnail test against the `pin-design` checklist. Then
+   read the result's `warnings` (see [references/render-warnings.md](references/render-warnings.md)
+   for what each code means and what to do). Re-render only for a real defect:
+   unreadable or cut-off text (`TITLE_CLAMPED`, `DESCRIPTION_CUT`), a photo cropped so the subject is
+   lost, a wrong photo, or a field showing a value that isn't true. Some warnings describe the pin
+   rather than a defect: `IMAGE_CROPPED` stays after you've set `image_focus` well, because the crop
+   itself doesn't change. Judge by the preview, and never re-render twice for the same warning.
+   Fix the one thing that's wrong and keep the rest. Don't re-render for taste alone unless the user asks.
 
 10. **Report** (keep it short):
     - the image link from the latest render and its `edit_url` (opens the pin on insightpins.com

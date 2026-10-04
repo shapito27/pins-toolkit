@@ -39,11 +39,13 @@ A pin competes in a crowded grid, mostly on phones, where each pin is shown smal
 - Text baked into the photo (captions in GIFs or screenshots) showing through or cut off by the crop.
 - Text over a busy or same-colored part of the photo.
 - A field showing a value that isn't true for the content (a guessed price, count or cook time).
-- Photo cropped badly: subject cut in half, heads cut off, product off-frame.
+- Photo cropped badly: subject cut in half, heads cut off, product off-frame (fix with
+  `image_focus`, or `image_fit: "contain"`), or a product sitting small in a big frame (`image_zoom`).
 - Low-resolution, blurry, or stretched photo; a photo with its own text or watermark.
 - Colors that blend into the photo; subtitle that's too long to read.
 
-Fix the one thing that's wrong with the smallest change (text size, photo, template) and keep the rest.
+Fix the one thing that's wrong with the smallest change (text size, photo position, photo, template)
+and keep the rest. The render result's `warnings` point at most of these defects.
 
 ## What not to do
 

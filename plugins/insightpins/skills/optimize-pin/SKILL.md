@@ -28,16 +28,17 @@ the InsightPins connector, each designed to test one change.
    - **A - Headline angle**: the closest layout and the same photo (when you have its URL), with a
      stronger headline using a different `pin-copy` angle.
    - **B - Layout and readability**: a template that puts text on a solid panel or uses a bigger
-     title, with higher contrast and larger `text_size`.
-   - **C - Photo and color**: a different, stronger photo from the page and a palette that
-     contrasts more with it.
+     title, with higher contrast and `text_size: "auto"` so the title fills its area.
+   - **C - Photo and color**: a different, stronger photo from the page (use `image_details`: a large
+     portrait photo whose `alt` matches the promise) and a palette that contrasts more with it. Use
+     `image_focus` or `image_zoom` when the subject was cut off or too small.
    Keep every variant compliant with the `pin-design` essentials. If the user has only 1 render left,
    make the single version that fixes the top problems together. If none are left, don't render:
    deliver the review, the copy and the settings (see the last section) and say when the limit resets.
 
 4. **Render** each variant with `render_pin` (call `extract_url` on the destination URL for photos,
-   `list_templates` and `list_styles` for current options). Check each preview; re-render only for a
-   real defect.
+   `list_templates` and `list_styles` for current options). Check each preview and its `warnings`
+   (see `create-pin`); re-render only for a real defect.
 
 5. **Report**:
    - a short table: variant, what changed, why it should do better, image link, `edit_url`;

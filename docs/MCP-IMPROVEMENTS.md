@@ -33,11 +33,11 @@ Keep these as they are:
 | - | - | - | - | - | - | - |
 | 1 | Verify URL fetching can't reach internal addresses (SSRF) | Security | Inferred | Critical if vulnerable | S | **Done** (deployed 2026-10-03, see below) |
 | 2 | `extract_url`: report blocked and bot-check pages as errors | Functions | Observed | High | S | **Done** (deployed 2026-10-03) |
-| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | Next |
-| 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | Next |
-| 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | Next |
+| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04); follow-ups below |
+| 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | **Done** (#67, checked 2026-10-04); overlay strength and smart cropping not done |
+| 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | **Done** (#62 warnings, #79 `text_size: "auto"`, checked 2026-10-04); follow-ups below |
 | 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | Next |
-| 7 | `extract_url`: structured data (recipe times, servings, product price) | Functions | Observed | Medium-High | S | Next |
+| 7 | `extract_url`: structured data (recipe times, servings, product price) | Functions | Observed | Medium-High | S | **Done** (#56, checked 2026-10-04); description still cut mid-sentence |
 | 8 | Template previews in `list_templates` | Templates | Inferred | Medium-High | S | Next |
 | 9 | List items for list templates | Templates | Inferred | Medium-High | M | Next |
 | 10 | Brand kit: custom colors, logo, saved defaults | Controls | Inferred | High for repeat users | M | Before paid plans |
@@ -54,6 +54,41 @@ Keep these as they are:
 
 "Now" means before or alongside directory submission. "Next" means the first improvement round,
 the biggest quality wins. "Later" means growth features.
+
+## Check of the October 4 deploy
+
+Checked against the live server on 2026-10-04 (4 renders; `extract_url` on the same pages as the
+first test) and the `pin-generator-tool` source at #81.
+
+| Item | Result |
+| - | - |
+| 3. Image details | `image_details` (size, orientation, animated, alt, source, low_resolution) and `primary_image` returned. Nerd Fitness: tracking GIF, animated demos and thumbnails filtered out. |
+| 7. Structured data | Minimalist Baker: Recipe with prep, cook and total time, servings, rating. Allbirds: Product with price, currency, brand. |
+| 5. Warnings | Wide photo in `bold-title`: `IMAGE_CROPPED` (47% visible) and `IMAGE_UPSCALED` (3.1x), both accurate. |
+| 4. Crop controls | `image_focus: "left"` brought the cut-off head back into view (same pin as test render 10). |
+| 5. `text_size: "auto"` | Recipe card title grew to fill its area, about the same as the manual 160% from the first test; no warnings. |
+| Templates | 38 live, 8 new (side-rail, vine-corners, tulip-frame, photo-stack, grid-lines, overlap-collage, photo-quad, vertical-title); `list_templates` now has `uses_photo` and `uses_extra_images`. |
+| Auth | `/api/mcp` answers 401 with `WWW-Authenticate` pointing at the protected-resource metadata, whose `resource` is `/api/mcp`. `/mcp` is the docs page (405 on POST). |
+
+**Follow-ups found in the check** (none blocks submission):
+
+1. **`TITLE_SMALL` didn't fire where it should.** Recipe Card at the default size with a 6-word title
+   left a visibly small title and an empty panel (same as test render 1), and returned no warnings.
+   "auto" then made the title much larger. The 0.30 fill threshold may be too low for panel templates.
+2. **`IMAGE_CROPPED` stays after a good `image_focus`.** It reports the crop (still 47% visible), which
+   is true, but a client that re-renders on every warning will loop. Suggest: when `image_focus` or
+   `image_fit` was set, say so in the message ("you set image_focus; check the preview") or downgrade it.
+3. **`primary_image` can be a weak choice.** On Nerd Fitness it is the og image, a 621x310 before/after
+   picture. Ranking by size, orientation and alt relevance would pick better.
+4. **Descriptions are still cut mid-sentence** ("...you should totally get"). Prefer `og:description`
+   or the meta description, and cut at a sentence end.
+5. **Text-heavy images still come through** (an infographic, an author headshot). Their `alt` gives them
+   away now; a `likely_text` flag would make it explicit.
+6. **The docs page suggests "a quote template and a dark palette"**, but all 15 palettes are still
+   light (item 11). Either add dark palettes or change the example.
+7. **Clients keep old tool definitions until they reconnect.** A session that loaded the tools before
+   the deploy doesn't see `image_focus` or `"auto"` in its schema, though the server accepts them.
+   Sending `notifications/tools/list_changed` after a deploy helps clients that support it.
 
 ## Details
 

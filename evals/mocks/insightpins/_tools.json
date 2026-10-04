@@ -56,7 +56,7 @@
   },
   {
    "name": "render_pin",
-   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. Each call makes a new image; when you re-render, give the user the latest link. The result also has an edit_url that opens this pin on the InsightPins website for further editing (it keeps the main photo, the text and the text sizes; give it to the user together with the image link). When the user says the text is too small or too big, re-render with text_size (percent, 100 is normal). Counts against the daily render limit; failed renders are not counted.",
+   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. The result also has an edit_url. When a short title looks small for its space, re-render with text_size \"auto\". When a photo is cropped badly or too small in its frame, re-render with image_focus, image_zoom or image_fit \"contain\". Counts against the daily render limit; failed renders are not counted. The result has a warnings list (each with a code and a message) when something looks wrong. Read it, but re-render only when a warning matters. Codes: TITLE_CLAMPED, DESCRIPTION_CUT, IMAGE_CROPPED, IMAGE_UPSCALED, TITLE_SHRUNK, TITLE_SMALL, SUBTITLE_HIDDEN, EXTRA_IMAGES_IGNORED, IMAGE_IGNORED, LAYOUT_UNSETTLED.",
    "inputSchema": {
     "type": "object",
     "required": [
@@ -74,12 +74,16 @@
        "blog-card",
        "product-spotlight",
        "price-tag",
+       "side-rail",
        "numbered-steps",
        "checklist",
        "number-badge",
        "centered-quote",
        "quote-with-image",
+       "vine-corners",
+       "tulip-frame",
        "recipe-card",
+       "photo-stack",
        "framed-bold",
        "diagonal-cut",
        "corner-badge",
@@ -96,6 +100,10 @@
        "travel-overlay",
        "lifestyle-collage",
        "destination-card",
+       "grid-lines",
+       "overlap-collage",
+       "photo-quad",
+       "vertical-title",
        "fitness-grid"
       ],
       "description": "From list_templates"
@@ -121,8 +129,8 @@
        "type": "string",
        "maxLength": 2048
       },
-      "maxItems": 2,
-      "description": "Extra images for collage and multi-image templates"
+      "maxItems": 3,
+      "description": "Extra images for collage and multi-image templates, up to 3 (Photo Stack and Photo Quad show four photos)"
      },
      "palette_id": {
       "type": "string",
@@ -192,10 +200,18 @@
       "description": "Template-specific fields from list_templates, e.g. {\"price\": \"$19\"}. Only the fields given are shown; omitted or blank ones are left off. number-badge and side-panels always show a number: pass listNumber."
      },
      "text_size": {
-      "type": "integer",
-      "minimum": 70,
-      "maximum": 250,
-      "description": "Text size for the whole pin, in percent (70-250). 100 is the template's normal size. Raise it (for example 130-180) when the text would look too small, lower it for a lot of text. Scales the title, description, button and site name together."
+      "anyOf": [
+       {
+        "type": "integer",
+        "minimum": 70,
+        "maximum": 250
+       },
+       {
+        "type": "string",
+        "const": "auto"
+       }
+      ],
+      "description": "Text size for the whole pin, in percent (70-250), or \"auto\". 100 is the template's normal size. \"auto\" instead fits the title to its space: a short title is made larger, as far as its area allows, and it is never smaller than normal. It cannot be combined with title_size, and the other text keeps its size."
      },
      "title_size": {
       "type": "integer",
@@ -228,6 +244,54 @@
        "png"
       ],
       "description": "Default and recommended: jpeg (about 0.3 MB). Use png only if the user asks for it."
+     },
+     "image_focus": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "center",
+         "top",
+         "bottom",
+         "left",
+         "right"
+        ]
+       },
+       {
+        "type": "object",
+        "properties": {
+         "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+         },
+         "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+         }
+        },
+        "required": [
+         "x",
+         "y"
+        ]
+       }
+      ],
+      "description": "Which part of the photo to keep in view when it is cropped: center, top, bottom, left, right, or { \"x\": 0.5, \"y\": 0.3 } with each from 0 (left/top) to 1 (right/bottom). Default center."
+     },
+     "image_zoom": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 200,
+      "description": "Enlarges the photo inside its frame around image_focus, in percent (100-200). Default 100. For a small product in a big frame; it makes a small photo look softer."
+     },
+     "image_fit": {
+      "type": "string",
+      "enum": [
+       "cover",
+       "contain"
+      ],
+      "description": "cover (default) fills the frame and crops the photo; contain shows the whole photo with the palette's secondary color in the empty bars."
      }
     }
    }
