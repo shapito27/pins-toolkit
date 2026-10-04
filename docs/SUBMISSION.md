@@ -14,14 +14,15 @@ with the answer for every field. Based on Anthropic's
 | Folder contains `.claude-plugin/plugin.json` | Yes |
 | Name `insightpins`: lowercase, hyphens, not reserved, not a known brand | Yes |
 | `description`, `author`, `version`, `license` set | Yes |
-| README >= 40 words outside code blocks | 768 words |
+| README >= 40 words outside code blocks | ~1,500 words |
 | LICENSE file + `license` field | Yes (MIT) |
 | No `.DS_Store` / `Thumbs.db` / `__MACOSX`, no symlinks, no LFS, no `.gitattributes` | None |
-| Every file < 256 KiB, <= 512 files, text only | 23 text files, largest ~16 KB |
+| Every file < 256 KiB, <= 512 files | 25 files: 23 text files (largest ~16 KB) and 2 PNG example images in `assets/` (35 KB and 78 KB) |
+| Images only in the README, via Markdown image syntax; not used by scripts or commands | Yes: `assets/example-pins.png` and `assets/before-after.png` |
 | `.mcp.json` valid, remote server is `type: http` with an `https://` URL | Yes |
 | No secrets, no `$ENV` credentials, no package launchers (`npx`, `uvx`...) | None |
 | No hooks, local MCP servers or `bin/`; scripts readable and disclosed | 2 Python scripts in the `pinterest-bulk-csv` skill, standard library only, no network, run only when the skill tells Claude to; described in the README |
-| Repository < 50 MiB, < 10,000 files | ~0.8 MB, 65 files |
+| Repository < 50 MiB, < 10,000 files | ~0.3 MB, 94 files |
 | Eval suite | All 6 cases 1.00 with the plugin |
 
 Expected result in the portal: no Blocking findings. A reviewer may still look at it (first
@@ -128,6 +129,6 @@ Services in section 1, with their daily render limits.
 recipe URL. Renders 1000x1500 pins from InsightPins templates and applies pin design and
 copywriting best practices.
 
-**What users get:** 6 skills (create-pin, pin-design, pin-copy, review-pin, optimize-pin,
-remake-pin) and 2 commands (`/insightpins:pin`, `/insightpins:pin-variations`), plus the
+**What users get:** 7 skills (create-pin, pin-design, pin-copy, review-pin, optimize-pin,
+remake-pin, pinterest-bulk-csv) and 2 commands (`/insightpins:pin`, `/insightpins:pin-variations`), plus the
 InsightPins connector.

@@ -1,54 +1,136 @@
 # InsightPins for Claude
 
-Make Pinterest pins that get noticed and clicked, right from a conversation with Claude.
+**Turn any blog post, product page or recipe into a Pinterest pin that gets noticed and clicked,
+in one message.**
 
-Give Claude a link to your blog post, product page or recipe and it turns it into a finished
-1000x1500 pin: it reads the page, writes a short headline, picks a matching InsightPins template,
-color palette and font pairing, renders the image, and checks the result. You also get a
-ready-to-paste Pinterest title, description, alt text and board suggestion.
+Paste a link and Claude does the rest: it reads the page, writes a scroll-stopping headline, picks
+a matching template, colors and fonts, renders a finished 1000x1500 pin, checks its own work and
+hands you ready-to-paste Pinterest copy. No design tool, no templates to fill in, no API key.
 
-The plugin connects Claude to the [InsightPins](https://insightpins.com) pin generator and adds
-skills that teach Claude what makes a good pin: readable text at phone size, one clear focal
-point, a strong headline and search-friendly copy.
+![Four pins made with the InsightPins plugin: a travel guide, a numbered list, a quote and a text-only tip pin](assets/example-pins.png)
 
-## What you can do
+*Example pins made with this plugin. Photos: U.S. National Park Service
+(public domain).*
 
-- **Create a pin from a URL** - "Make a pin for https://myblog.com/fall-soups"
-- **Make several variations** - different templates, photos and headline angles for the same page, so you can post fresh pins and see which performs best
-- **Remake a pin, better** - upload a pin you like (yours or one for inspiration) and Claude builds a new, original pin with a similar style and stronger design and copy
-- **Review a pin** - upload a pin and get a scored review: readability, contrast, layout, headline, branding and copy, with concrete fixes
-- **Optimize a pin** - get a review plus improved versions aimed at more saves and clicks
-- **Check a bulk upload CSV** - find every row Pinterest would reject (long titles, Drive or Dropbox
-  links instead of image files, dates a spreadsheet rewrote, missing boards, unquoted commas, repeated
-  links, files over 200 pins) with the fix for each
-- **Schedule pins in bulk** - turn a list of pins into a ready-to-upload CSV, spread across days in
-  your time zone and converted to UTC, split into files of up to 200 pins
+## Why use it
 
-## Commands
+- **From link to finished pin in one message.** Claude reads your page, chooses the best photo
+  and writes the text. You just say "make a pin for this".
+- **Design rules built in.** The skills carry what works on Pinterest: a headline you can read at
+  phone size, one clear focal point, strong contrast, the right template for the content (recipe,
+  product, listicle, quote, travel, how-to).
+- **It checks its own work.** Claude looks at every render and the server's warnings (cut-off
+  title, heavily cropped or blurry photo, text too small) and fixes real defects before you see them.
+- **Copy and SEO included.** Every pin comes with a keyword-rich Pinterest title, description, alt
+  text and a board suggestion. Facts come only from your page: no invented prices or claims.
+- **A designer's eye on pins you already have.** Upload a pin for an honest score and ranked fixes,
+  or get improved versions to A/B test.
+- **Bulk upload without the rejections.** Build or check a Pinterest bulk upload CSV and catch every
+  row Pinterest would refuse before you upload.
+- **Free to start.** 38 templates, 15 color palettes, 10 font pairings and 50 renders a day.
+
+## See it in action
+
+### Make a pin from a link
+
+> Make a pin for https://yourtravelblog.com/yosemite-guide
+
+Claude replies with the pin and everything you need to post it (shortened):
+
+```
+Here's your pin: https://pins.insightpins.com/mcp/... (link works for 7 days, download it)
+Edit it on InsightPins without using a render: https://app.insightpins.com/?from=mcp...
+Template: Split Horizontal, palette Ocean Breeze, font Bold Impact.
+Photo: the waterfall photo from your page. Make sure you have the right to publish it.
+
+Pinterest title: Yosemite National Park Guide: Waterfalls, Sequoias and Granite Domes
+Description: Planning your first Yosemite trip? See the waterfalls, giant sequoias and ...
+Alt text: Yosemite Falls above the Merced River, with the headline "Yosemite National Park ..."
+Suggested board: National Parks Travel
+```
+
+### Get several pins to test
+
+> Make 4 different pins for https://yourtravelblog.com/yosemite-guide
+
+Each pin changes something that matters (photo, template and headline angle), not just the color,
+so you can post fresh pins over several weeks and see which one wins.
+
+### Review a pin
+
+> *(upload a pin)* Why isn't this pin getting clicks?
+
+```
+Overall: 5.8/10 - nice photo, but the headline is hard to read in the feed and doesn't promise much.
+
+Top fixes (biggest impact first)
+1. Title is long and thin at phone size -> cut it to 3-5 words in a heavy font.
+2. "Some thoughts and tips" is vague -> name the payoff: "Yosemite in Winter".
+3. White-on-white layout blends into the feed -> add a bold color block behind the title.
+```
+
+The review scores 8 criteria (readability, promise, photo, layout, scroll-stopping power, format,
+branding, trust) and suggests better headlines. It uses no renders.
+
+### Optimize a pin
+
+> Make this pin better and give me versions to test
+
+![Before and after: a long thin title on a plain white pin, and the optimized pin with a short bold title on a coral color block](assets/before-after.png)
+
+*Before: a long, thin title that disappears at phone size. After: a short bold headline, a strong
+color block and a clear button.*
+
+### Check a bulk upload CSV
+
+> *(upload pins.csv)* Check this before I upload it to Pinterest
+
+```
+3 problems in 24 rows:
+Row 4: the title is 112 characters, Pinterest allows 100 -> suggested shorter title: ...
+Row 7: the media URL is a Google Drive share link, not an image file -> use a direct image link
+Row 9: the publish date "3/10/2026 9:00" was rewritten by a spreadsheet app -> tell me your time
+       zone and whether that's March 10 or October 3, and I'll convert it to UTC
+
+Want me to rebuild the file with these fixes?
+```
+
+## What's inside
+
+There are no agents, hooks or background processes: everything runs in your conversation, and
+Claude picks the right skill from what you ask.
+
+**Skills** (Claude uses them on its own; in Claude Code you can also call each one as
+`/insightpins:<name>`)
+
+| Skill | What it does |
+| - | - |
+| `create-pin` | The full workflow from a URL to a finished pin: reads the page, picks the photo, template and style, renders, checks the result and writes the copy. Also makes sets of variations. |
+| `pin-design` | Visual best practices: readability at phone size, layout, photo choice, color, fonts and branding. Used to choose a design and to spot defects in a preview. |
+| `pin-copy` | Headlines, Pinterest titles, descriptions, alt text, board names and keywords, written for search and clicks. |
+| `review-pin` | Scores an uploaded pin on an 8-point rubric and ranks the fixes by impact. Uses no renders. |
+| `optimize-pin` | Turns a review into 2-3 improved versions, each testing one change, ready to A/B test. |
+| `remake-pin` | Upload a pin you like (yours or one for inspiration) and get a new, original pin in a similar style for your content, with better design and copy. |
+| `pinterest-bulk-csv` | Builds and checks Pinterest bulk upload CSV files: title and description length, direct image links, boards, dates in UTC, CSV quoting, the 200-pin limit. Spreads pins across days in your time zone. |
+
+**Commands**
 
 | Command | What it does |
 | - | - |
 | `/insightpins:pin <url>` | Create one pin for a page |
 | `/insightpins:pin-variations <url> [count]` | Create several different pins for one page |
-| `/insightpins:review-pin` | Review and score an uploaded pin (uses no renders) |
-| `/insightpins:optimize-pin` | Review a pin and render improved versions to A/B test |
-| `/insightpins:remake-pin` | Make a new pin in the style of an uploaded one, but better |
-| `/insightpins:pinterest-bulk-csv` | Build or check a Pinterest bulk upload CSV |
 
-In claude.ai chat and Cowork you don't need commands: just describe what you want and Claude uses
-the right skill.
+In claude.ai chat and Cowork you don't need commands: just describe what you want.
 
-## Skills
+**InsightPins connector tools** (from the InsightPins server, used by the skills)
 
-- **create-pin** - the full workflow from a URL to a finished pin and ready-to-paste copy
-- **pin-design** - visual best practices: readability at phone size, layout, photo, color, branding
-- **pin-copy** - headlines, Pinterest titles, descriptions, alt text, boards and keywords
-- **review-pin** - scores a pin on an 8-point rubric and ranks the fixes
-- **optimize-pin** - turns a review into 2-3 improved variants, each testing one change
-- **remake-pin** - recreates a pin's style for your content, with original photo and copy
-- **pinterest-bulk-csv** - builds and checks Pinterest bulk upload CSV files, with two small Python
-  scripts for exact character counts, UTC dates and CSV quoting. The same rules run in the free
-  [Pinterest CSV checker](https://insightpins.com/tools/pinterest-csv-checker.html)
+| Tool | What it does |
+| - | - |
+| `extract_url` | Reads a page: title, description, photos with their size and shape, and recipe or product facts (cook time, servings, price) |
+| `list_templates` | Lists the 38 pin templates and the fields each one supports |
+| `list_styles` | Lists the 15 color palettes and 10 font pairings |
+| `render_pin` | Renders a 1000x1500 pin and returns a preview, an image link, an edit link and warnings |
+| `get_quota` | Shows how many renders you have left today |
 
 ## Setup
 
@@ -114,6 +196,9 @@ Pins often use photos from the page you link. Claude always tells you where the 
 Make sure you have the right to publish it, or use your own images or licensed stock photos. When
 you upload someone else's pin for inspiration, Claude creates an original design and copy rather
 than copying their image or text.
+
+The example pins on this page use photos from the U.S. National Park Service (nps.gov), which are
+in the public domain. `yourtravelblog.com` is a placeholder site name.
 
 ## Disclaimer
 

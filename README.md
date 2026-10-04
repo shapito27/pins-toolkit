@@ -1,8 +1,20 @@
 # pins-toolkit
 
-Source for the **InsightPins** plugin for Claude: create, review and optimize Pinterest pins with the
-[InsightPins](https://insightpins.com) pin generator and built-in pin design and copywriting best practices,
-and build or check Pinterest bulk upload CSV files.
+Source for the **InsightPins** plugin for Claude: turn any blog post, product page or recipe into a
+finished Pinterest pin in one message, with the [InsightPins](https://insightpins.com) pin generator
+and built-in pin design and copywriting best practices. It also reviews and improves pins you
+already have, and builds or checks Pinterest bulk upload CSV files.
+
+![Four pins made with the InsightPins plugin](plugins/insightpins/assets/example-pins.png)
+
+- **Create** a pin from a link, or several variations to test, with ready-to-paste title,
+  description, alt text and board
+- **Review** an uploaded pin: a score on 8 criteria and the fixes that matter most
+- **Optimize** a pin into improved versions, or **remake** one you like in your own style
+- **Check and build** Pinterest bulk upload CSV files before Pinterest rejects them
+
+7 skills, 2 commands and the InsightPins connector (5 tools). Full list, examples and data handling
+in the [plugin README](plugins/insightpins/README.md).
 
 | Path | What it is |
 | - | - |
