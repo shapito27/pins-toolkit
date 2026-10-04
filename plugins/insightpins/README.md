@@ -7,7 +7,7 @@ Paste a link and Claude does the rest: it reads the page, writes a scroll-stoppi
 a matching template, colors and fonts, renders a finished 1000x1500 pin, checks its own work and
 hands you ready-to-paste Pinterest copy. No design tool, no templates to fill in, no API key.
 
-![Four pins made with the InsightPins plugin: a travel guide, a numbered list, a quote and a text-only tip pin](assets/example-pins.png)
+![Four pins made with the InsightPins plugin: a travel guide, a numbered list, a quote and a text-only tip pin](assets/example-pins.jpg)
 
 *Example pins made with this plugin. Photos: U.S. National Park Service
 (public domain).*
@@ -33,25 +33,26 @@ hands you ready-to-paste Pinterest copy. No design tool, no templates to fill in
 
 ### Make a pin from a link
 
-> Make a pin for https://yourtravelblog.com/yosemite-guide
+> Make a pin for https://insightpins.com/blog/pinterest-pin-ideas.html
 
-Claude replies with the pin and everything you need to post it (shortened):
+Claude replies with the pin (the green one on the right above) and everything you need to post it
+(shortened):
 
 ```
 Here's your pin: https://pins.insightpins.com/mcp/... (link works for 7 days, download it)
 Edit it on InsightPins without using a render: https://app.insightpins.com/?from=mcp...
-Template: Split Horizontal, palette Ocean Breeze, font Bold Impact.
-Photo: the waterfall photo from your page. Make sure you have the right to publish it.
+Template: Vine Corners, palette Sage, font Editorial.
+Photo: none. The page's only photo is a wide fridge shot, so I used a text-only template.
 
-Pinterest title: Yosemite National Park Guide: Waterfalls, Sequoias and Granite Domes
-Description: Planning your first Yosemite trip? See the waterfalls, giant sequoias and ...
-Alt text: Yosemite Falls above the Merced River, with the headline "Yosemite National Park ..."
-Suggested board: National Parks Travel
+Pinterest title: Pinterest Pin Ideas: A System for Never Running Out
+Description: Stuck for Pinterest pin ideas? Mine your own top pins, Pinterest search and Trends ...
+Alt text: Text pin with green vines reading "Never Run Out of Pinterest Pin Ideas"
+Suggested board: Pinterest Marketing Tips
 ```
 
 ### Get several pins to test
 
-> Make 4 different pins for https://yourtravelblog.com/yosemite-guide
+> Make 4 different pins for https://insightpins.com/blog/pinterest-pin-ideas.html
 
 Each pin changes something that matters (photo, template and headline angle), not just the color,
 so you can post fresh pins over several weeks and see which one wins.
@@ -76,7 +77,7 @@ branding, trust) and suggests better headlines. It uses no renders.
 
 > Make this pin better and give me versions to test
 
-![Before and after: a long thin title on a plain white pin, and the optimized pin with a short bold title on a coral color block](assets/before-after.png)
+![Before and after: a long thin title on a plain white pin, and the optimized pin with a short bold title on a coral color block](assets/before-after.jpg)
 
 *Before: a long, thin title that disappears at phone size. After: a short bold headline, a strong
 color block and a clear button.*
@@ -198,7 +199,7 @@ you upload someone else's pin for inspiration, Claude creates an original design
 than copying their image or text.
 
 The example pins on this page use photos from the U.S. National Park Service (nps.gov), which are
-in the public domain. `yourtravelblog.com` is a placeholder site name.
+in the public domain.
 
 ## Disclaimer
 
