@@ -21,5 +21,8 @@
     "bulk upload",
     "csv"
   ],
-  "privacyPolicyUrl": "https://insightpins.com/privacy.html"
+  "privacyPolicyUrl": "https://insightpins.com/privacy.html",
+  "documentationUrl": "https://github.com/shapito27/pins-toolkit/blob/main/plugins/insightpins/README.md",
+  "supportUrl": "https://insightpins.com/contacts.html",
+  "termsOfServiceUrl": "https://insightpins.com/terms-of-use.html"
 }

@@ -258,6 +258,16 @@ class ManifestTest(unittest.TestCase):
         self.assertEqual(url, "https://insightpins.com/privacy.html")
         self.assertIn(url, read(os.path.join(PLUGIN, "README.md")))
 
+    def test_listing_links(self):
+        readme = read(os.path.join(PLUGIN, "README.md"))
+        self.assertEqual(self.manifest.get("termsOfServiceUrl"), "https://insightpins.com/terms-of-use.html")
+        self.assertIn(self.manifest["termsOfServiceUrl"], readme)
+        self.assertEqual(self.manifest.get("supportUrl"), "https://insightpins.com/contacts.html")
+        self.assertIn(self.manifest["supportUrl"], readme)
+        doc = self.manifest.get("documentationUrl", "")
+        self.assertTrue(doc.startswith(self.manifest["repository"] + "/blob/main/plugins/insightpins/"), doc)
+        self.assertTrue(os.path.isfile(os.path.join(ROOT, doc.split("/blob/main/", 1)[1])), doc)
+
     def test_icon(self):
         path = self.manifest.get("icon", ".claude-plugin/icon.png")
         full = os.path.join(PLUGIN, path)

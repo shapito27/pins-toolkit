@@ -142,7 +142,9 @@ In claude.ai chat and Cowork you don't need commands: just describe what you wan
 2. Open the plugin's **Connectors** tab and connect **InsightPins**. You sign in with your Google account (OAuth). No API key is needed.
 3. Ask Claude to make a pin.
 
-In Claude Code the connector loads with the plugin; run `/mcp` to sign in.
+In Claude Code the connector loads with the plugin; run `/mcp` to sign in. In Cowork, connect the
+InsightPins connector on claude.ai first: Cowork uses the claude.ai connector for servers that need
+sign-in. Without the connector, the review, copy and bulk CSV skills still work; making pins needs it.
 
 The connector's server is `https://app.insightpins.com/api/mcp`. Its tools and limits are documented at
 [app.insightpins.com/mcp](https://app.insightpins.com/mcp).
