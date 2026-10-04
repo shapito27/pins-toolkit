@@ -36,18 +36,18 @@ hands you ready-to-paste Pinterest copy. No design tool, no templates to fill in
 
 > Make a pin for https://insightpins.com/blog/pinterest-pin-ideas.html
 
-Claude replies with the pin (the green one on the right above) and everything you need to post it
+Claude replies with the pin (the pink one on the right above) and everything you need to post it
 (shortened):
 
 ```
 Here's your pin: https://pins.insightpins.com/mcp/... (link works for 7 days, download it)
 Edit it on InsightPins without using a render: https://app.insightpins.com/?from=mcp...
-Template: Vine Corners, palette Forest Calm, font Classic Serif.
+Template: Vine Corners, palette Dusty Rose, font Classic Serif.
 Photo: none. The page's only photo is a wide fridge shot, so I used a text-only template.
 
 Pinterest title: Pinterest Pin Ideas: A System for Never Running Out
 Description: Stuck for Pinterest pin ideas? Mine your own top pins, Pinterest search and Trends ...
-Alt text: Text pin with green vines reading "Never Run Out of Pinterest Pin Ideas"
+Alt text: Text pin with pink vines reading "Never Run Out of Pinterest Pin Ideas"
 Suggested board: Pinterest Marketing Tips
 ```
 

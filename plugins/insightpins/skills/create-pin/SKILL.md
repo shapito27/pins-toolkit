@@ -59,9 +59,15 @@ still draft the copy without it.
 
 5. **Pick the style.** Call `list_styles` and choose a palette and font pairing with
    [references/style-selection.md](references/style-selection.md): first a palette whose text stays
-   readable on the chosen template (its contrast table), then one that stands apart from the photo
+   readable on the chosen template ([references/template-colors.md](references/template-colors.md)
+   lists the readable palettes for each template), then one that stands apart from the photo
    by lightness and fits the topic's mood. If the user or their site has colors already used on
-   earlier pins, keep them for brand consistency unless they fail the contrast table.
+   earlier pins, keep them for brand consistency unless the template's list rules them out.
+   **When the user names a palette** (a brand palette) that isn't in the template's "Readable with"
+   list, keep their palette: choose a template where it is listed, or one where it is under "Also
+   without a button" and send `show_cta: false`. Six palettes (forest-calm, cool-mint, sage,
+   electric, coral-reef, sunset-glow) make almost every button hard to read, so with them hide the
+   button unless you use `collage-style`. Tell the user in one line why the button is off.
 
 6. **Pick the photo.** You can't see the images before rendering, so use `image_details`: each entry
    has `width`, `height`, `orientation` (portrait, landscape, square), `animated`, `alt` text,
@@ -88,8 +94,8 @@ still draft the copy without it.
    render failed for limits. Tell the user how many renders a plan will use if they're running low.
 
 8. **Render** with `render_pin`: template, palette, font, headline as `title`, subtitle as
-   `description` (only on templates that support it, and not on `number-badge`, which draws it too
-   faint to read: send `show_description: false` there), `site_name`, `image_url`, and a CTA that fits
+   `description` (only on templates that support it, and not where `template-colors.md` says the
+   subtitle is never readable, such as `number-badge`: send `show_description: false` there), `site_name`, `image_url`, and a CTA that fits
    the content ("Get the Recipe", "Read the Guide", "Shop Now", "See the List"; 30 characters max).
    **Set the text size on the first render**; the template default (100) is usually too small at
    thumbnail size. Use `text_size: "auto"`: it fits the title to its area (never smaller than
@@ -114,7 +120,7 @@ still draft the copy without it.
    unreadable or cut-off text (`TITLE_CLAMPED`, `DESCRIPTION_CUT`), a photo cropped so the subject is
    lost, a wrong photo, or a field showing a value that isn't true. Check the small text too: if the
    subtitle, site name or button text looks faded against its background, switch to a palette
-   marked Strong in the contrast table, or hide the subtitle (`show_description: false`). Some warnings describe the pin
+   from the template's "Readable with" list, or hide the subtitle (`show_description: false`). Some warnings describe the pin
    rather than a defect: `IMAGE_CROPPED` stays after you've set `image_focus` well, because the crop
    itself doesn't change. Judge by the preview, and never re-render twice for the same warning.
    Fix the one thing that's wrong and keep the rest. Don't re-render for taste alone unless the user asks.

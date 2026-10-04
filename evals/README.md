@@ -30,7 +30,7 @@ fixture into the run's workspace. `bulk-csv-check` also needs `--allow-tools Bas
 | `optimize-variants` | Optimize the weak quote pin; it gets saves but few clicks | `optimize-pin` fires; 2-3 renders; no low-contrast palette; diagnosis tied to clicks, variants that each change one thing, rate-based test plan; pin copy invents no facts |
 | `optimize-one-render` | Same, with 1 render left | checks quota first, renders exactly once, says the one version combines fixes and can't show which helped, offers the rest for later |
 | `optimize-no-renders` | Same, with 0 renders left (render returns a limit error) | no render; still delivers the review, copy and settings, and says when the limit resets |
-| `brand-palette` | User asks for their brand palette `coral-reef` (fails small text on color panels) | keeps `coral-reef`, but never on `split-horizontal`/`diagonal-cut`; invents no recipe facts |
+| `brand-palette` | User asks for their brand palette `coral-reef` (its button text is 2.8:1 on almost every template) | keeps `coral-reef`, but never on `split-horizontal`/`diagonal-cut` and only with the button hidden (or on `collage-style`); invents no recipe facts |
 
 ## Reading the baseline
 
@@ -69,6 +69,9 @@ palette in 3/3 runs) and `optimize-variants` 0.76 (a result the page didn't stat
 (2026-10-04), after the fixes below.
 
 History:
+- After the pin generator's colour map (#85) showed buttons use the palette's light `background` on
+  `primary`, `brand-palette` failed 3/3 on the new button grader: Claude kept `coral-reef` with the
+  button on. `create-pin` step 5 now says to hide the button for the six palettes below 3:1.
 - The `number-badge` subtitle grader failed 3/3 at first: the warning lived only in
   `style-selection.md`, which isn't read at the render step. `create-pin` step 8 and the template
   guide now say it too.

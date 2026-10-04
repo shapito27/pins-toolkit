@@ -51,7 +51,7 @@ Keep these as they are:
 | 18 | Publish and schedule to Pinterest | Functions | Inferred | Very high | L | Later (big project) |
 | 19 | Batch rendering of variations | Functions | Inferred | Low-Medium | S | Later |
 | 20 | Larger preview on request, carousel pins, background removal | Misc | Inferred | Low-Medium | M | Later |
-| 21 | Readable small text: contrast-checked text colors and a `LOW_CONTRAST` warning | Templates | Observed (measured 2026-10-04) | High | S-M | **Next, first round** |
+| 21 | Readable small text: contrast-checked text colors and a `LOW_CONTRAST` warning | Templates | Observed (measured 2026-10-04) | High | S-M | **Partly done** (#85: colour map and `docs/TEMPLATE_COLOR_ROLES.md`; the plugin uses them); text colours and the warning still to do |
 
 "Now" means before or alongside directory submission. "Next" means the first improvement round,
 the biggest quality wins. "Later" means growth features.
@@ -357,6 +357,17 @@ Mainly a speed and convenience win; quota should count each image.
 
 The plugin works around it for now: `style-selection.md` has the contrast table above, and the
 skills check small text in the preview and hide the `number-badge` subtitle.
+
+**Update (pin-generator-tool #85):** `web/src/lib/constants/templateColorPairs.ts` now records which
+palette colour every template draws each text in, a test keeps it in line with the templates, and
+`docs/TEMPLATE_COLOR_ROLES.md` is generated from it. It corrected one assumption above: panel and
+button text is the palette's light `background` colour, not white, so only 9 palettes reach 3:1 and
+4 reach 4.5:1 on that pair. The plugin now builds `create-pin/references/template-colors.md` from
+that doc (`scripts/build-template-colors.py`), so Claude picks a palette per template.
+Still open on the server: choose text colours by contrast (or darken the primaries of the 6
+palettes below 3:1), draw subtitles in the `text` colour instead of `secondary` on the 6 templates
+that use it, and report `LOW_CONTRAST` in `warnings`. A `readable_palettes` field per template in
+`list_templates` would let any client pick well without the plugin's table.
 
 ## Suggested order of work
 

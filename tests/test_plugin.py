@@ -3,6 +3,7 @@ scripts and the eval suite's graders. Standard library only.
 
     python3 -m unittest discover -s tests
 """
+import importlib.util
 import json
 import os
 import re
@@ -75,21 +76,38 @@ def palettes():
 def contrast_table():
     """Rows of the contrast table in style-selection.md: id -> (ratio, rating text)."""
     text = read(STYLE_GUIDE)
-    section = text.split("## Contrast table", 1)[1].split("\n## ", 1)[0]
+    section = text.split("## Contrast: which palettes keep text readable", 1)[1].split("\n## ", 1)[0]
     rows = {}
     for m in re.finditer(r"^\| ([a-z-]+) \| ([\d.]+) \| (.+?) \|$", section, re.M):
         rows[m.group(1)] = (float(m.group(2)), m.group(3))
     return rows
 
 
+def light_on_primary(colors):
+    """The pair most templates use for panels and buttons: palette background on primary."""
+    return contrast(colors["background"], colors["primary"])
+
+
 def rating_for(ratio):
-    if ratio >= 6.5:
+    if ratio >= 4.5:
         return "Strong"
-    if ratio >= 4.4:
-        return "Good"
     if ratio >= 3.0:
-        return "Headline only"
-    return "Avoid"
+        return "Good"
+    return "Fails"
+
+
+TEMPLATE_COLORS = os.path.join(SKILLS, "create-pin", "references", "template-colors.md")
+
+
+def template_colors():
+    """template-colors.md rows: id -> (readable, readable without a button, notes)."""
+    rows = {}
+    for line in read(TEMPLATE_COLORS).splitlines():
+        m = re.match(r"^\| `([a-z-]+)` \| (.*?) \| (.*?) \| (.*?) \|$", line)
+        if m:
+            split = lambda cell: [p.strip() for p in cell.split(",") if p.strip() and p.strip() != "none"]
+            rows[m.group(1)] = (split(m.group(2)), split(m.group(3)), m.group(4))
+    return rows
 
 
 def mood_table_columns():
@@ -121,12 +139,10 @@ class ContrastFormulaTest(unittest.TestCase):
                 hex_to_rgb(bad)
 
     def test_rating_boundaries(self):
-        self.assertEqual(rating_for(6.5), "Strong")
-        self.assertEqual(rating_for(6.49), "Good")
-        self.assertEqual(rating_for(4.4), "Good")
-        self.assertEqual(rating_for(4.39), "Headline only")
-        self.assertEqual(rating_for(3.0), "Headline only")
-        self.assertEqual(rating_for(2.99), "Avoid")
+        self.assertEqual(rating_for(4.5), "Strong")
+        self.assertEqual(rating_for(4.49), "Good")
+        self.assertEqual(rating_for(3.0), "Good")
+        self.assertEqual(rating_for(2.99), "Fails")
 
 
 class StyleGuideTest(unittest.TestCase):
@@ -143,7 +159,7 @@ class StyleGuideTest(unittest.TestCase):
 
     def test_ratios_match_palette_colors(self):
         for pid, (ratio, _) in self.table.items():
-            computed = contrast("#FFFFFF", self.palettes[pid]["primary"])
+            computed = light_on_primary(self.palettes[pid])
             self.assertAlmostEqual(ratio, round(computed, 1), delta=0.051,
                                    msg=f"{pid}: table says {ratio}, colors give {computed:.2f}")
 
@@ -152,47 +168,98 @@ class StyleGuideTest(unittest.TestCase):
         self.assertEqual(ratios, sorted(ratios, reverse=True))
 
     def test_ratings_follow_ratio(self):
-        # Rate by the exact ratio, not the rounded one in the table: cool-mint is 2.998, shown as 3.0.
         for pid, (_, rating) in self.table.items():
-            exact = contrast("#FFFFFF", self.palettes[pid]["primary"])
+            exact = light_on_primary(self.palettes[pid])
             self.assertTrue(rating.startswith(rating_for(exact)),
                             f"{pid}: {exact:.3f} is rated '{rating}', expected '{rating_for(exact)}'")
 
-    def test_panel_suggestions_are_strong_or_good(self):
+    def test_panel_suggestions_are_readable_on_panel_templates(self):
         panel, _ = mood_table_columns()
         self.assertTrue(panel, "mood table has no panel column entries")
+        colors = template_colors()
         for pid in panel:
             self.assertIn(pid, self.table, f"unknown palette {pid} in mood table")
-            exact = contrast("#FFFFFF", self.palettes[pid]["primary"])
-            self.assertIn(rating_for(exact), ("Strong", "Good"),
-                          f"{pid} is suggested for panel templates but fails small text")
+            for template in ("split-horizontal", "diagonal-cut"):
+                self.assertIn(pid, colors[template][0], f"{pid} is not readable on {template}")
 
     def test_light_suggestions_have_readable_buttons(self):
         _, light = mood_table_columns()
         self.assertTrue(light, "mood table has no light column entries")
         for pid in light:
             self.assertIn(pid, self.palettes, f"unknown palette {pid} in mood table")
-            self.assertGreaterEqual(contrast("#FFFFFF", self.palettes[pid]["primary"]), 3.0,
-                                    f"{pid}: white button text below 3:1")
+            self.assertGreaterEqual(light_on_primary(self.palettes[pid]), 3.0,
+                                    f"{pid}: button text below 3:1")
 
     def test_every_palette_passes_for_headline_on_light_templates(self):
         for pid, c in self.palettes.items():
             self.assertGreaterEqual(contrast(c["text"], c["background"]), 4.5, pid)
 
-    def test_number_badge_claim(self):
-        """The guide says secondary-on-background is 1.5-2.9 for all but minimalist (4.4)."""
-        for pid, c in self.palettes.items():
-            ratio = contrast(c["secondary"], c["background"])
-            if pid == "minimalist":
-                self.assertAlmostEqual(ratio, 4.4, delta=0.06)
-            else:
-                self.assertTrue(1.45 <= ratio < 2.95, f"{pid}: {ratio:.2f}")
+    def test_left_out_palettes_fail_buttons(self):
+        text = read(STYLE_GUIDE).split("## Palette by mood and topic", 1)[1].split("## Font", 1)[0]
+        for pid in ("forest-calm", "cool-mint", "sage", "electric", "coral-reef", "sunset-glow"):
+            self.assertIn(pid, text)
+            self.assertLess(light_on_primary(self.palettes[pid]), 3.0, pid)
 
-    def test_low_contrast_palettes_named_in_note_fail_buttons(self):
-        text = read(STYLE_GUIDE)
-        for pid in ("sunset-glow", "sage", "electric", "cool-mint"):
-            self.assertIn(pid, text.split("## Palette by mood and topic", 1)[1].split("## Font", 1)[0])
-            self.assertLess(contrast("#FFFFFF", self.palettes[pid]["primary"]), 3.0, pid)
+
+class TemplateColorsTest(unittest.TestCase):
+    """template-colors.md is generated from the pin generator's colour map."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.rows = template_colors()
+        _, body = strip_frontmatter(read(os.path.join(EVALS, "mocks", "insightpins", "list_templates.md")))
+        cls.templates = [t["id"] for t in json.loads(body)]
+        cls.palettes = palettes()
+
+    def test_covers_every_template_once(self):
+        self.assertEqual(sorted(self.rows), sorted(self.templates))
+
+    def test_palettes_are_known_and_columns_disjoint(self):
+        for template, (readable, extra, _) in self.rows.items():
+            for pid in readable + extra:
+                self.assertIn(pid, self.palettes, f"{template}: {pid}")
+            self.assertFalse(set(readable) & set(extra), template)
+
+    def test_readable_palettes_pass_the_common_pair(self):
+        # Every template but collage-style (accent-coloured button) uses background-on-primary
+        # for its button, so its readable palettes must reach 3:1 on that pair.
+        for template, (readable, _, _) in self.rows.items():
+            if template == "collage-style":
+                continue
+            for pid in readable:
+                self.assertGreaterEqual(light_on_primary(self.palettes[pid]), 3.0, f"{template}: {pid}")
+
+    def test_style_guide_names_the_secondary_subtitle_templates(self):
+        flagged = sorted(t for t, (_, _, notes) in self.rows.items() if "never readable" in notes)
+        self.assertEqual(flagged, sorted(["number-badge", "dashed-accent", "starburst-badge",
+                                          "arch-window", "side-panels", "lifestyle-collage"]))
+        guide = read(STYLE_GUIDE)
+        for template in flagged:
+            self.assertIn(f"`{template}`", guide)
+
+    def test_up_to_date_with_the_colour_map(self):
+        source = os.path.join(ROOT, "..", "pin-generator-tool", "docs", "TEMPLATE_COLOR_ROLES.md")
+        if not os.path.isfile(source):
+            self.skipTest("pin-generator-tool is not checked out next to this repo")
+        spec = importlib.util.spec_from_file_location(
+            "build_template_colors", os.path.join(ROOT, "scripts", "build-template-colors.py"))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        text, _ = module.build(read(source))
+        self.assertEqual(text, read(TEMPLATE_COLORS),
+                         "run: python3 scripts/build-template-colors.py ../pin-generator-tool")
+
+    def test_parser_rejects_unknown_palettes(self):
+        spec = importlib.util.spec_from_file_location(
+            "build_template_colors", os.path.join(ROOT, "scripts", "build-template-colors.py"))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        self.assertEqual(module.palettes("15/15: all"), module.ALL)
+        self.assertEqual(module.palettes("0/15: none"), [])
+        self.assertEqual(module.palettes("-"), [])
+        self.assertEqual(module.palettes("2/15: Ocean Breeze, Midnight"), ["ocean-breeze", "midnight"])
+        with self.assertRaises(SystemExit):
+            module.palettes("1/15: Neon Pink")
 
 
 # --- Directory requirements ------------------------------------------------------------------
@@ -495,6 +562,7 @@ class EvalSuiteTest(unittest.TestCase):
         bad = [render_input(template_id="split-horizontal", title="T", palette_id="coral-reef"),
                render_input(palette_id="ocean-breeze", title="T", template_id="diagonal-cut")]
         good = [render_input(template_id="diagonal-cut", title="T", palette_id="midnight"),
+                render_input(template_id="split-horizontal", title="T", palette_id="rose-gold"),
                 render_input(template_id="minimal-clean", title="T", palette_id="coral-reef"),
                 render_input(template_id="split-horizontal", title="T")]
         for s in bad:
@@ -507,10 +575,15 @@ class EvalSuiteTest(unittest.TestCase):
         _, optimize, _ = grader("optimize-variants", "no-weak-palette")
         self.assertTrue(re.search(winter, render_input(template_id="minimal-clean", palette_id="coral-reef")))
         self.assertFalse(re.search(winter, render_input(template_id="minimal-clean", palette_id="midnight")))
-        # optimize allows coral-reef on light templates but not on white-text panels
-        self.assertFalse(re.search(optimize, render_input(template_id="minimal-clean", palette_id="coral-reef")))
-        self.assertTrue(re.search(optimize, render_input(palette_id="coral-reef", template_id="split-horizontal")))
-        self.assertTrue(re.search(optimize, render_input(template_id="minimal-clean", palette_id="sage")))
+        # optimize: a failing palette is fine only without a button, and never on a colour panel
+        self.assertTrue(re.search(optimize, render_input(template_id="minimal-clean", palette_id="coral-reef")))
+        self.assertFalse(re.search(optimize, render_input(template_id="minimal-clean", palette_id="sage",
+                                                          show_cta=False)))
+        self.assertTrue(re.search(optimize, render_input(template_id="split-horizontal", palette_id="sage",
+                                                         show_cta=False)))
+        self.assertTrue(re.search(optimize, render_input(palette_id="ocean-breeze", template_id="split-horizontal")))
+        self.assertFalse(re.search(optimize, render_input(template_id="split-horizontal", palette_id="lavender")))
+        self.assertFalse(re.search(optimize, render_input(template_id="collage-style", palette_id="sage")))
 
     def test_number_badge_subtitle_grader(self):
         _, pattern, _ = grader("listicle-number", "no-faded-badge-subtitle")
@@ -526,11 +599,16 @@ class EvalSuiteTest(unittest.TestCase):
     def test_brand_palette_graders(self):
         _, keeps, _ = grader("brand-palette", "keeps-brand-palette")
         _, panel, _ = grader("brand-palette", "no-faded-panel")
+        _, button, _ = grader("brand-palette", "no-faded-button")
         self.assertTrue(re.search(keeps, render_input(template_id="minimal-clean", palette_id="coral-reef")))
         self.assertFalse(re.search(keeps, render_input(template_id="minimal-clean", palette_id="midnight")))
         self.assertTrue(re.search(panel, render_input(template_id="split-horizontal", palette_id="coral-reef")))
         self.assertFalse(re.search(panel, render_input(template_id="minimal-clean", palette_id="coral-reef")))
-
+        self.assertTrue(re.search(button, render_input(template_id="minimal-clean", palette_id="coral-reef")))
+        self.assertFalse(re.search(button, render_input(template_id="minimal-clean", palette_id="coral-reef",
+                                                        show_cta=False)))
+        self.assertFalse(re.search(button, render_input(template_id="collage-style", palette_id="coral-reef")))
+        self.assertFalse(re.search(button, render_input(template_id="minimal-clean", palette_id="midnight")))
 
 if __name__ == "__main__":
     unittest.main()

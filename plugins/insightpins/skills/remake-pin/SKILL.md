@@ -38,7 +38,7 @@ works about that pin's style and fixes what doesn't.
    states, never claims from the reference pin or added results.
 
 6. **Improve, don't just copy.** Fix the weak points you found: larger or higher-contrast headline
-   (choose the palette with the contrast table in `create-pin`'s `references/style-selection.md`),
+   (choose a palette from the template's list in `create-pin`'s `references/template-colors.md`),
    cleaner hierarchy, better photo, a real number, a clearer promise.
 
 7. **Render** with `render_pin` and check the preview. Re-render only for real defects.
