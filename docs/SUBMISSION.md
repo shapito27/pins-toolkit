@@ -114,6 +114,9 @@ Services in section 1, with their daily render limits.
 - **Doesn't pass:** send me the findings. I'll fix them and push, then you select **Check for new commits**
   (or **Resubmit for review** if it was rejected).
 - **Releasing updates later:** merge to `main` and raise `version` in `plugin.json` each time.
+  If the CSV rules changed on the website (`insightpins.com/downloads-src/pinterest-bulk-csv`), first
+  copy its scripts and `reference.md` into `plugins/insightpins/skills/pinterest-bulk-csv/` and run
+  `python3 scripts/check-bulk-csv-sync.py ../insightpins.com` (must print "0 mismatches").
 - **Withdraw or delist:** **Withdraw submission** while in review; **Delist plugin** from the page
   menu once live. **Relist plugin** brings it back (as a request).
 
