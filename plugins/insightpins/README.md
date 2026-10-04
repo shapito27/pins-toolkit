@@ -18,6 +18,11 @@ point, a strong headline and search-friendly copy.
 - **Remake a pin, better** - upload a pin you like (yours or one for inspiration) and Claude builds a new, original pin with a similar style and stronger design and copy
 - **Review a pin** - upload a pin and get a scored review: readability, contrast, layout, headline, branding and copy, with concrete fixes
 - **Optimize a pin** - get a review plus improved versions aimed at more saves and clicks
+- **Check a bulk upload CSV** - find every row Pinterest would reject (long titles, Drive or Dropbox
+  links instead of image files, dates a spreadsheet rewrote, missing boards, unquoted commas, repeated
+  links, files over 200 pins) with the fix for each
+- **Schedule pins in bulk** - turn a list of pins into a ready-to-upload CSV, spread across days in
+  your time zone and converted to UTC, split into files of up to 200 pins
 
 ## Commands
 
@@ -28,6 +33,7 @@ point, a strong headline and search-friendly copy.
 | `/insightpins:review-pin` | Review and score an uploaded pin (uses no renders) |
 | `/insightpins:optimize-pin` | Review a pin and render improved versions to A/B test |
 | `/insightpins:remake-pin` | Make a new pin in the style of an uploaded one, but better |
+| `/insightpins:pinterest-bulk-csv` | Build or check a Pinterest bulk upload CSV |
 
 In claude.ai chat and Cowork you don't need commands: just describe what you want and Claude uses
 the right skill.
@@ -40,6 +46,9 @@ the right skill.
 - **review-pin** - scores a pin on an 8-point rubric and ranks the fixes
 - **optimize-pin** - turns a review into 2-3 improved variants, each testing one change
 - **remake-pin** - recreates a pin's style for your content, with original photo and copy
+- **pinterest-bulk-csv** - builds and checks Pinterest bulk upload CSV files, with two small Python
+  scripts for exact character counts, UTC dates and CSV quoting. The same rules run in the free
+  [Pinterest CSV checker](https://insightpins.com/tools/pinterest-csv-checker.html)
 
 ## Setup
 
@@ -62,8 +71,11 @@ insightpins.com; see the website for current plans.
 
 ## Data handling
 
-This plugin contains only instructions (skills and commands) and a connector reference. It runs no
-code on your computer.
+This plugin contains instructions (skills and commands), a connector reference, and two Python
+scripts in the `pinterest-bulk-csv` skill (`build_csv.py`, `check_csv.py`). Claude runs those scripts
+only when you ask it to build or check a bulk upload CSV. They use only Python's standard library,
+read and write the CSV and JSON files you work with, and make no network requests: your CSV is not
+sent to InsightPins or anywhere else. Nothing else in the plugin runs code.
 
 When you use it, Claude sends the following to the InsightPins server at `app.insightpins.com`
 through the connector:

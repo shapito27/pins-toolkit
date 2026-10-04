@@ -28,10 +28,26 @@ Or add this repo as a marketplace (`/plugin marketplace add shapito27/pins-toolk
 ```bash
 claude plugin validate ./plugins/insightpins
 claude plugin validate .
-claude plugin eval . --no-publish --scaffold
+claude plugin eval . --no-publish --scaffold --allow-tools Bash
 ```
 
-`--scaffold` lets the review case copy its fixture image into the run's workspace.
+`--scaffold` lets two cases copy their fixture into the run's workspace; `--allow-tools Bash` lets the
+bulk CSV case run the checker script.
+
+## The bulk CSV skill has a source of truth elsewhere
+
+`plugins/insightpins/skills/pinterest-bulk-csv/` is a copy of `downloads-src/pinterest-bulk-csv/` in the
+`insightpins.com` repo, whose `check_csv.py` also defines the rules of the
+[web CSV checker](https://insightpins.com/tools/pinterest-csv-checker.html). The plugin copy adds
+script paths (`${CLAUDE_SKILL_DIR}`), a "just checking a file?" path and notes for pins made with
+InsightPins; the scripts and `reference.md` are unchanged. When the rules change there, copy the
+scripts and `reference.md` again and re-run that repo's fixtures against the copy (all 41 matched
+on 2026-10-04):
+
+```bash
+python3 tests/fixtures/csv-checker/regenerate.py   # in insightpins.com, if rules changed
+# then compare: check_csv.py --json --now <expected.json now> <fixture> for each fixture
+```
 
 ## License
 

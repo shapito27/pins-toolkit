@@ -17,10 +17,10 @@ with the answer for every field. Based on Anthropic's
 | README >= 40 words outside code blocks | 768 words |
 | LICENSE file + `license` field | Yes (MIT) |
 | No `.DS_Store` / `Thumbs.db` / `__MACOSX`, no symlinks, no LFS, no `.gitattributes` | None |
-| Every file < 256 KiB, <= 512 files, text only | 18 text files, largest ~6 KB |
+| Every file < 256 KiB, <= 512 files, text only | 22 text files, largest ~16 KB |
 | `.mcp.json` valid, remote server is `type: http` with an `https://` URL | Yes |
 | No secrets, no `$ENV` credentials, no package launchers (`npx`, `uvx`...) | None |
-| No hooks, scripts, local MCP servers or `bin/` | None (skills, commands and a remote MCP only) |
+| No hooks, local MCP servers or `bin/`; scripts readable and disclosed | 2 Python scripts in the `pinterest-bulk-csv` skill, standard library only, no network, run only when the skill tells Claude to; described in the README |
 | Repository < 50 MiB, < 10,000 files | ~0.8 MB, 65 files |
 | Eval suite | All 6 cases 1.00 with the plugin |
 
