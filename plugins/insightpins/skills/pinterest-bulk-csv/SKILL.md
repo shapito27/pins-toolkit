@@ -24,11 +24,23 @@ publishes and schedules the pins. You never publish anything.
 
 ## Just checking a file?
 
-When the user brings a CSV and wants it checked or fixed, skip to step 4: run
-the checker, then explain each finding with its row and fix, most serious first.
-Fix only what is mechanical (spaces, line breaks in descriptions, quoting, date
-format once the user confirms the time zone and day/month order). Never shorten
-a title or description, or pick a different image, without asking.
+When the user brings a CSV and wants it checked, skip to step 4: run the
+checker, then explain each finding with its row and fix, most serious first.
+
+To hand back a fixed file, don't edit the CSV by hand. The checker only reports;
+rebuild the file with `build_csv.py`, which trims spaces, joins line breaks in
+descriptions, quotes fields and re-checks:
+
+1. Put the rows in `pins.json`, giving each row's existing date as `publish_at`.
+2. Ask which time zone the file's dates are in. A file made for Pinterest is
+   usually already in UTC (`--tz UTC`). For a date a spreadsheet rewrote, like
+   `10/7/2026`, also ask whether it is day first or month first; never guess.
+3. Rows with no date publish on upload; `build_csv.py` would give them new
+   slots, so ask before rebuilding them.
+4. Run `build_csv.py pins.json --tz <zone> --out fixed.csv`.
+
+Only the user can fix a title that is too long, a share-page image link or a
+missing board: ask for the new value, never shorten text or pick an image yourself.
 
 ## Workflow
 
@@ -100,12 +112,14 @@ want to check a file they edit by hand later.
 
 When the pins come from the `create-pin` skill in this conversation:
 
-- Use each render's `image_url` as the Media URL, its title and description as
-  Title and Description, and the source page as Link.
-- **Rendered image links expire after 7 days.** Pinterest fetches the image when
-  it creates the pin, about 2 hours after upload, and keeps its own copy, so a
-  file uploaded within the 7 days works even for pins dated later. Tell the user
-  to upload it soon, or to put the images on their own site and use those links.
+- Use each render's `image_url` as the Media URL, the Pinterest title and
+  description you wrote (not the on-image headline) as Title and Description,
+  and the source page as Link.
+- **Rendered image links expire after 7 days.** Pinterest creates CSV pins about
+  2 hours after upload, and in one test a pin still published after its image
+  was deleted (see `reference.md`), so a file uploaded within the 7 days should
+  work even for pins dated later. Tell the user to upload it soon; the safest
+  option is to put the images on their own site and use those links.
 - Variations of one page share a Link. Pinterest refuses a Link repeated in one
   file, so `build_csv.py` puts them in separate files; say that each file must be uploaded.
 

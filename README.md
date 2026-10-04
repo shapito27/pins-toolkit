@@ -1,7 +1,8 @@
 # pins-toolkit
 
 Source for the **InsightPins** plugin for Claude: create, review and optimize Pinterest pins with the
-[InsightPins](https://insightpins.com) pin generator and built-in pin design and copywriting best practices.
+[InsightPins](https://insightpins.com) pin generator and built-in pin design and copywriting best practices,
+and build or check Pinterest bulk upload CSV files.
 
 | Path | What it is |
 | - | - |
@@ -11,6 +12,7 @@ Source for the **InsightPins** plugin for Claude: create, review and optimize Pi
 | [`docs/SUBMISSION.md`](docs/SUBMISSION.md) | Directory submission checklist and portal answers |
 | [`docs/TEST-REPORT.md`](docs/TEST-REPORT.md), [`docs/MCP-IMPROVEMENTS.md`](docs/MCP-IMPROVEMENTS.md) | Test results and ranked server improvement ideas |
 | `.claude-plugin/marketplace.json` | Lets you install the plugin straight from this repo |
+| [`scripts/check-bulk-csv-sync.py`](scripts/check-bulk-csv-sync.py) | Checks the plugin's CSV checker against the insightpins.com fixtures |
 
 ## Try it
 
@@ -45,8 +47,9 @@ scripts and `reference.md` again and re-run that repo's fixtures against the cop
 on 2026-10-04):
 
 ```bash
-python3 tests/fixtures/csv-checker/regenerate.py   # in insightpins.com, if rules changed
-# then compare: check_csv.py --json --now <expected.json now> <fixture> for each fixture
+cp ../insightpins.com/downloads-src/pinterest-bulk-csv/reference.md plugins/insightpins/skills/pinterest-bulk-csv/
+cp ../insightpins.com/downloads-src/pinterest-bulk-csv/scripts/*.py plugins/insightpins/skills/pinterest-bulk-csv/scripts/
+python3 scripts/check-bulk-csv-sync.py ../insightpins.com   # must print "0 mismatches"
 ```
 
 ## License

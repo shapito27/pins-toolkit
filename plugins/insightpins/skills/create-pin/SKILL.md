@@ -103,6 +103,8 @@ different in a way that matters: a different photo, a different template categor
 headline angle (see `pin-copy` angles). If the page has only one usable photo, reuse it and vary the
 template and angle, and say so. Changing only the color is not a variation. Present a short
 table: pin, angle, template, link. Suggest posting them over several days or weeks, not all at once.
+To schedule several pins in one go, offer the `pinterest-bulk-csv` skill to put them in a Pinterest
+bulk upload CSV (the image links expire after 7 days, so the file should be uploaded soon).
 
 ## When a limit is hit
 
