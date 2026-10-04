@@ -88,7 +88,8 @@ still draft the copy without it.
    render failed for limits. Tell the user how many renders a plan will use if they're running low.
 
 8. **Render** with `render_pin`: template, palette, font, headline as `title`, subtitle as
-   `description` (only on templates that support it), `site_name`, `image_url`, and a CTA that fits
+   `description` (only on templates that support it, and not on `number-badge`, which draws it too
+   faint to read: send `show_description: false` there), `site_name`, `image_url`, and a CTA that fits
    the content ("Get the Recipe", "Read the Guide", "Shop Now", "See the List"; 30 characters max).
    **Set the text size on the first render**; the template default (100) is usually too small at
    thumbnail size. Use `text_size: "auto"`: it fits the title to its area (never smaller than

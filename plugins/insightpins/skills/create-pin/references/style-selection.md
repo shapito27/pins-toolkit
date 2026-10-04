@@ -15,7 +15,10 @@ Always call `list_styles` first; palettes and font pairings can change. Use this
    topics (winter, wellness, luxury, spirituality). A color that echoes one in the photo (the green of
    a salad, the blue of a lake) looks designed; one that fights the photo's mood looks like an ad.
 4. **Brand consistency.** If the user has a brand color or used a palette on earlier pins, reuse it,
-   as long as it passes rule 1. Recognizable pins across a feed build trust.
+   as long as it passes rule 1. Recognizable pins across a feed build trust. If the user asks for a
+   palette by name and it fails rule 1 on the template you planned, keep their palette and switch to
+   a template where it passes (a light-background one), or tell them in one line and offer a
+   readable alternative. Don't swap their choice silently.
 5. **One mood per pin.** Font pairing and palette should say the same thing (elegant, playful,
    bold, calm).
 
@@ -29,7 +32,7 @@ Templates use the palette in two ways:
 - **Light background** (tested: `minimal-clean`, `number-badge`, `quote-with-image`,
   `vine-corners`): the palette's dark text color on its pale background. Every palette passes for
   the headline. Buttons are white bold text on the primary color; bold button labels need 3 or more
-  in the table below, so only sunset-glow, sage and electric make them hard to read.
+  in the table below, so sunset-glow, sage, electric and (just) cool-mint make them hard to read.
 
 | Palette | White on primary (panels, buttons) | Use on panel templates |
 | - | - | - |
@@ -44,7 +47,7 @@ Templates use the palette in two ways:
 | ocean-breeze | 3.7 | Headline only |
 | forest-calm | 3.3 | Headline only |
 | coral-reef | 3.2 | Headline only |
-| cool-mint | 3.0 | Headline only |
+| cool-mint | 3.0 | Avoid on panels (just under 3) |
 | sunset-glow | 2.7 | Avoid on panels |
 | sage | 2.5 | Avoid on panels |
 | electric | 2.3 | Avoid on panels |
@@ -61,7 +64,8 @@ A quick check without math: if the panel color is about as light as a medium gra
 **Known template issue:** `number-badge` draws its subtitle and site name in the palette's light
 secondary color, which fails on every palette (about 1.5-2.9) except minimalist (4.4). On that
 template, leave the subtitle out (`show_description: false`) and put that line in the Pinterest
-description instead. Check other templates' small text in the preview the same way.
+description instead. The site name stays faint there; that's acceptable for a small brand line, or
+use minimalist. Check other templates' small text in the preview the same way.
 
 ## Palette by mood and topic
 
@@ -69,8 +73,8 @@ description instead. Check other templates' small text in the preview the same w
 | - | - | - |
 | Food, cooking, baking, autumn | terracotta, warm-earth, berry-blush (desserts) | terracotta, warm-earth, coral-reef |
 | Home decor, interiors, wedding, beauty | dusty-rose, warm-earth, berry-blush | rose-gold, dusty-rose, warm-earth |
-| Health, wellness, gardening, nature | warm-earth, midnight, lavender | forest-calm, cool-mint |
-| Travel, outdoors, water, winter | midnight, minimalist | ocean-breeze, midnight, cool-mint |
+| Health, wellness, gardening, nature | warm-earth, midnight, lavender | forest-calm, warm-earth |
+| Travel, outdoors, water, winter | midnight, minimalist | ocean-breeze, midnight |
 | Finance, business, career, tech | midnight, minimalist | midnight, minimalist |
 | Kids, crafts, parties, fun | berry-blush, dusty-rose | coral-reef, berry-blush |
 | Fashion, luxury, minimal aesthetic | minimalist, berry-blush | minimalist, rose-gold |
@@ -78,9 +82,9 @@ description instead. Check other templates' small text in the preview the same w
 | Sales, deals, urgent or bold | terracotta, berry-blush | coral-reef, terracotta |
 
 These are starting points: check the photo against rule 2 and switch to another listed palette
-when the panel color and the photo blend together. sunset-glow, sage and electric are left out
-because their button text (white on the primary color) is hard to read; on light templates,
-use them only with `show_cta: false`.
+when the panel color and the photo blend together. sunset-glow, sage, electric and cool-mint are
+left out because their button text (white on the primary color) is hard to read; on light
+templates, use them only with `show_cta: false`.
 
 ## Font pairing by mood
 

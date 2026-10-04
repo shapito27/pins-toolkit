@@ -40,16 +40,21 @@ the InsightPins connector. Each variant tests one change, so the user learns wha
      `references/style-selection.md`) and `text_size: "auto"`.
    - **C - Photo and color:** a different, stronger photo from the page (use `image_details`: a large
      portrait photo whose `alt` matches the promise) and a palette that stands apart from it by
-     lightness and fits the topic's mood. Use `image_focus` or `image_zoom` when the subject was cut
+     lightness and fits the topic's mood. It reuses B's template, so on a color-panel template it
+     needs a palette marked Strong or Good in the contrast table too. Use `image_focus` or `image_zoom` when the subject was cut
      off or too small.
    **Keep the comparison fair:** B and C reuse A's headline (or the original one, if the headline
-   wasn't a problem), and C reuses B's template, so A vs the original tests the headline, B vs A the
-   layout and readability (template, palette, text size), and C vs B the photo and color. If the original has no photo (a text-only or quote pin),
-   B is the same headline on a photo template with the page's best photo, and C swaps that photo and
-   palette. Keep the brand's palette and fonts in A, and in B and C when they pass the contrast table.
-   If the user has only 1 render left, make the single version that fixes the top problems
-   together, and say it can't show which change helped. If none are left, don't render: deliver the
-   review, the copy and the settings (see the last section) and say when the limit resets.
+   wasn't a problem), and C reuses B's template, so A vs the original tests the headline, B vs A
+   the layout and readability (template, palette, text size), and C vs B the photo and color. If
+   the original has no photo (a text-only or quote pin), B is the same headline on a photo template
+   with the page's best photo, and C swaps that photo and palette. Keep the brand's palette and
+   fonts in A, and in B and C when they pass the contrast table. Apart from A, which keeps the
+   original's palette on purpose, never pick a palette the contrast table marks "Headline only" or
+   "Avoid on panels" for a color-panel template.
+   **Low on renders:** with 2 left, make A and B. With 1 left, make the single version that fixes
+   the top problems together, and say it can't show which change helped. With none left, don't
+   render: deliver the review, the copy and the settings (see the last section) and say when the
+   limit resets.
 
 4. **Render** each variant with `render_pin` (call `extract_url` on the destination URL for photos,
    `list_templates` and `list_styles` for current options). Check each preview and its `warnings`
@@ -58,15 +63,18 @@ the InsightPins connector. Each variant tests one change, so the user learns wha
 5. **Check that each variant is really better.** Score each preview with the `review-pin` rubric.
    A variant must beat the original on the criterion it targets and must not lose on any other. In
    particular, check every piece of text, not only the headline: a bold color that makes the
-   subtitle, site name or button text fade is a new defect, not an improvement. Fix it before
-   reporting (palette marked Strong, or hide the subtitle), or drop that variant and say why.
+   subtitle, site name or button text fade is a new defect, not an improvement. Fix it with one
+   re-render (palette marked Strong, or hide the subtitle) if renders allow; otherwise report the
+   variant with the problem named and the fix to apply on insightpins.com through its `edit_url`.
+   If the tool returned no preview, say you couldn't check the variants and what to look at.
 
 6. **Report**:
    - a short table: variant, what changed, hypothesis, rubric score, image link, `edit_url`;
    - optimized Pinterest **title**, **description**, **alt text** and **board** (shared across
      variants unless the headline angle needs its own title), written with the `pin-copy` skill;
-     headlines and copy use only facts the page states, with no added numbers, results or effects
-     ("the 12 lessons I learned", not "the lessons that made it stick");
+     headlines and copy use only facts the page states, with no added numbers, audiences, results
+     or effects ("the 12 lessons I learned", not "the lessons that made it stick" or "perfect for
+     busy families");
    - links expire in 7 days; note the photo sources and that the user needs the right to publish them;
    - **how to test**:
      - publish each variant as a new pin to the same URL and board, a few days apart, and keep the
