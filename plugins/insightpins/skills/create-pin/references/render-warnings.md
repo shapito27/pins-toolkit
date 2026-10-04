@@ -19,3 +19,7 @@ real problem in the preview, and never twice for the same warning.
 
 `image_focus`, `image_zoom` and `image_fit` apply to every photo in the pin and are meant for
 single-photo templates; `side-panels` and the two lower `lifestyle-collage` tiles ignore them.
+
+No warning flags low contrast yet. Faded small text (subtitle, site name or button text on a
+mid-tone color panel, or in a light color on a pale background) only shows in the preview, so
+check it there and use the contrast table in `style-selection.md`.

@@ -17,10 +17,11 @@ hands you ready-to-paste Pinterest copy. No design tool, no templates to fill in
 - **From link to finished pin in one message.** Claude reads your page, chooses the best photo
   and writes the text. You just say "make a pin for this".
 - **Design rules built in.** The skills carry what works on Pinterest: a headline you can read at
-  phone size, one clear focal point, strong contrast, the right template for the content (recipe,
-  product, listicle, quote, travel, how-to).
+  phone size, one clear focal point, colors that fit the topic, contrast checked for every palette,
+  the right template for the content (recipe, product, listicle, quote, travel, how-to).
 - **It checks its own work.** Claude looks at every render and the server's warnings (cut-off
-  title, heavily cropped or blurry photo, text too small) and fixes real defects before you see them.
+  title, heavily cropped or blurry photo, text too small or faded) and fixes real defects before you
+  see them.
 - **Copy and SEO included.** Every pin comes with a keyword-rich Pinterest title, description, alt
   text and a board suggestion. Facts come only from your page: no invented prices or claims.
 - **A designer's eye on pins you already have.** Upload a pin for an honest score and ranked fixes,
@@ -41,7 +42,7 @@ Claude replies with the pin (the green one on the right above) and everything yo
 ```
 Here's your pin: https://pins.insightpins.com/mcp/... (link works for 7 days, download it)
 Edit it on InsightPins without using a render: https://app.insightpins.com/?from=mcp...
-Template: Vine Corners, palette Sage, font Editorial.
+Template: Vine Corners, palette Forest Calm, font Classic Serif.
 Photo: none. The page's only photo is a wide fridge shot, so I used a text-only template.
 
 Pinterest title: Pinterest Pin Ideas: A System for Never Running Out
@@ -77,10 +78,12 @@ branding, trust) and suggests better headlines. It uses no renders.
 
 > Make this pin better and give me versions to test
 
-![Before and after: a long thin title on a plain white pin, and the optimized pin with a short bold title on a coral color block](assets/before-after.jpg)
+![The original pin with a long, vague title, then variant A with a short, sharp headline on the same layout, and variant B with the same headline on a deep blue panel](assets/before-after.jpg)
 
-*Before: a long, thin title that disappears at phone size. After: a short bold headline, a strong
-color block and a clear button.*
+*Claude finds what holds the pin back, then makes versions that each test one change. Variant A
+keeps the layout and fixes the headline. Variant B keeps A's headline and moves it onto a bold,
+high-contrast panel in a color that suits a winter trip. Post both, compare save and click rates
+after a few weeks, and you'll know which change worked.*
 
 ### Check a bulk upload CSV
 
@@ -110,7 +113,7 @@ Claude picks the right skill from what you ask.
 | `pin-design` | Visual best practices: readability at phone size, layout, photo choice, color, fonts and branding. Used to choose a design and to spot defects in a preview. |
 | `pin-copy` | Headlines, Pinterest titles, descriptions, alt text, board names and keywords, written for search and clicks. |
 | `review-pin` | Scores an uploaded pin on an 8-point rubric and ranks the fixes by impact. Uses no renders. |
-| `optimize-pin` | Turns a review into 2-3 improved versions, each testing one change, ready to A/B test. |
+| `optimize-pin` | Finds why a pin underperforms (not seen, not saved or not clicked) and makes 2-3 improved versions, each testing one change, with a plan for comparing them. |
 | `remake-pin` | Upload a pin you like (yours or one for inspiration) and get a new, original pin in a similar style for your content, with better design and copy. |
 | `pinterest-bulk-csv` | Builds and checks Pinterest bulk upload CSV files: title and description length, direct image links, boards, dates in UTC, CSV quoting, the 200-pin limit. Spreads pins across days in your time zone. |
 

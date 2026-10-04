@@ -48,7 +48,7 @@ still draft the copy without it.
 3. **Write the copy** using the `pin-copy` skill: a short on-image headline (3-8 words, ideally),
    an optional subtitle, and separately the Pinterest title, description and alt text.
    Use only facts the page states: don't add selling points like "one-pan", "ready in 20 minutes"
-   or "kid-friendly" unless the page says so.
+   or "kid-friendly", or results like "that made it stick", unless the page says so.
 
 4. **Pick the template.** Call `list_templates` (the list changes over time) and choose with
    [references/template-selection.md](references/template-selection.md). Fill `custom_fields` from
@@ -58,8 +58,10 @@ still draft the copy without it.
    content has one.
 
 5. **Pick the style.** Call `list_styles` and choose a palette and font pairing with
-   [references/style-selection.md](references/style-selection.md). If the user or their site has
-   colors already used on earlier pins, keep them for brand consistency.
+   [references/style-selection.md](references/style-selection.md): first a palette whose text stays
+   readable on the chosen template (its contrast table), then one that stands apart from the photo
+   by lightness and fits the topic's mood. If the user or their site has colors already used on
+   earlier pins, keep them for brand consistency unless they fail the contrast table.
 
 6. **Pick the photo.** You can't see the images before rendering, so use `image_details`: each entry
    has `width`, `height`, `orientation` (portrait, landscape, square), `animated`, `alt` text,
@@ -109,7 +111,9 @@ still draft the copy without it.
    read the result's `warnings` (see [references/render-warnings.md](references/render-warnings.md)
    for what each code means and what to do). Re-render only for a real defect:
    unreadable or cut-off text (`TITLE_CLAMPED`, `DESCRIPTION_CUT`), a photo cropped so the subject is
-   lost, a wrong photo, or a field showing a value that isn't true. Some warnings describe the pin
+   lost, a wrong photo, or a field showing a value that isn't true. Check the small text too: if the
+   subtitle, site name or button text looks faded against its background, switch to a palette
+   marked Strong in the contrast table, or hide the subtitle (`show_description: false`). Some warnings describe the pin
    rather than a defect: `IMAGE_CROPPED` stays after you've set `image_focus` well, because the crop
    itself doesn't change. Judge by the preview, and never re-render twice for the same warning.
    Fix the one thing that's wrong and keep the rest. Don't re-render for taste alone unless the user asks.

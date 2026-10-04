@@ -12,7 +12,10 @@ Each item is a yes/no question. A "no" on any item marked **(critical)** is wort
 
 - [ ] **(critical)** Headline readable at a glance.
 - [ ] Headline is short: ideally 3-8 words, at most about 3 lines.
-- [ ] **(critical)** Strong contrast between text and its background.
+- [ ] **(critical)** Strong contrast between the headline and its background.
+- [ ] **(critical)** Subtitle and site name also readable (a 4.5:1 contrast ratio or more; bold
+      button labels at least 3:1); they are small and often drawn lighter than the headline. White small text on a
+      mid-tone panel (coral, orange, bright blue, lime) fails.
 - [ ] Heavy enough type weight; thin script fonts used only for small accents.
 - [ ] Subtitle, if any, is short (one line or two) and clearly secondary.
 
@@ -35,8 +38,11 @@ Each item is a yes/no question. A "no" on any item marked **(critical)** is wort
 
 ## Color
 
-- [ ] Palette contrasts with the photo's dominant colors, so bands and badges stand out.
-- [ ] Colors fit the topic's mood.
+- [ ] Text panels and badges stand apart from the photo by lightness (dark next to bright, light
+      next to dark), not only by hue.
+- [ ] Colors fit the topic's mood (red, coral and orange for food, deals and fun; cooler or
+      neutral tones for calm, winter, wellness and luxury topics).
+- [ ] The palette doesn't fight the photo (a color that echoes one in the photo looks designed).
 - [ ] Consistent with the brand's other pins, if known.
 
 ## Message

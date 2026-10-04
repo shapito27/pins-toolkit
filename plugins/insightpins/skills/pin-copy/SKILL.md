@@ -46,7 +46,9 @@ Use the formulas in [references/title-formulas.md](references/title-formulas.md)
 
 Use only facts from the page or from the user: the count, price, time, audience and benefits they
 actually state. Don't add selling points of your own ("no remodel needed", "renter-friendly",
-"kid-approved", "ready in 10 minutes") even if they seem likely. If a strong angle needs a fact you
+"kid-approved", "ready in 10 minutes") even if they seem likely. That includes results and effects
+the page doesn't claim: write "the 12 lessons I learned", not "the 12 lessons that made it stick" or
+"that changed my life". If a strong angle needs a fact you
 don't have, leave it out or ask the user; never write it in and flag it afterwards.
 If you haven't seen the pin image, write alt text from the photo you chose (or describe the planned
 image) and say it should match the final image.

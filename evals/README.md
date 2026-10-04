@@ -26,6 +26,8 @@ fixture into the run's workspace. `bulk-csv-check` also needs `--allow-tools Bas
 | `copy-only` | Pinterest text for a blog post, no MCP | headline, title, description, alt text, board all present; keyword-led title; no invented claims |
 | `bulk-csv-check` | Check a bulk upload CSV with 6 time-independent problems (`resources/my-pins.template.csv`, dates filled in relative to today) | runs `check_csv.py` (indicator), finds at least 5 of 6 tied to the right pin, doesn't silently shorten titles or guess the day/month order |
 | `review-uploaded-pin` | review of a weak quote pin (`resources/quote-pin.jpg`) | finds the real problems (contrast, thin/small text, empty space, vague CTA), gives a score and ranked fixes |
+| `winter-palette` | Winter travel page with a bright, snowy landscape photo | a palette is set; no low-contrast or off-mood palette (`coral-reef`, `sunset-glow`, `sage`, `electric`); no mid-tone palette on a white-text panel template (`split-horizontal`, `diagonal-cut`) |
+| `optimize-variants` | Optimize the weak quote pin; it gets saves but few clicks | `optimize-pin` fires; 2-3 renders; no low-contrast palette; diagnosis tied to clicks, variants that each change one thing, rate-based test plan; pin copy invents no facts |
 
 ## Reading the baseline
 
@@ -34,7 +36,7 @@ mostly measures "no connector", not the skills. The meaningful skill-vs-plain-Cl
 `copy-only` and `review-uploaded-pin`. For the MCP cases, look at the with-plugin scores on the
 specific graders (photo choice, text size, honesty, quota handling).
 
-## Latest results (2026-10-04, 9 cases, sonnet judge, mocks matching the October 4 server)
+## Latest results (2026-10-04, sonnet judge, mocks matching the October 4 server)
 
 Run with `--judge-model sonnet` for stable verdicts: the default small judge once failed a complete
 `copy-only` answer that a sonnet judge passed 3/3.
@@ -50,8 +52,23 @@ Run with `--judge-model sonnet` for stable verdicts: the default small judge onc
 | copy-only | 1.00 | 0.33 | +0.67 |
 | review-uploaded-pin | 1.00 | 0.67 | +0.33 |
 | bulk-csv-check | 1.00 | 0.00 | +1.00 |
+| winter-palette | 1.00 | not run | |
+| optimize-variants | 1.00 | not run | |
+
+The last two cases were added with the contrast and color rules and run with the plugin only
+(`--ablation none`; without the plugin there are no InsightPins tools). Against the skills before
+those rules (`main` at 8a15f47), `winter-palette` scored 0.67 (a white-text panel on a mid-tone
+palette in 3/3 runs) and `optimize-variants` 0.76 (a result the page didn't state in the copy in
+3/3 runs, a low-contrast palette in 1). A full run of all 11 cases with the plugin scored 1.00.
 
 History:
+- `optimize-variants` first failed `honest-copy` for "the 12 lessons that made it stick": the
+  `pin-copy` facts rule didn't reach `optimize-pin`, which doesn't load `pin-copy`. The rule is now
+  repeated in `optimize-pin`, `remake-pin` and `create-pin`. The grader was also scoped to the pin
+  copy, after it failed an honest reply for the test plan's "2-4 weeks" and the link expiry date.
+  It is still a little noisy: in a later run one reply whose copy was the page's own wording got
+  PASS FAIL FAIL (case score 0.95). Read the reply before treating a single `honest-copy` failure
+  as a regression.
 - `bulk-csv-check` first failed plain Claude for numbering rows from the first pin instead of the
   header; the grader now accepts either numbering and matches problems by pin.
 - `copy-only` first scored 0.83: one run added claims the post didn't make ("no remodel",

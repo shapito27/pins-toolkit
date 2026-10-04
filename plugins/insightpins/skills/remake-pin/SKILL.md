@@ -34,7 +34,8 @@ works about that pin's style and fixes what doesn't.
    reference pin can't be used as a background because its text is baked in.
 
 5. **Write better copy** with the `pin-copy` skill: keep the reference's angle if it fits the
-   content, but make the headline more specific and readable.
+   content, but make the headline more specific and readable. Use only facts the user's page
+   states, never claims from the reference pin or added results.
 
 6. **Improve, don't just copy.** Fix the weak points you found: larger or higher-contrast headline,
    cleaner hierarchy, better photo, a real number, a clearer promise.
