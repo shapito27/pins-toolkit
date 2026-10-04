@@ -17,13 +17,13 @@ with the answer for every field. Based on Anthropic's
 | README >= 40 words outside code blocks | ~1,500 words |
 | LICENSE file + `license` field | Yes (MIT) |
 | No `.DS_Store` / `Thumbs.db` / `__MACOSX`, no symlinks, no LFS, no `.gitattributes` | None |
-| Every file < 256 KiB, <= 512 files | 25 files: 23 text files (largest ~16 KB) and 2 JPEG example images in `assets/` (77 KB and 165 KB) |
+| Every file < 256 KiB, <= 512 files | 25 files: 23 text files (largest ~16 KB) and 2 JPEG example images in `assets/` (122 KB and 166 KB) |
 | Images only in the README, via Markdown image syntax; not used by scripts or commands | Yes: `assets/example-pins.jpg` and `assets/before-after.jpg` |
 | `.mcp.json` valid, remote server is `type: http` with an `https://` URL | Yes |
 | No secrets, no `$ENV` credentials, no package launchers (`npx`, `uvx`...) | None |
 | No hooks, local MCP servers or `bin/`; scripts readable and disclosed | 2 Python scripts in the `pinterest-bulk-csv` skill, standard library only, no network, run only when the skill tells Claude to; described in the README |
-| Repository < 50 MiB, < 10,000 files | ~0.5 MB, 94 files |
-| Eval suite | All 6 cases 1.00 with the plugin |
+| Repository < 50 MiB, < 10,000 files | ~0.5 MB, 111 files |
+| Eval suite | All 11 cases 1.00 with the plugin (2026-10-04) |
 
 Expected result in the portal: no Blocking findings. A reviewer may still look at it (first
 submissions are published by an Anthropic reviewer by default).

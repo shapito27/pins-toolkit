@@ -51,6 +51,7 @@ Keep these as they are:
 | 18 | Publish and schedule to Pinterest | Functions | Inferred | Very high | L | Later (big project) |
 | 19 | Batch rendering of variations | Functions | Inferred | Low-Medium | S | Later |
 | 20 | Larger preview on request, carousel pins, background removal | Misc | Inferred | Low-Medium | M | Later |
+| 21 | Readable small text: contrast-checked text colors and a `LOW_CONTRAST` warning | Templates | Observed (measured 2026-10-04) | High | S-M | **Next, first round** |
 
 "Now" means before or alongside directory submission. "Next" means the first improvement round,
 the biggest quality wins. "Later" means growth features.
@@ -328,11 +329,40 @@ Mainly a speed and convenience win; quota should count each image.
 - Carousel pins (2-5 images), a format Pinterest supports.
 - Background removal for product photos (clean product on a palette color).
 
+### 21. Readable small text: contrast check (next, first round)
+
+**Observed** (2026-10-04, measured on full-size renders with the WCAG contrast formula):
+- On color-panel templates (`split-horizontal`, `diagonal-cut`) the text is white on the palette's
+  primary color, and the subtitle and site name are drawn lighter than the headline. On
+  `coral-reef`, the title measured 3.2:1, the subtitle 2.7:1 and the site name 2.0:1; on
+  `ocean-breeze` 3.6, 3.3 and 2.6. Small text needs 4.5:1.
+- White on each palette's primary: minimalist 16.1, berry-blush 7.0, midnight 6.9, dusty-rose 5.9,
+  lavender 5.2, warm-earth 4.6, terracotta 4.4, rose-gold 3.8, ocean-breeze 3.7, forest-calm 3.3,
+  coral-reef 3.2, cool-mint 3.0, sunset-glow 2.7, sage 2.5, electric 2.3. Half the palettes can't
+  carry small white text on a panel, and the same white-on-primary is used for buttons.
+- `number-badge` draws the subtitle and site name in the palette's light secondary color on the
+  pale background: 1.8:1 on `sunset-glow`, 2.6:1 on `terracotta`. Secondary on background is 1.5-2.9
+  for every palette except minimalist (4.4), so this subtitle is never comfortably readable.
+- Nothing in `warnings` flags any of this.
+
+**Proposal:**
+- Pick text colors by contrast, not by role: for each text element, use white or the palette's
+  dark text color, whichever has the higher contrast with what's behind it (4.5:1 target for the
+  subtitle, site name and button; 3:1 minimum for a large title). Don't fade small text on panels.
+- Draw subtitles and site names in the text color (or text color at most slightly lighter), not
+  the secondary color, on light-background templates.
+- Add a `LOW_CONTRAST` warning naming the element and the measured ratio, like the other warnings.
+- Optionally darken the mid-tone primaries (or add dark variants) so every palette can carry
+  white text; this overlaps with item 11.
+
+The plugin works around it for now: `style-selection.md` has the contrast table above, and the
+skills check small text in the preview and hide the `number-badge` subtitle.
+
 ## Suggested order of work
 
 1. ~~**This week:** item 1 (security check) and item 2 (bot-check errors).~~ Done 2026-10-03.
 2. **First improvement round:** items 3, 4, 5, 6, 7. These fix every bad pin seen in testing.
-   Then 8, 9 and 11 (template side).
+   Then 21 (readable small text), 8, 9 and 11 (template side).
 3. **Before paid plans:** items 10 and 12 (brand kit, quota and plan errors).
 4. **Growth:** 17 (keywords, already planned), 14, 15, 16, then 18 (Pinterest publishing).
 

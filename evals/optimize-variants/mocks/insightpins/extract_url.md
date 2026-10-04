@@ -1,0 +1,5 @@
+---
+type: fixed
+---
+
+{"title": "Own Less, Live More: 12 Lessons From a Year of Decluttering", "description": "What I learned from getting rid of half my things in 12 months, with the checklist I used for every room.", "images": ["https://simplelivingnotes.example/img/tidy-living-room-1000x1500.jpg", "https://simplelivingnotes.example/img/donation-boxes-1600x900.jpg"], "siteName": "Simple Living Notes", "url": "https://simplelivingnotes.example/own-less/", "image_details": [{"url": "https://simplelivingnotes.example/img/tidy-living-room-1000x1500.jpg", "width": 1000, "height": 1500, "orientation": "portrait", "animated": false, "alt": "Bright, tidy living room with a white sofa and a few plants", "source": "content", "low_resolution": false}, {"url": "https://simplelivingnotes.example/img/donation-boxes-1600x900.jpg", "width": 1600, "height": 900, "orientation": "landscape", "animated": false, "alt": "Cardboard boxes labeled donate, keep and sell on a wooden floor", "source": "og", "low_resolution": false}], "primary_image": "https://simplelivingnotes.example/img/donation-boxes-1600x900.jpg"}

@@ -80,3 +80,34 @@ Skill changes from this round: `create-pin` uses `image_details`, `primary_image
 (what each warning means, when to re-render, and not to loop on `IMAGE_CROPPED`); the template guide
 covers the 8 new templates and `uses_photo` / `uses_extra_images`.
 
+
+## Contrast and color check (2026-10-04)
+
+Prompted by the README's "optimize" example: its "after" pin used `coral-reef` on `diagonal-cut`, and
+the subtitle and site name were hard to read. Measured on the full-size renders (WCAG contrast):
+
+| Pin | Title | Subtitle | Site name | Button |
+| - | - | - | - | - |
+| `diagonal-cut` / `coral-reef` (old README "after") | 3.2 | 2.7 | 2.0 | |
+| `split-horizontal` / `ocean-breeze` (old gallery) | 3.6 | 3.3 | 2.6 | |
+| `number-badge` / `sunset-glow` (old gallery) | 7.0 | 1.8 | 1.8 | 2.5 |
+| `number-badge` / `terracotta` | 17.0 | 2.6 | 2.5 | 4.4 |
+| `diagonal-cut` / `midnight` (new variant B) | 6.7 | 5.9 | 4.1 | |
+| `split-horizontal` / `minimalist` (new gallery) | 16.1 | 13.9 | 9.4 | |
+| `vine-corners` / `forest-calm` (new gallery) | 11.2 | 6.4 | 6.2 | 3.2 |
+
+Small text needs about 4.5:1. The coral "after" pin was also a mood mismatch: a hot sales color on
+a calm winter scene. Changes:
+- `style-selection.md`: rules in order (all text readable, separate from the photo by lightness,
+  fit the mood), a contrast table for all 15 palettes, which templates use white-on-primary panels,
+  the `number-badge` subtitle issue, and a mood table split by panel and light templates.
+- `pin-design` and its checklist: contrast for the subtitle, site name and button; color that fits
+  the topic and photo; faded small text as a common defect; a button label is fine, fake controls aren't.
+- `optimize-pin`: diagnosis by where people drop off (not seen, not saved, not clicked), a
+  hypothesis per variant, fair comparisons (B and C reuse A's headline, C reuses B's template),
+  a check that every variant beats the original without new defects, and a rate-based test plan.
+- `create-pin`: palette chosen by the contrast table, small text checked in the preview.
+- New evals `winter-palette` and `optimize-variants`; server proposal in
+  [MCP-IMPROVEMENTS.md, item 21](MCP-IMPROVEMENTS.md#21-readable-small-text-contrast-check-next-first-round).
+- README examples re-rendered with readable palettes, and the optimize example now shows the
+  original plus two variants that each change one thing.
