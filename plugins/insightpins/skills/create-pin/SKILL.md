@@ -36,10 +36,14 @@ still draft the copy without it.
 2. **Classify the content**: how-to/blog post, listicle (has a number), product, recipe, quote,
    travel/destination, or lifestyle/inspiration. Pull out facts the templates can show: the list
    number, price, cook time, servings, category. `structured` gives them directly when the page
-   publishes them: for a `Recipe`, `cook_time` (or `total_time` if there's no cook time) for
-   `cookTime` and `servings` for `servings` (write "4 servings"); for a `Product`, `price` for
-   `price`, adding the `currency` when the price has no symbol ("100" and "EUR" become "100 EUR").
-   Use these values as given; they come from the page itself.
+   publishes them:
+   - `Recipe`: `cook_time` for `cookTime`; if there is only a `total_time`, write it with "total"
+     ("1 h 15 min total") so it isn't passed off as cook time, or leave the field out.
+     `servings` for `servings` (write "4 servings").
+   - `Product`: `price` for `price`, exactly as given; it already carries the symbol or currency
+     code ("$100", "€49.90", "1299 CAD"). If `structured` has no price, the server couldn't read it
+     reliably: ask the user, or don't use `price-tag`.
+   These values come from the page itself.
 
 3. **Write the copy** using the `pin-copy` skill: a short on-image headline (3-8 words, ideally),
    an optional subtitle, and separately the Pinterest title, description and alt text.

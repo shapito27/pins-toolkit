@@ -74,7 +74,11 @@ first test) and the `pin-generator-tool` source at #81.
 
 1. **`TITLE_SMALL` didn't fire where it should.** Recipe Card at the default size with a 6-word title
    left a visibly small title and an empty panel (same as test render 1), and returned no warnings.
-   "auto" then made the title much larger. The 0.30 fill threshold may be too low for panel templates.
+   "auto" then made the title much larger. Cause (from the server side): the recipe card is
+   box-fitted and reports no fill, so the warning can't fire there; the 0.30 threshold itself was
+   calibrated in Chrome across the templates that give the title a size budget, and the 8 newer
+   templates haven't been measured yet. Planned fix: the dry-run fill measurement (step 2 of the
+   feedback fixes). The skill no longer relies on this warning.
 2. **`IMAGE_CROPPED` stays after a good `image_focus`.** It reports the crop (still 47% visible), which
    is true, but a client that re-renders on every warning will loop. Suggest: when `image_focus` or
    `image_fit` was set, say so in the message ("you set image_focus; check the preview") or downgrade it.
@@ -88,9 +92,11 @@ first test) and the `pin-generator-tool` source at #81.
    light (item 11). Either add dark palettes or change the example.
 7. **Clients can keep old tool definitions.** A session that loaded the tools before the deploy
    didn't see `image_focus` or `"auto"` in its schema, even after reconnecting, though the server
-   accepted both. This is caching on the client side; nothing to fix on the server. New chats get the
-   new definitions. The `create-pin` skill falls back to numbers and template choice if a client
-   refuses the new options.
+   accepted both. This is caching on the client side. The server has no fallback for a client that
+   validates locally against a stale integer-only `text_size`; it would refuse "auto". The
+   `create-pin` skill falls back to numbers and template choice in that case. Cheap mitigation on the
+   server: bump the server version (still 0.1.0) with every tool change, which helps clients that
+   compare versions.
 
 ## Details
 
@@ -333,3 +339,17 @@ Mainly a speed and convenience win; quota should count each image.
 When an item ships, the plugin skills can be simplified. For example, once `extract_url` returns
 image dimensions, the skill no longer needs to guess orientation from file names. Tell me which
 items ship and I'll update the skills and evals.
+
+## Answers from the server side (2026-10-04)
+
+- **`photo-stack` with fewer than 4 photos** always draws four slots and reuses what it has (1 photo
+  fills all four; 2 give a, b, b, a; 3 give a, c, b, a; 0 use palette fallbacks). Tests pin which image
+  goes in which slot, but nobody has looked at 1 or 2 distinct photos, and there is no warning for too
+  few extra images (a product call). The skill now uses it only with 4 different photos.
+- **Prices**: beyond "$100", the extractor handles 98, 98.50, 1,299.00, European 49,90 (becomes
+  €49.90), lowPrice, priceSpecification and variant prices, symbols for known codes and "1299 CAD"
+  for codes without one. It refuses 1.299,00, prices already carrying a symbol like "$98" and absurd
+  values, leaving the price out. Tested on synthetic JSON-LD only. The skill uses the price as given.
+- **Cook time vs total time**: the extractor returns `total_time`, `prep_time` and `cook_time`
+  separately. The skill now writes a total time with "total" (or leaves it out) instead of putting it
+  in the Cook Time field as if it were cook time.
