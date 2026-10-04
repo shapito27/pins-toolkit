@@ -5,7 +5,7 @@ finished Pinterest pin in one message, with the [InsightPins](https://insightpin
 and built-in pin design and copywriting best practices. It also reviews and improves pins you
 already have, and builds or checks Pinterest bulk upload CSV files.
 
-![Four pins made with the InsightPins plugin](plugins/insightpins/assets/example-pins.png)
+![Four pins made with the InsightPins plugin](plugins/insightpins/assets/example-pins.jpg)
 
 - **Create** a pin from a link, or several variations to test, with ready-to-paste title,
   description, alt text and board
