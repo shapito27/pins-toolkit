@@ -1,0 +1,300 @@
+{
+ "tools": [
+  {
+   "name": "extract_url",
+   "description": "Fetch a web page (blog post, product page, recipe...) and return its title, description, site name and up to 10 image URLs, ready to put on a pin.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "url": {
+      "type": "string",
+      "maxLength": 2048,
+      "description": "Absolute http(s) URL of the page"
+     }
+    },
+    "required": [
+     "url"
+    ]
+   }
+  },
+  {
+   "name": "list_templates",
+   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "string",
+      "enum": [
+       "blog",
+       "product",
+       "list",
+       "quote",
+       "recipe",
+       "creative"
+      ],
+      "description": "Only templates in this category"
+     }
+    }
+   }
+  },
+  {
+   "name": "list_styles",
+   "description": "List the color palettes (with their hex colors) and font pairings a pin can use.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {}
+   }
+  },
+  {
+   "name": "get_quota",
+   "description": "How many pin renders the user has left today. The limit resets at 00:00 UTC.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {}
+   }
+  },
+  {
+   "name": "render_pin",
+   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. The result also has an edit_url. When a short title looks small for its space, re-render with text_size \"auto\". When a photo is cropped badly or too small in its frame, re-render with image_focus, image_zoom or image_fit \"contain\". Counts against the daily render limit; failed renders are not counted. The result has a warnings list (each with a code and a message) when something looks wrong. Read it, but re-render only when a warning matters. Codes: TITLE_CLAMPED, DESCRIPTION_CUT, IMAGE_CROPPED, IMAGE_UPSCALED, TITLE_SHRUNK, TITLE_SMALL, SUBTITLE_HIDDEN, EXTRA_IMAGES_IGNORED, IMAGE_IGNORED, LAYOUT_UNSETTLED.",
+   "inputSchema": {
+    "type": "object",
+    "required": [
+     "template_id",
+     "title"
+    ],
+    "properties": {
+     "template_id": {
+      "type": "string",
+      "enum": [
+       "bold-title",
+       "image-focus",
+       "minimal-clean",
+       "dashed-accent",
+       "blog-card",
+       "product-spotlight",
+       "price-tag",
+       "side-rail",
+       "numbered-steps",
+       "checklist",
+       "number-badge",
+       "centered-quote",
+       "quote-with-image",
+       "vine-corners",
+       "tulip-frame",
+       "recipe-card",
+       "photo-stack",
+       "framed-bold",
+       "diagonal-cut",
+       "corner-badge",
+       "split-horizontal",
+       "modern-minimal",
+       "gradient-wave",
+       "magazine-cover",
+       "text-focus",
+       "collage-style",
+       "story-card",
+       "starburst-badge",
+       "arch-window",
+       "side-panels",
+       "travel-overlay",
+       "lifestyle-collage",
+       "destination-card",
+       "grid-lines",
+       "overlap-collage",
+       "photo-quad",
+       "vertical-title",
+       "fitness-grid"
+      ],
+      "description": "From list_templates"
+     },
+     "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+     },
+     "description": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Shown as the subtitle on templates that support one"
+     },
+     "image_url": {
+      "type": "string",
+      "maxLength": 2048,
+      "description": "Main image, e.g. one returned by extract_url"
+     },
+     "additional_image_urls": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "maxLength": 2048
+      },
+      "maxItems": 3,
+      "description": "Extra images for collage and multi-image templates, up to 3 (Photo Stack and Photo Quad show four photos)"
+     },
+     "palette_id": {
+      "type": "string",
+      "enum": [
+       "ocean-breeze",
+       "midnight",
+       "lavender",
+       "forest-calm",
+       "cool-mint",
+       "sage",
+       "electric",
+       "sunset-glow",
+       "terracotta",
+       "coral-reef",
+       "berry-blush",
+       "rose-gold",
+       "dusty-rose",
+       "warm-earth",
+       "minimalist"
+      ],
+      "description": "From list_styles"
+     },
+     "font_id": {
+      "type": "string",
+      "enum": [
+       "classic-serif",
+       "modern-sans",
+       "bold-impact",
+       "friendly",
+       "minimalist",
+       "creative",
+       "professional",
+       "playful",
+       "editorial",
+       "tech-modern"
+      ],
+      "description": "From list_styles"
+     },
+     "site_name": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Shown as the domain line, e.g. \"myblog.com\""
+     },
+     "cta_text": {
+      "type": "string",
+      "maxLength": 30,
+      "description": "Default: \"Read More\""
+     },
+     "show_cta": {
+      "type": "boolean",
+      "description": "Default: true"
+     },
+     "show_description": {
+      "type": "boolean",
+      "description": "Default: true when a description is given"
+     },
+     "show_site_name": {
+      "type": "boolean",
+      "description": "Default: true when a site name is given"
+     },
+     "custom_fields": {
+      "type": "object",
+      "additionalProperties": {
+       "type": "string",
+       "maxLength": 100
+      },
+      "description": "Template-specific fields from list_templates, e.g. {\"price\": \"$19\"}. Only the fields given are shown; omitted or blank ones are left off. number-badge and side-panels always show a number: pass listNumber."
+     },
+     "text_size": {
+      "anyOf": [
+       {
+        "type": "integer",
+        "minimum": 70,
+        "maximum": 250
+       },
+       {
+        "type": "string",
+        "const": "auto"
+       }
+      ],
+      "description": "Text size for the whole pin, in percent (70-250), or \"auto\". 100 is the template's normal size. \"auto\" instead fits the title to its space: a short title is made larger, as far as its area allows, and it is never smaller than normal. It cannot be combined with title_size, and the other text keeps its size."
+     },
+     "title_size": {
+      "type": "integer",
+      "minimum": 70,
+      "maximum": 150,
+      "description": "Extra size for the title only, in percent (70-150), applied on top of text_size. Default 100."
+     },
+     "description_size": {
+      "type": "integer",
+      "minimum": 70,
+      "maximum": 150,
+      "description": "Extra size for the description only, in percent (70-150), applied on top of text_size. Default 100."
+     },
+     "cta_size": {
+      "type": "integer",
+      "minimum": 70,
+      "maximum": 150,
+      "description": "Extra size for the button text only, in percent (70-150), applied on top of text_size. Default 100."
+     },
+     "site_name_size": {
+      "type": "integer",
+      "minimum": 70,
+      "maximum": 150,
+      "description": "Extra size for the site name only, in percent (70-150), applied on top of text_size. Default 100."
+     },
+     "format": {
+      "type": "string",
+      "enum": [
+       "jpeg",
+       "png"
+      ],
+      "description": "Default and recommended: jpeg (about 0.3 MB). Use png only if the user asks for it."
+     },
+     "image_focus": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "center",
+         "top",
+         "bottom",
+         "left",
+         "right"
+        ]
+       },
+       {
+        "type": "object",
+        "properties": {
+         "x": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+         },
+         "y": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+         }
+        },
+        "required": [
+         "x",
+         "y"
+        ]
+       }
+      ],
+      "description": "Which part of the photo to keep in view when it is cropped: center, top, bottom, left, right, or { \"x\": 0.5, \"y\": 0.3 } with each from 0 (left/top) to 1 (right/bottom). Default center."
+     },
+     "image_zoom": {
+      "type": "integer",
+      "minimum": 100,
+      "maximum": 200,
+      "description": "Enlarges the photo inside its frame around image_focus, in percent (100-200). Default 100. For a small product in a big frame; it makes a small photo look softer."
+     },
+     "image_fit": {
+      "type": "string",
+      "enum": [
+       "cover",
+       "contain"
+      ],
+      "description": "cover (default) fills the frame and crops the photo; contain shows the whole photo with the palette's secondary color in the empty bars."
+     }
+    }
+   }
+  }
+ ]
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "insightpins": {
+      "type": "http",
+      "url": "https://app.insightpins.com/api/mcp"
+    }
+  }
+}
