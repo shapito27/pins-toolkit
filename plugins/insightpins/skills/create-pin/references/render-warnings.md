@@ -9,7 +9,7 @@ real problem in the preview, and never twice for the same warning.
 | `TITLE_CLAMPED` | The title is cut off even at the smallest size. | Always fix: shorten the headline. |
 | `DESCRIPTION_CUT` | The subtitle (or the end of the title) is longer than the template shows. | Shorten the subtitle, or choose a template with more room. |
 | `TITLE_SHRUNK` | The title was shrunk well below the requested size to fit. | Shorten the headline if it now looks small in the preview. |
-| `TITLE_SMALL` | The title uses only a small part of its room. | Re-render with `text_size: "auto"`. Use "auto" from the first render and this rarely appears. |
+| `TITLE_SMALL` | The title uses only a small part of its room. | Re-render with `text_size: "auto"`. It doesn't fire on every template (for example `recipe-card`), so judge the title size in the preview too, and use "auto" from the first render. |
 | `IMAGE_CROPPED` | Only part of the photo is visible (for example a wide photo in a tall frame). | Look at the preview. If the subject is cut off, set `image_focus` on it, or `image_fit: "contain"`, or choose a panel template. If the subject is in view, keep the pin: the warning stays because the crop itself doesn't change. |
 | `IMAGE_UPSCALED` | A small photo is enlarged a lot, so it may look soft. | Prefer a larger photo from `image_details` or a template with a smaller photo area. Fine to keep if the preview looks sharp enough; lower `image_zoom` if you raised it. |
 | `SUBTITLE_HIDDEN` | The template has no subtitle, so the description isn't shown. | Expected if you chose that template on purpose; otherwise pick one with `supports_subtitle: true`. No re-render needed just for this. |
