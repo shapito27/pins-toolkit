@@ -18,7 +18,7 @@ fixture into the run's workspace. `bulk-csv-check` also needs `--allow-tools Bas
 | Case | Tests | Key graders |
 | - | - | - |
 | `recipe-from-url` | URL -> pin; `image_details` with a wide `primary_image`, a portrait food photo, an author headshot and an infographic; `structured` recipe data | picks the portrait food photo, sets `text_size` ("auto" or >= 120), puts the page's cook time (25 min) on the pin and invents no price or other values, full report |
-| `listicle-number` | "17 Easy Chicken Dinners" page | the real number 17 reaches the pin; no other list number |
+| `listicle-number` | "17 Easy Chicken Dinners" page | the real number 17 reaches the pin; no other list number; no subtitle on `number-badge` (drawn too faint) |
 | `blocked-page` | `extract_url` returns a "Just a moment..." bot-check page as a success (older servers) | no render; tells the user and asks for title/image |
 | `blocked-page-error` | `extract_url` returns a `[BOT_CHALLENGE]` error (current server) | no render; tells the user and asks for title/image |
 | `crop-warning` | Only a landscape photo; every render returns `IMAGE_CROPPED` | handles the crop (panel template, `image_focus` or `image_fit`), renders at most twice instead of looping on the warning, honest report |
@@ -28,6 +28,9 @@ fixture into the run's workspace. `bulk-csv-check` also needs `--allow-tools Bas
 | `review-uploaded-pin` | review of a weak quote pin (`resources/quote-pin.jpg`) | finds the real problems (contrast, thin/small text, empty space, vague CTA), gives a score and ranked fixes |
 | `winter-palette` | Winter travel page with a bright, snowy landscape photo | a palette is set; no low-contrast or off-mood palette (`coral-reef`, `sunset-glow`, `sage`, `electric`); no mid-tone palette on a white-text panel template (`split-horizontal`, `diagonal-cut`) |
 | `optimize-variants` | Optimize the weak quote pin; it gets saves but few clicks | `optimize-pin` fires; 2-3 renders; no low-contrast palette; diagnosis tied to clicks, variants that each change one thing, rate-based test plan; pin copy invents no facts |
+| `optimize-one-render` | Same, with 1 render left | checks quota first, renders exactly once, says the one version combines fixes and can't show which helped, offers the rest for later |
+| `optimize-no-renders` | Same, with 0 renders left (render returns a limit error) | no render; still delivers the review, copy and settings, and says when the limit resets |
+| `brand-palette` | User asks for their brand palette `coral-reef` (fails small text on color panels) | keeps `coral-reef`, but never on `split-horizontal`/`diagonal-cut`; invents no recipe facts |
 
 ## Reading the baseline
 
@@ -54,14 +57,25 @@ Run with `--judge-model sonnet` for stable verdicts: the default small judge onc
 | bulk-csv-check | 1.00 | 0.00 | +1.00 |
 | winter-palette | 1.00 | not run | |
 | optimize-variants | 1.00 | not run | |
+| optimize-one-render | 1.00 | not run | |
+| optimize-no-renders | 1.00 | not run | |
+| brand-palette | 1.00 | not run | |
 
-The last two cases were added with the contrast and color rules and run with the plugin only
+The last five cases were added with the contrast and color rules and run with the plugin only
 (`--ablation none`; without the plugin there are no InsightPins tools). Against the skills before
 those rules (`main` at 8a15f47), `winter-palette` scored 0.67 (a white-text panel on a mid-tone
 palette in 3/3 runs) and `optimize-variants` 0.76 (a result the page didn't state in the copy in
-3/3 runs, a low-contrast palette in 1). A full run of all 11 cases with the plugin scored 1.00.
+3/3 runs, a low-contrast palette in 1). A full run of all 14 cases with the plugin scored 1.00
+(2026-10-04), after the fixes below.
 
 History:
+- The `number-badge` subtitle grader failed 3/3 at first: the warning lived only in
+  `style-selection.md`, which isn't read at the render step. `create-pin` step 8 and the template
+  guide now say it too.
+- `optimize-variants` once used `sage` on `split-horizontal` for variant C: only variant B was told
+  to use the contrast table. Every variant except A (which keeps the original palette) now must.
+- One `honest-copy` failure was a real audience claim ("perfect for anyone who wants a simpler
+  home"); `optimize-pin`'s facts rule now names audiences.
 - `optimize-variants` first failed `honest-copy` for "the 12 lessons that made it stick": the
   `pin-copy` facts rule didn't reach `optimize-pin`, which doesn't load `pin-copy`. The rule is now
   repeated in `optimize-pin`, `remake-pin` and `create-pin`. The grader was also scoped to the pin

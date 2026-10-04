@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Check a CSV for Pinterest's bulk upload and list every row that would fail.
 
     python scripts/check_csv.py pinterest-bulk-upload.csv
@@ -101,7 +100,7 @@ def check_text(text, now=None):
     first_line = re.split(r"[\r\n]", text, maxsplit=1)[0]  # a CR-only file has no \n at all
     if ";" in first_line and "," not in first_line:
         r.error("file", "columns are separated by semicolons (a regional Excel "
-                "export); Pinterest expects commas", "file.semicolon", "file")
+                "format); Pinterest expects commas", "file.semicolon", "file")
         return r, summary
 
     # newline="" keeps \r, \n and \r\n all ending a record (Excel for Mac writes

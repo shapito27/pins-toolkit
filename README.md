@@ -20,6 +20,7 @@ in the [plugin README](plugins/insightpins/README.md).
 | - | - |
 | [`plugins/insightpins/`](plugins/insightpins/) | The plugin itself (manifest, MCP connector, skills, commands). This is the folder submitted to the Claude directory. See its [README](plugins/insightpins/README.md). |
 | [`evals/`](evals/) | `claude plugin eval` suite with mocked InsightPins tools (no real renders) |
+| [`tests/`](tests/) | Unit tests: directory requirements, contrast table, CSV scripts, eval graders |
 | [`docs/PLAN.md`](docs/PLAN.md) | Roadmap and design decisions |
 | [`docs/SUBMISSION.md`](docs/SUBMISSION.md) | Directory submission checklist and portal answers |
 | [`docs/TEST-REPORT.md`](docs/TEST-REPORT.md), [`docs/MCP-IMPROVEMENTS.md`](docs/MCP-IMPROVEMENTS.md) | Test results and ranked server improvement ideas |
@@ -42,8 +43,14 @@ Or add this repo as a marketplace (`/plugin marketplace add shapito27/pins-toolk
 ```bash
 claude plugin validate ./plugins/insightpins
 claude plugin validate .
+python3 -m unittest discover -s tests          # directory checks, contrast table, CSV scripts, graders
 claude plugin eval . --no-publish --scaffold --allow-tools Bash
 ```
+
+`tests/test_plugin.py` checks what the directory's validator checks (manifest, icon, privacy URL,
+file sizes, README images), that the contrast table in `style-selection.md` matches the palette
+colors, that the CSV scripts work and carry nothing the security scan reads as "uses the
+environment", and that the eval graders match what they should.
 
 `--scaffold` lets two cases copy their fixture into the run's workspace; `--allow-tools Bash` lets the
 bulk CSV case run the checker script.
@@ -54,14 +61,25 @@ bulk CSV case run the checker script.
 `insightpins.com` repo, whose `check_csv.py` also defines the rules of the
 [web CSV checker](https://insightpins.com/tools/pinterest-csv-checker.html). The plugin copy adds
 script paths (`${CLAUDE_SKILL_DIR}`), a "just checking a file?" path and notes for pins made with
-InsightPins; the scripts and `reference.md` are unchanged. When the rules change there, copy the
-scripts and `reference.md` again and re-run that repo's fixtures against the copy (all 41 matched
-on 2026-10-04):
+InsightPins. `reference.md` is unchanged. The scripts differ in two places, both for the Claude
+directory's security scan, which held the plugin for "reads the environment" because of the word
+`env` next to the share-link host names in `check_csv.py`:
+
+- no `#!/usr/bin/env python3` first line (the skill runs them with `python3 -B`);
+- `check_csv.py`'s semicolon message says "a regional Excel format" instead of "export".
+
+Making the same two changes in `insightpins.com` keeps the copies identical. When the rules change
+there, copy the scripts and `reference.md` again, re-apply the two changes if they aren't upstream
+yet, and run the fixtures and the plugin tests (all 41 fixtures matched on 2026-10-04):
 
 ```bash
 cp ../insightpins.com/downloads-src/pinterest-bulk-csv/reference.md plugins/insightpins/skills/pinterest-bulk-csv/
 cp ../insightpins.com/downloads-src/pinterest-bulk-csv/scripts/*.py plugins/insightpins/skills/pinterest-bulk-csv/scripts/
+sed -i '1{/^#!/d}' plugins/insightpins/skills/pinterest-bulk-csv/scripts/*.py
+sed -i 's/"export); Pinterest expects commas/"format); Pinterest expects commas/' \
+  plugins/insightpins/skills/pinterest-bulk-csv/scripts/check_csv.py
 python3 scripts/check-bulk-csv-sync.py ../insightpins.com   # must print "0 mismatches"
+python3 -m unittest discover -s tests                     # must pass
 ```
 
 ## License

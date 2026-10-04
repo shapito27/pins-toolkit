@@ -5,47 +5,84 @@ with the answer for every field. Based on Anthropic's
 [submit guide](https://claude.com/docs/plugins/submit) and
 [pre-submission checklist](https://claude.com/docs/plugins/pre-submission-checklist).
 
-## Status of the automated checks (checked locally, v1.0.0)
+## Your first validation (2026-10-04) and what changed
+
+The portal validated `main` at the time (25 files, 341.7 kB) with these results:
+
+| Portal check | Result | What it means | Status |
+| - | - | - | - |
+| Repository fetched; size limits; `plugin.json` valid | Passed | | |
+| 7 skills, 2 commands, 1 MCP server (`insightpins`) | Passed | The portal sees exactly what we ship | |
+| Name and publisher checks | Passed | | |
+| Directory lints | Passed with warnings | The warnings are the icon and privacy URL rows below | Fixed |
+| **Uses a credential from the user's machine** (`MCP_FORWARDS_CREDENTIAL_ENV`) | **Policy hold**, 2 findings | A pattern match, not a real credential read. `check_csv.py` started with `#!/usr/bin/env python3` (the scanner reads `env` as "prints the environment") and contains host names (`drive.google.com`, `dropbox.com`...) in its list of share links it rejects. Together that looked like "reads the environment and sends it to a host"; the second finding repeats it at plugin level because the plugin also has a remote MCP server. The scripts never read environment variables and make no network calls. | Fixed: both scripts lost the shebang (the skill runs them with `python3 -B`), and "Excel export" became "Excel format" in one message. A unit test now fails if either comes back |
+| No icon (`ICON_MISSING`) | Warning | | Fixed: `.claude-plugin/icon.png`, your site's 512x512 logo |
+| No privacy policy URL (`PRIVACY_URL_MISSING`) | Info | It found the URL in the README anyway | Fixed: `privacyPolicyUrl` in `plugin.json` |
+| Images and fonts passed without a code check (`ASSETS_PASSED_UNREAD`) | Info | The two README example images were accepted as images | Nothing to do |
+
+## Local checks (v1.0.0, after the fixes)
 
 | Check | Result |
 | - | - |
-| `claude plugin validate ./plugins/insightpins` | Passed |
-| `claude plugin validate .` (marketplace) | Passed |
-| Folder contains `.claude-plugin/plugin.json` | Yes |
-| Name `insightpins`: lowercase, hyphens, not reserved, not a known brand | Yes |
-| `description`, `author`, `version`, `license` set | Yes |
-| README >= 40 words outside code blocks | ~1,500 words |
-| LICENSE file + `license` field | Yes (MIT) |
-| No `.DS_Store` / `Thumbs.db` / `__MACOSX`, no symlinks, no LFS, no `.gitattributes` | None |
-| Every file < 256 KiB, <= 512 files | 25 files: 23 text files (largest ~16 KB) and 2 JPEG example images in `assets/` (122 KB and 166 KB) |
-| Images only in the README, via Markdown image syntax; not used by scripts or commands | Yes: `assets/example-pins.jpg` and `assets/before-after.jpg` |
-| `.mcp.json` valid, remote server is `type: http` with an `https://` URL | Yes |
-| No secrets, no `$ENV` credentials, no package launchers (`npx`, `uvx`...) | None |
-| No hooks, local MCP servers or `bin/`; scripts readable and disclosed | 2 Python scripts in the `pinterest-bulk-csv` skill, standard library only, no network, run only when the skill tells Claude to; described in the README |
-| Repository < 50 MiB, < 10,000 files | ~0.5 MB, 111 files |
-| Eval suite | All 11 cases 1.00 with the plugin (2026-10-04) |
+| `claude plugin validate ./plugins/insightpins` and `claude plugin validate .` | Passed |
+| `python3 -m unittest discover -s tests` (38 tests: manifest, icon, privacy URL, file limits, README images, scanner triggers in scripts, contrast table, CSV scripts, graders) | Passed |
+| Plugin files | 26: 23 text files (largest ~16 KB), 2 JPEG example images (122 KB, 166 KB), 1 PNG icon (35 KB) |
+| Name, `description`, `author`, `version`, `license`, LICENSE file, README >= 40 words | Yes |
+| `.mcp.json`: one remote `type: http` server, `https://app.insightpins.com/api/mcp`, no secrets | Yes |
+| No hooks, local MCP servers, `bin/`, symlinks, junk files or package launchers | None |
+| Scripts | 2 Python scripts in `pinterest-bulk-csv`, standard library only, no network, no environment reads; disclosed in the README |
+| Repository < 50 MiB, < 10,000 files | ~0.6 MB, 141 files |
+| Eval suite | All 14 cases 1.00 with the plugin (2026-10-04) |
 
-Expected result in the portal: no Blocking findings. A reviewer may still look at it (first
-submissions are published by an Anthropic reviewer by default).
+## Step by step from here
+
+1. **Merge the pull request with these fixes into `main`.** The portal reads the tracked branch.
+2. **Decide on the icon before anything else is saved.** The portal takes the icon from
+   `.claude-plugin/icon.png` only the first time the plugin is saved or submitted, and changing it
+   later doesn't change the listing. The current file is your site's 512x512 magnifying-glass logo
+   (`insightpins.com/assets/images/android-chrome-512x512.png`). To use a different one, replace
+   that file (square PNG, 512-2048 px, under 2 MB) and merge before step 3.
+3. **Re-validate** the submission in the portal (**Check for new commits** or **Re-validate** on
+   the Versions tab, branch `main`). Expect:
+   - the policy hold gone, or still listed but now explainable (see the note below);
+   - no icon or privacy URL warnings;
+   - only the info row about the two images.
+   If your draft was already saved before the icon existed and the listing preview still shows no
+   icon, withdraw that draft and start a new submission (allowed while it isn't published), or
+   ask Anthropic support to pick it up.
+4. **If the credential finding is still there,** it isn't blocking: a reviewer confirms it. Where
+   the portal asks for a note to the reviewer, paste:
+   > The flagged file `skills/pinterest-bulk-csv/scripts/check_csv.py` reads no environment
+   > variables or credentials and makes no network requests (standard library only: argparse,
+   > csv, io, json, re, sys, collections, datetime, and urllib.parse to parse URLs). The host names in it
+   > (drive.google.com, dropbox.com...) are a deny list: the checker reports Pinterest bulk-upload
+   > rows whose image link points to a share page instead of an image file. The plugin's only
+   > network access is the declared InsightPins connector at app.insightpins.com.
+5. **Listing details:** check the name, description and icon preview (they come from `plugin.json`
+   and the README).
+6. **Data handling, compliance and submit:** answers are in "Portal steps and answers" below
+   (personal data **Yes**, contact `ruslan@insightpins.com`, all four acknowledgements). Keep
+   **GitHub push webhook** for updates and leave auto-publish at the default.
+7. **Before you select Publish:** make the repository public, and make sure a brand-new
+   InsightPins account can sign in and render a pin (a reviewer will try).
+8. **After publishing:** for every update, merge to `main` and raise `version` in `plugin.json`.
 
 ## Before you open the portal
 
-- [ ] **Merge PR #1 into `main`.** The directory follows the tracked branch, so the plugin must be on `main`.
-- [ ] **Confirm the connector URL is exactly `https://app.insightpins.com/api/mcp`** (the MCP server,
-      also the OAuth token audience). `https://app.insightpins.com/mcp` is only the human docs page;
-      a client pointed there can't connect. It must be the same as in
-      `plugins/insightpins/.mcp.json`, so users with both see one set of tools.
+- [x] **Plugin on `main`** (PRs #1-#5 merged; merge the PR with the validation fixes too).
+- [x] **Connector URL is exactly `https://app.insightpins.com/api/mcp`** (the MCP server, also the
+      OAuth token audience). `https://app.insightpins.com/mcp` is only the human docs page.
 - [x] **Privacy policy and terms cover the Claude connector** (both updated 03.10.2026; the
-      plugin README matches the privacy policy).
+      plugin README and `privacyPolicyUrl` point to the privacy policy).
 - [x] **Security item** in [MCP-IMPROVEMENTS.md](MCP-IMPROVEMENTS.md): fix deployed 2026-10-03;
       internal addresses refused from outside. Cover redirects and `render_pin` image URLs in server tests.
 - [ ] **Free tier works for a new account**, so a reviewer can sign in and render a pin.
 - [ ] **Optional: test on claude.ai.** Zip `plugins/insightpins`, then go to **Customize > Plugins >
       Add > Upload plugin**, connect InsightPins and make one pin.
-- [ ] **GitHub account connected** on claude.ai in the organization you submit from. On Team or
-      Enterprise plans, an Owner must submit.
-- [ ] **Repository visibility:** it can stay private while validating and in review (the Claude
-      GitHub App is installed). It **must be public before publishing**.
+- [x] **GitHub account connected** on claude.ai (you've validated already). On Team or Enterprise
+      plans, an Owner must submit.
+- [ ] **Repository visibility:** it can stay private while validating and in review. It **must be
+      public before publishing**.
 
 ## Privacy policy and terms: what's missing
 
@@ -87,7 +124,8 @@ Services in section 1, with their daily render limits.
    - Plugin path: `plugins/insightpins`
    - Branch or tag: `main`
    - Select **Validate**. If the repo is private, confirm the source upload. Fix anything marked
-     Blocking (tell me the finding), push, then **Re-validate**.
+     Blocking or held (tell me the finding), push, then **Re-validate**. The first run's findings
+     and fixes are in the table at the top.
 3. **Listing details:** read from `plugin.json` and the README. To change anything, edit the files
    and re-validate. Name and description: "InsightPins" / "Create, review and optimize Pinterest
    pins from any article, product or recipe URL..."

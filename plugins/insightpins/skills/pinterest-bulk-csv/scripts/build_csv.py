@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Build Pinterest bulk upload CSV file(s) from pins.json.
 
     python scripts/build_csv.py pins.json --tz America/New_York \
