@@ -38,7 +38,8 @@ still draft the copy without it.
    number, price, cook time, servings, category. `structured` gives them directly when the page
    publishes them: for a `Recipe`, `cook_time` (or `total_time` if there's no cook time) for
    `cookTime` and `servings` for `servings` (write "4 servings"); for a `Product`, `price` for
-   `price`. Use these values as given; they come from the page itself.
+   `price`, adding the `currency` when the price has no symbol ("100" and "EUR" become "100 EUR").
+   Use these values as given; they come from the page itself.
 
 3. **Write the copy** using the `pin-copy` skill: a short on-image headline (3-8 words, ideally),
    an optional subtitle, and separately the Pinterest title, description and alt text.
@@ -86,14 +87,18 @@ still draft the copy without it.
    **Set the text size on the first render**; the template default (100) is usually too small at
    thumbnail size. Use `text_size: "auto"`: it fits the title to its area (never smaller than
    normal) and keeps the other text at its size. It can't be combined with `title_size`. Use a number
-   instead when the whole pin's text should change: 120-140 for headlines of 8-12 words, 100-110 for
-   very long text (or shorten it). On templates with a subtitle, keep `description_size` at 100-115.
+   instead only when the user asks for all the text to be bigger or smaller, or when the subtitle and
+   button need to grow too: 130-160 for short headlines, 120-140 for 8-12 words, 100-110 for very
+   long text (or shorten it). On templates with a subtitle, keep `description_size` at 100-115.
    **Photo controls**, for single-photo templates: `image_focus` keeps a part in view when the photo
    is cropped (`top`, `bottom`, `left`, `right`, `center`, or `{ "x": 0.3, "y": 0.2 }`, 0 to 1 from
    left/top); `image_zoom` 100-200 enlarges a small product in a big frame (it softens a small
    photo); `image_fit: "contain"` shows the whole photo with bars in the palette's secondary color.
    Set `image_focus` up front when you already know where the subject is, for example `top` for a
    person in a wide photo.
+   **If the tool refuses these options** (an app that still has the older tool definitions only
+   allows a number for `text_size` and has no photo controls), use `text_size` 130-160 instead of
+   "auto", and pick a template whose frame matches the photo's shape instead of `image_focus`.
 
 9. **Check the preview and the warnings.** The preview image is about 200x300, roughly how the pin
    looks in a phone feed, so use it as the thumbnail test against the `pin-design` checklist. Then

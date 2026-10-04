@@ -86,9 +86,11 @@ first test) and the `pin-generator-tool` source at #81.
    away now; a `likely_text` flag would make it explicit.
 6. **The docs page suggests "a quote template and a dark palette"**, but all 15 palettes are still
    light (item 11). Either add dark palettes or change the example.
-7. **Clients keep old tool definitions until they reconnect.** A session that loaded the tools before
-   the deploy doesn't see `image_focus` or `"auto"` in its schema, though the server accepts them.
-   Sending `notifications/tools/list_changed` after a deploy helps clients that support it.
+7. **Clients can keep old tool definitions.** A session that loaded the tools before the deploy
+   didn't see `image_focus` or `"auto"` in its schema, even after reconnecting, though the server
+   accepted both. This is caching on the client side; nothing to fix on the server. New chats get the
+   new definitions. The `create-pin` skill falls back to numbers and template choice if a client
+   refuses the new options.
 
 ## Details
 

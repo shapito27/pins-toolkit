@@ -14,7 +14,7 @@ October 2026 and chosen here from their descriptions, not yet tested.
 | Listicle ("17 ideas", "10 tips") | `number-badge`, `travel-overlay`, `side-panels`, `fitness-grid`, `blog-card` | Put the real number in `listNumber`; the number is the hook |
 | Step-by-step / checklist | `numbered-steps`, `checklist` | Short subtitle listing what's covered |
 | Product | `product-spotlight`, `price-tag`, `side-rail` (new) | Use `price-tag` only with a real price (`structured.price`); clean product photo on a plain background works best. A square product photo sits small in `product-spotlight`: `image_zoom` 130-160 enlarges it |
-| Recipe | `recipe-card`, `split-horizontal`, `photo-stack` (new, 4 photos), `bold-title` (portrait photo only) | Fill `cookTime` and `servings` from `structured`; food photo carries the pin |
+| Recipe | `recipe-card`, `split-horizontal`, `photo-stack` (new; 4 matching photos: the main one plus 3 in `additional_image_urls`), `bold-title` (portrait photo only) | Fill `cookTime` and `servings` from `structured`; food photo carries the pin |
 | Quote / mindset / saying | `vine-corners` (new), `tulip-frame` (new), `centered-quote`, `quote-with-image` | Keep the quote under ~20 words. `vine-corners` and `tulip-frame` are text-only with a subtitle for the attribution; `centered-quote` has no subtitle, so put the attribution at the end of the title ("... - Thoreau"). Use a heavy font (`classic-serif`, `bold-impact`, `professional`); thin fonts fade on light backgrounds |
 | Travel / destination | `destination-card`, `travel-overlay`, `arch-window` | Big scenic photo; headline names the place |
 | Lifestyle / home / fashion inspiration | `lifestyle-collage`, `overlap-collage` (new, 3 photos), `photo-quad` (new, 4 photos), `collage-style`, `arch-window`, `modern-minimal`, `story-card` | Collages need photos that match in tone. `photo-quad` shows two short script labels (`photoLabelTop`, `photoLabelBottom`): set them from the content or leave them out |
@@ -23,9 +23,10 @@ October 2026 and chosen here from their descriptions, not yet tested.
 ## By photo
 
 - **Photo shape matters most.** Full-bleed templates (`bold-title`, `gradient-wave`, `corner-badge`,
-  `travel-overlay`, `destination-card`, `framed-bold`, `starburst-badge`) crop the photo to fill
-  2:3, so use them only with vertical photos. Horizontal, square or unknown-shape photos go in a wide
-  panel: `split-horizontal`, `recipe-card`, `product-spotlight` (tested) or `minimal-clean`.
+  `travel-overlay`, `destination-card`, `framed-bold`, `starburst-badge`, `vertical-title`) crop the
+  photo to fill a tall frame, so they suit portrait photos. Landscape or square photos usually go in
+  a wide panel: `split-horizontal`, `recipe-card`, `product-spotlight` (tested) or `minimal-clean`
+  (see the last bullet for the exception).
 
 - **Busy photo** (lots of detail behind where text would go): choose a template that puts text on a
   solid band or panel (`split-horizontal`, `image-focus`, `minimal-clean`, `story-card`,
