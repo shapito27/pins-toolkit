@@ -18,9 +18,12 @@ publishes and schedules the pins. You never publish anything.
 - Count characters, convert dates and quote fields with the scripts, not by
   eye. If you cannot run code, follow `reference.md` by hand and tell the user
   the lengths and dates were checked manually.
-- The scripts are in this skill's `scripts/` folder (`${CLAUDE_SKILL_DIR}/scripts/`).
-  They use only Python's standard library, read and write local files only, and
-  make no network requests.
+- The scripts are in this skill's `scripts/` folder. Claude Code and Cowork
+  fill in `${CLAUDE_SKILL_DIR}` in the commands below. In chat on claude.ai, the
+  skill folder is copied into the code sandbox: run `scripts/check_csv.py` and
+  `scripts/build_csv.py` relative to this skill's folder there. They use only
+  Python's standard library, read and write local files only, and make no
+  network requests.
 
 ## Just checking a file?
 
@@ -34,7 +37,17 @@ descriptions, quotes fields and re-checks:
 1. Put the rows in `pins.json`, giving each row's existing date as `publish_at`.
 2. Ask which time zone the file's dates are in. A file made for Pinterest is
    usually already in UTC (`--tz UTC`). For a date a spreadsheet rewrote, like
-   `10/7/2026`, also ask whether it is day first or month first; never guess.
+   `10/7/2026 6:00 PM`, also ask whether it is day first or month first; never
+   guess. Then convert it with code, not by eye, using the format that matches
+   the answer (`%m/%d/%Y` month first, `%d/%m/%Y` day first; `%I:%M %p` for
+   6:00 PM, `%H:%M` for 18:00):
+
+   ```bash
+   python3 -c "from datetime import datetime; print(datetime.strptime('10/7/2026 6:00 PM', '%m/%d/%Y %I:%M %p').strftime('%Y-%m-%d %H:%M'))"
+   ```
+
+   If the format doesn't match, Python stops with an error: ask the user
+   instead of adjusting the date yourself.
 3. Rows with no date publish on upload; `build_csv.py` would give them new
    slots, so ask before rebuilding them.
 4. Run `build_csv.py pins.json --tz <zone> --out fixed.csv`.
