@@ -22,4 +22,5 @@ single-photo templates; `side-panels` and the two lower `lifestyle-collage` tile
 
 No warning flags low contrast yet. Faded small text (subtitle, site name or button text on a
 mid-tone color panel, or in a light color on a pale background) only shows in the preview, so
-check it there and use the contrast table in `style-selection.md`.
+check it there and use `template-colors.md` (readable palettes per template) and
+`style-selection.md`.

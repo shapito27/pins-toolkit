@@ -111,3 +111,12 @@ a calm winter scene. Changes:
   [MCP-IMPROVEMENTS.md, item 21](MCP-IMPROVEMENTS.md#21-readable-small-text-contrast-check-next-first-round).
 - README examples re-rendered with readable palettes, and the optimize example now shows the
   original plus two variants that each change one thing.
+
+### Update: the pin generator's colour map
+
+`pin-generator-tool` #85 added an exact map of which palette colour each template draws each text
+in (`docs/TEMPLATE_COLOR_ROLES.md`). The measurements above assumed white text on panels and
+buttons; the templates use the palette's lighter `background` colour, so contrast is a little lower
+(forest-calm's button is 2.9:1, not 3.2). The plugin's palette table now uses that pair, a generated
+`template-colors.md` lists the readable palettes per template, and the gallery's text-only pin moved
+from `forest-calm` to `dusty-rose` (4.9:1 button).

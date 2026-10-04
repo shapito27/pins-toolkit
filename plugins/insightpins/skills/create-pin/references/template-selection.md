@@ -11,7 +11,7 @@ October 2026 and chosen here from their descriptions, not yet tested.
 | Content | Good first choices | Notes |
 | - | - | - |
 | How-to / blog post / guide | `bold-title`, `minimal-clean`, `split-horizontal`, `magazine-cover`, `text-focus` | Headline does the work; pick a template with a subtitle if the benefit needs explaining |
-| Listicle ("17 ideas", "10 tips") | `number-badge`, `travel-overlay`, `side-panels`, `fitness-grid`, `blog-card` | Put the real number in `listNumber`; the number is the hook. On `number-badge`, leave the subtitle out (`show_description: false`): it is drawn too faint to read |
+| Listicle ("17 ideas", "10 tips") | `number-badge`, `travel-overlay`, `side-panels`, `fitness-grid`, `blog-card` | Put the real number in `listNumber`; the number is the hook. On `number-badge` and `side-panels`, leave the subtitle out (`show_description: false`): it is drawn too faint to read (see `template-colors.md`) |
 | Step-by-step / checklist | `numbered-steps`, `checklist` | Short subtitle listing what's covered |
 | Product | `product-spotlight`, `price-tag`, `side-rail` (new) | Use `price-tag` only with a real price (`structured.price`); clean product photo on a plain background works best. A square product photo sits small in `product-spotlight`: `image_zoom` 130-160 enlarges it |
 | Recipe | `recipe-card`, `split-horizontal`, `photo-stack` (new; only with 4 different matching photos: the main one plus 3 in `additional_image_urls`. With fewer it repeats them, and one photo fills all four slots), `bold-title` (portrait photo only) | Fill `cookTime` and `servings` from `structured`; food photo carries the pin |

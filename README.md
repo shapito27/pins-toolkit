@@ -26,6 +26,7 @@ in the [plugin README](plugins/insightpins/README.md).
 | [`docs/TEST-REPORT.md`](docs/TEST-REPORT.md), [`docs/MCP-IMPROVEMENTS.md`](docs/MCP-IMPROVEMENTS.md) | Test results and ranked server improvement ideas |
 | `.claude-plugin/marketplace.json` | Lets you install the plugin straight from this repo |
 | [`scripts/check-bulk-csv-sync.py`](scripts/check-bulk-csv-sync.py) | Checks the plugin's CSV checker against the insightpins.com fixtures |
+| [`scripts/build-template-colors.py`](scripts/build-template-colors.py) | Builds the per-template palette guide from the pin generator's `docs/TEMPLATE_COLOR_ROLES.md` |
 
 ## Try it
 
@@ -80,6 +81,18 @@ sed -i 's/"export); Pinterest expects commas/"format); Pinterest expects commas/
   plugins/insightpins/skills/pinterest-bulk-csv/scripts/check_csv.py
 python3 scripts/check-bulk-csv-sync.py ../insightpins.com   # must print "0 mismatches"
 python3 -m unittest discover -s tests                     # must pass
+```
+
+## The palette guide comes from the pin generator
+
+`plugins/insightpins/skills/create-pin/references/template-colors.md` is generated from
+`docs/TEMPLATE_COLOR_ROLES.md` in the `pin-generator-tool` repo, which is itself generated from the
+templates' colour map. When templates or palettes change there, regenerate it and run the tests
+(they check it against that doc when the repo is checked out next to this one):
+
+```bash
+python3 scripts/build-template-colors.py ../pin-generator-tool
+python3 -m unittest discover -s tests
 ```
 
 ## License
