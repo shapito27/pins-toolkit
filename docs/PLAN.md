@@ -1,7 +1,7 @@
 # InsightPins plugin for Claude - plan
 
 Goal: publish a Claude plugin in Anthropic's directory that (1) connects Claude to the
-InsightPins MCP server (`https://app.insightpins.com/mcp`) and (2) ships skills that teach
+InsightPins MCP server (`https://app.insightpins.com/api/mcp`) and (2) ships skills that teach
 Claude how to make a good Pinterest pin, not just a rendered one. Later, (3) add a Pinterest
 keywords MCP server so titles and descriptions are built on real search data.
 
@@ -74,7 +74,7 @@ pins-toolkit/
   "mcpServers": {
     "insightpins": {
       "type": "http",
-      "url": "https://app.insightpins.com/mcp"
+      "url": "https://app.insightpins.com/api/mcp"
     }
   }
 }
@@ -229,7 +229,7 @@ Possible later skills (not MVP): `seasonal-planning` (Pinterest seasonality - pi
 - [ ] More eval cases later: no-URL request, "text is too small" follow-up, remake, optimize with numbers.
 
 ### Phase 4 - connector submission (if not already listed)
-- [ ] Developer portal -> **Submit new -> MCP connector** for `https://app.insightpins.com/mcp`.
+- [ ] Developer portal -> **Submit new -> MCP connector** for `https://app.insightpins.com/api/mcp`.
 
 ### Phase 5 - plugin submission
 Full checklist and portal answers: [SUBMISSION.md](SUBMISSION.md). Local checks all pass; version 1.0.0.
@@ -242,7 +242,7 @@ Full checklist and portal answers: [SUBMISSION.md](SUBMISSION.md). Local checks 
 
 ### Phase 6 - keywords MCP (v0.2.0 / v1.x)
 - [ ] Keywords will live on the insightpins.com domain. Best option: add keyword tools to the **same**
-  `app.insightpins.com/mcp` server - one OAuth sign-in, one connector, no `.mcp.json` change, no new
+  `app.insightpins.com/api/mcp` server - one OAuth sign-in, one connector, no `.mcp.json` change, no new
   destination for the security scan. If it must be a separate endpoint, add a second `.mcp.json` entry
   (e.g. `"insightpins-keywords": { "type": "http", "url": "https://app.insightpins.com/keywords/mcp" }`)
   and register it as a connector too.

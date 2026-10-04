@@ -1,6 +1,6 @@
 # InsightPins MCP: issues and improvement ideas
 
-Feedback on `https://app.insightpins.com/mcp` from building and testing the Claude plugin
+Feedback on `https://app.insightpins.com/api/mcp` from building and testing the Claude plugin
 (10 live renders and 11 page reads on 2026-10-03, see [TEST-REPORT.md](TEST-REPORT.md)).
 Each item notes whether it was **observed** in testing or is **inferred** from the tool surface.
 Effort is a rough estimate without seeing the server code.

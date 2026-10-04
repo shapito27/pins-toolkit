@@ -30,7 +30,9 @@ submissions are published by an Anthropic reviewer by default).
 ## Before you open the portal
 
 - [ ] **Merge PR #1 into `main`.** The directory follows the tracked branch, so the plugin must be on `main`.
-- [ ] **Confirm the connector URL is exactly `https://app.insightpins.com/mcp`**, the same as in
+- [ ] **Confirm the connector URL is exactly `https://app.insightpins.com/api/mcp`** (the MCP server,
+      also the OAuth token audience). `https://app.insightpins.com/mcp` is only the human docs page;
+      a client pointed there can't connect. It must be the same as in
       `plugins/insightpins/.mcp.json`, so users with both see one set of tools.
 - [x] **Privacy policy and terms cover the Claude connector** (both updated 03.10.2026; the
       plugin README matches the privacy policy).
@@ -57,7 +59,7 @@ and [terms-of-use.html](https://insightpins.com/terms-of-use.html) (updated 09.0
 Suggested privacy policy section. The account data matches what you told me the sign-in collects;
 check the two bracketed parts against what your server really does before publishing:
 
-> **The InsightPins connector for Claude (app.insightpins.com/mcp)**
+> **The InsightPins connector for Claude (app.insightpins.com/api/mcp)**
 > When you connect InsightPins to Claude, you sign in with your Google account. This creates an
 > InsightPins account with: your email address, your Google account ID (which identifies you), your
 > name (which can be empty), the date the account was created and, if you close it, the date it was

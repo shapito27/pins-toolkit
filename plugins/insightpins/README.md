@@ -49,6 +49,9 @@ the right skill.
 
 In Claude Code the connector loads with the plugin; run `/mcp` to sign in.
 
+The connector's server is `https://app.insightpins.com/api/mcp`. Its tools and limits are documented at
+[app.insightpins.com/mcp](https://app.insightpins.com/mcp).
+
 ## Usage limits
 
 Each rendered pin counts against your InsightPins daily render limit (currently 50 free renders per
