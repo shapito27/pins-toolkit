@@ -38,7 +38,7 @@ Keep these as they are:
 | 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | **Done** (#62 warnings, #79 `text_size: "auto"`, checked 2026-10-04); follow-ups below |
 | 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | **Done** (#88: `upload_image`, `create_upload_link`, `get_upload`; checked 2026-10-05) |
 | 7 | `extract_url`: structured data (recipe times, servings, product price) | Functions | Observed | Medium-High | S | **Done** (#56, checked 2026-10-04); description still cut mid-sentence |
-| 8 | Template previews in `list_templates` | Templates | Inferred | Medium-High | S | **Done** (#105: `photo_area`, `best_photo`, `preview_url`; checked 2026-10-05) |
+| 8 | Template previews in `list_templates` | Templates | Inferred | Medium-High | S | **Done** (#105: `photo_area`, `best_photo`, `preview_url`; #108: `preview_templates` returns the images; checked 2026-10-05) |
 | 9 | List items for list templates | Templates | Inferred | Medium-High | M | Next |
 | 10 | Brand kit: custom colors, logo, saved defaults | Controls | Inferred | High for repeat users | M | Before paid plans |
 | 11 | Dark and high-contrast backgrounds | Templates | Observed | Medium | S-M | Next |
@@ -432,7 +432,8 @@ Checked against the live server on 2026-10-05 (no renders):
 | - | - |
 | 8. Template previews | `list_templates` gives `photo_area`, `best_photo` and `preview_url` (for example `recipe-card`: `panel`, `square`, `https://app.insightpins.com/template-previews/recipe-card.jpg`). Four descriptions changed to say where the photo is. |
 | 3. Image hints | On `bbcgoodfood.com/recipes/easy-pancakes` the presenter headshot is now `hint: "author"`, three app and podcast promos are `promo`, and the pancake photo (the page's `og:image`) is `primary_image`; before #97 and #99 the headshot was `primary_image` and the pancake photo was missing. |
-| Limits (#103) | The terms say 20 renders and 10 uploads a day (published 05.10.2026), but `get_quota` still returned `"limit": 50`: the new defaults were not live yet at the time of the check. |
+| Limits (#103) | The terms say 20 renders and 10 uploads a day (published 05.10.2026). `get_quota` still returned `"limit": 50` at first; a later check returned `"limit": 20`. |
+| 8. `preview_templates` (#108, 0.4.0) | Free and read-only: two `template_ids` returned two labelled sample images and a note to choose colours from `readable_palettes`, not from the preview. |
 | Colours (#101) | `lifestyle-collage`, `fitness-grid` and `travel-overlay` draw their text on a light box instead of the photo; `template-colors.md` is regenerated. |
 
 The plugin (1.0.4) uses the new photo fields, says 20 renders and 10 uploads, and its mocks match the

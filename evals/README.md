@@ -1,7 +1,7 @@
 # InsightPins plugin evals
 
 `claude plugin eval` suite for [`plugins/insightpins`](../plugins/insightpins). The InsightPins MCP
-tools are mocked (`mocks/insightpins/`, matching the server as deployed on 2026-10-05 (0.3.0): 8 tools,
+tools are mocked (`mocks/insightpins/`, matching the server as deployed on 2026-10-05 (0.4.0): 9 tools,
 38 templates with `photo_area`, `best_photo`, `preview_url`, `overlay` and `readable_palettes`, the darker palettes from #93, `image_details`
 (with `hint`) and `structured` from `extract_url`, photo controls, `overlay_strength` and
 `warnings` in `render_pin`), so a run uses no real renders and needs no InsightPins account.

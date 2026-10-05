@@ -169,3 +169,6 @@ and `remake-pin`, `optimize-pin` and `review-pin` updated to match.
 - Graders: `crop-warning` accepts any panel template whose `best_photo` is `landscape` or `square`;
   `recipe-from-url` also accepts the wide food photo in a panel template whose `best_photo` is
   `landscape`. Unit tests build both lists from the template mock.
+- `preview_templates` (#108) returned labelled sample images for `recipe-card` and `split-horizontal`
+  without using a render; `create-pin` and `remake-pin` now call it to compare a shortlist, and the
+  mocks list it as the ninth tool. `get_quota` now returns `"limit": 20`.

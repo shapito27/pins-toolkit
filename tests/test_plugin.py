@@ -432,7 +432,7 @@ class McpMocksTest(unittest.TestCase):
     def test_tools_match_the_server(self):
         tools = json.loads(read(os.path.join(EVALS, "mocks", "insightpins", "_tools.json")))["tools"]
         names = sorted(t["name"] for t in tools)
-        self.assertEqual(names, sorted(["extract_url", "list_templates", "list_styles", "get_quota",
+        self.assertEqual(names, sorted(["extract_url", "list_templates", "preview_templates", "list_styles", "get_quota",
                                         "render_pin", "upload_image", "create_upload_link",
                                         "get_upload"]))
         render = next(t for t in tools if t["name"] == "render_pin")["inputSchema"]["properties"]
@@ -683,6 +683,8 @@ class McpFeaturesTest(unittest.TestCase):
         self.assertIn("`readable_palettes`", create)
         self.assertIn("Never use an image with a `hint`", create)
         self.assertIn("`LOW_CONTRAST`", create)
+        self.assertIn("`preview_templates`", create)
+        self.assertIn("`preview_templates`", read(os.path.join(SKILLS, "remake-pin", "SKILL.md")))
         for skill in ("optimize-pin", "remake-pin"):
             self.assertIn("readable_palettes", read(os.path.join(SKILLS, skill, "SKILL.md")), skill)
         for skill in ("create-pin", "optimize-pin", "remake-pin"):

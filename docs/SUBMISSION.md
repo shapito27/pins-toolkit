@@ -108,8 +108,8 @@ connector, then re-validate the plugin so **Connects to** shows it as registered
 | Step | Answer |
 | - | - |
 | Connection | `https://app.insightpins.com/api/mcp` (or pick the custom connector you already added). One URL for everyone |
-| Tools | Should sync 8 tools (5 plus the 3 upload tools added in #88) with no missing-annotation flags |
-| Listing | Name: **InsightPins**. One-liner (max 200): "Turn any blog post, product page or recipe into a Pinterest pin: read the page, pick a template and render a 1000x1500 pin." Description: what the 8 tools do (including uploading your own photo), the 38 templates, 20 free renders and 10 uploads a day, 7-day image links, and that a Google sign-in is needed. Data handling: the connector receives photos users choose to upload, which may show people; they are cleaned of location and camera data and deleted after 7 days. Categories: Design, Marketing (or the closest offered). Documentation URL: `https://app.insightpins.com/mcp`. Privacy policy: `https://insightpins.com/privacy.html`. Support: `ruslan@insightpins.com`. Icon: the same 512x512 logo. Slug: `insightpins` (permanent once published) |
+| Tools | Should sync 9 tools (the first 5, the 3 upload tools from #88 and `preview_templates` from #108) with no missing-annotation flags |
+| Listing | Name: **InsightPins**. One-liner (max 200): "Turn any blog post, product page or recipe into a Pinterest pin: read the page, pick a template and render a 1000x1500 pin." Description: what the 9 tools do (including uploading your own photo), the 38 templates, 20 free renders and 10 uploads a day, 7-day image links, and that a Google sign-in is needed. Data handling: the connector receives photos users choose to upload, which may show people; they are cleaned of location and camera data and deleted after 7 days. Categories: Design, Marketing (or the closest offered). Documentation URL: `https://app.insightpins.com/mcp`. Privacy policy: `https://insightpins.com/privacy.html`. Support: `ruslan@insightpins.com`. Icon: the same 512x512 logo. Slug: `insightpins` (permanent once published) |
 | Use cases | Create pins from a URL; make pin variations; render pins for a bulk upload. Before connecting: an InsightPins account, created by signing in with Google (free). Reads and writes: reads web pages, writes (creates) pin images |
 | Company | InsightPins, `https://insightpins.com`, contact Ruslan Saifullin, `ruslan@insightpins.com` |
 | Authentication | **OAuth with dynamic client registration** |
@@ -122,9 +122,11 @@ connector, then re-validate the plugin so **Connects to** shows it as registered
 The connector is the live server, so new tools, fields and warnings reach Claude on the next
 connection without a new submission. On the connector's manage page
 (`claude.ai/directory/manage/insightpins-pin-generator`), keep the listing in step by hand:
-1. **Tools:** if the page offers a sync or refresh, run it and check for 8 tools with no
-   missing-annotation flags.
-2. **Description:** the Listing row above (8 tools, own-photo uploads, 20 renders and 10 uploads a
+1. **Tools:** if the page offers a sync or refresh, run it and check for 9 tools with no
+   missing-annotation flags. The listing keeps the tool list it read when the connector was
+   submitted (5 tools, before the uploads existed); the live server serves 9, and Claude uses the
+   live list. If there is no sync, ask directory support to refresh it.
+2. **Description:** the Listing row above (9 tools, template previews, own-photo uploads, 20 renders and 10 uploads a
    day). Since 2026-10-05 it can also say that every palette keeps the text readable on every
    template and that renders warn about hard-to-read text.
 3. **Data handling:** photos users choose to upload, which may show people; location and camera

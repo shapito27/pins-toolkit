@@ -4,7 +4,9 @@ Always call `list_templates` first: templates are added and changed over time. U
 choose among what the list returns. Each template says whether it shows a subtitle
 (`supports_subtitle`), whether it uses a photo (`uses_photo`), whether it takes extra photos
 (`uses_extra_images`), where the photo goes (`photo_area`), which photo shape suits it best
-(`best_photo`), which `custom_fields` it takes, and links a sample image (`preview_url`). Templates marked (new) were added in
+(`best_photo`), which `custom_fields` it takes, and links a sample image (`preview_url`). `preview_templates`
+returns those sample images so you can look at a shortlist (or a whole category) before choosing;
+it uses no render. Templates marked (new) were added in
 October 2026 and chosen here from their descriptions, not yet tested.
 
 ## By content type

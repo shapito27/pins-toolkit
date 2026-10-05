@@ -133,7 +133,8 @@ In claude.ai chat and Cowork you don't need commands: just describe what you wan
 | Tool | What it does |
 | - | - |
 | `extract_url` | Reads a page: title, description, photos with their size and shape, and recipe or product facts (cook time, servings, price) |
-| `list_templates` | Lists the 38 pin templates and the fields each one supports |
+| `list_templates` | Lists the 38 pin templates, the fields each one supports, where the photo goes and which photo shape suits it |
+| `preview_templates` | Shows sample images of templates (a shortlist or a whole category) so Claude can see them before choosing. Uses no render |
 | `list_styles` | Lists the 15 color palettes and 10 font pairings |
 | `render_pin` | Renders a 1000x1500 pin and returns a preview, an image link, an edit link and warnings. It can find the photo's subject on its own and fade a template's colour overlay |
 | `get_quota` | Shows how many renders you have left today |

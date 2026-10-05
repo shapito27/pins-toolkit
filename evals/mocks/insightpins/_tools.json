@@ -39,6 +39,38 @@
    }
   },
   {
+   "name": "preview_templates",
+   "description": "See what templates look like before choosing one. Pass category to get one contact sheet of every template in it (each cell is labelled with its template id), or template_ids (up to 6) for larger single previews of a shortlist. Previews use sample text and photo, palette ocean-breeze and font modern-sans; your pin uses your own content and style. Free: no render is used.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "string",
+      "enum": [
+       "blog",
+       "product",
+       "list",
+       "quote",
+       "recipe",
+       "creative"
+      ],
+      "description": "One contact sheet for this category"
+     },
+     "template_ids": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 64
+      },
+      "minItems": 1,
+      "maxItems": 6,
+      "description": "Up to 6 template ids from list_templates"
+     }
+    }
+   }
+  },
+  {
    "name": "list_styles",
    "description": "List the color palettes (with their hex colors) and font pairings a pin can use.",
    "inputSchema": {

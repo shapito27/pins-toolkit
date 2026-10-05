@@ -64,6 +64,11 @@ still draft the copy without it.
    left off the pin, so omit any you don't have a real value for (never invent a price, cook time or
    count). Exception: `number-badge` and `side-panels` always show a number, so use them only when the
    content has one.
+   **See before you choose:** when two to six templates fit and the descriptions don't settle it,
+   call `preview_templates` with them (`template_ids`; it is free and uses no render) and compare
+   the images. Previews use sample text and photo, the ocean-breeze palette and modern-sans, so judge
+   the layout, the photo area and the room for the headline, not the colours. If the tool isn't
+   available, choose from the descriptions.
 
 5. **Pick the style.** Call `list_styles` and choose a palette and font pairing with
    [references/style-selection.md](references/style-selection.md): first a palette from the
