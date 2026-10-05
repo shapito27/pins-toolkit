@@ -65,26 +65,34 @@ still draft the copy without it.
    content has one.
 
 5. **Pick the style.** Call `list_styles` and choose a palette and font pairing with
-   [references/style-selection.md](references/style-selection.md): first a palette whose text stays
-   readable on the chosen template ([references/template-colors.md](references/template-colors.md)
-   lists the readable palettes for each template), then one that stands apart from the photo
-   by lightness and fits the topic's mood. If the user or their site has colors already used on
-   earlier pins, keep them for brand consistency unless the template's list rules them out.
-   **When the user names a palette** (a brand palette) that isn't in the template's "Readable with"
-   list, keep their palette: choose a template where it is listed, or one where it is under "Also
-   without a button" and send `show_cta: false`. Six palettes (forest-calm, cool-mint, sage,
-   electric, coral-reef, sunset-glow) make almost every button hard to read, so with them hide the
-   button unless you use `collage-style`. Tell the user in one line why the button is off.
+   [references/style-selection.md](references/style-selection.md): first a palette from the
+   template's `readable_palettes` in `list_templates` (its title, subtitle and button all reach 3:1
+   there, so the render won't warn `LOW_CONTRAST`), then one that stands apart from the photo by
+   lightness and fits the topic's mood. If a template entry has no `readable_palettes` (an older
+   server), use the "Readable with" list in
+   [references/template-colors.md](references/template-colors.md) instead. If the user or their
+   site has colors already used on earlier pins, keep them for brand consistency unless the
+   template's list rules them out.
+   **When the user names a palette** (a brand palette), keep it. Today every template lists every
+   palette, but if theirs isn't in the template's `readable_palettes`, choose a template whose list
+   has it, or one where `template-colors.md` lists it under "Also without a button" and send
+   `show_cta: false` (tell the user in one line why the button is off).
 
 6. **Pick the photo.** You can't see the images before rendering, so use `image_details`: each entry
    has `width`, `height`, `orientation` (portrait, landscape, square), `animated`, `alt` text,
-   `source` (og, content, json-ld) and `low_resolution`.
+   `source` (og, content, json-ld), `low_resolution`, and sometimes a `hint`.
    - Choose a photo whose `alt` matches the headline, prefer `portrait`, and skip `animated` and
      `low_resolution` ones.
    - `primary_image` is the page's share image. It is a good default, but not always the best photo:
      check its `alt` and shape like any other.
+   - **Never use an image with a `hint`** (`author`, `logo`, `banner` or `infographic`): the server
+     marks images that are probably not a photo for the pin and lists them after the real ones. This
+     beats every other rule here, including "prefer `portrait`": a portrait author headshot is not a
+     pin photo. If only hinted images are left (even `primary_image`), ask the user for a photo or
+     use a template with `uses_photo: false`.
    - Skip photos whose `alt` or file name points to text or a person rather than the subject:
-     "infographic", "chart", "before and after", "screenshot", "quote", author headshots and logos.
+     "infographic", "chart", "before and after", "screenshot", "quote", author headshots and logos
+     (the server doesn't catch them all).
    - If a page gives no `image_details` (older responses), judge by file name: a size like
      `689x1024` hints at orientation, and `.gif`, `pixel`, `logo` or `200x200` mean skip.
    **Match the photo to the template:** full-bleed templates (photo fills the whole pin, such as
@@ -103,8 +111,9 @@ still draft the copy without it.
    render failed for limits. Tell the user how many renders a plan will use if they're running low.
 
 8. **Render** with `render_pin`: template, palette, font, headline as `title`, subtitle as
-   `description` (only on templates that support it, and not where `template-colors.md` says the
-   subtitle is never readable, such as `number-badge`: send `show_description: false` there), `site_name`, `image_url`, and a CTA that fits
+   `description` (only on templates that support it, and not where the notes in
+   `template-colors.md` say the subtitle is never readable: send `show_description: false` there),
+   `site_name`, `image_url`, and a CTA that fits
    the content ("Get the Recipe", "Read the Guide", "Shop Now", "See the List"; 30 characters max).
    **Set the text size on the first render**; the template default (100) is usually too small at
    thumbnail size. Use `text_size: "auto"`: it fits the title to its area (never smaller than
@@ -135,9 +144,14 @@ still draft the copy without it.
    read the result's `warnings` (see [references/render-warnings.md](references/render-warnings.md)
    for what each code means and what to do). Re-render only for a real defect:
    unreadable or cut-off text (`TITLE_CLAMPED`, `DESCRIPTION_CUT`), a photo cropped so the subject is
-   lost, a wrong photo, or a field showing a value that isn't true. Check the small text too: if the
-   subtitle, site name or button text looks faded against its background, switch to a palette
-   from the template's "Readable with" list, or hide the subtitle (`show_description: false`). Some
+   lost, a wrong photo, or a field showing a value that isn't true. `LOW_CONTRAST` means the title,
+   subtitle or button is hard to read on the chosen palette: re-render once with a palette its
+   message names. If the user chose the palette, keep it and hide what fails instead (the button with
+   `show_cta: false`, the subtitle with `show_description: false`), or switch to a template whose
+   `readable_palettes` has it, and say why in one line. The server doesn't judge the site name, small
+   labels or text on the photo, so check them in the preview: a faint site name is acceptable unless
+   the user wants their domain seen (then use a palette `template-colors.md` names for it), and text
+   on the photo needs a calmer, darker part of the photo (`image_focus`). Some
    warnings describe the pin rather than a defect: `IMAGE_CROPPED` says how much of the photo shows;
    setting `image_focus` doesn't change that, it only chooses which part. Re-render for it only when
    the preview shows the subject cut off. Judge by the preview, and never re-render twice for the

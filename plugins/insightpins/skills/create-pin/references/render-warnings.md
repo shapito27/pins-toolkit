@@ -17,12 +17,13 @@ real problem in the preview, and never twice for the same warning.
 | `EXTRA_IMAGES_IGNORED` | Extra photos were sent to a one-photo template. | Use a template with `uses_extra_images: true`, or leave the extras out next time. |
 | `LAYOUT_UNSETTLED` | The title size hadn't settled when the pin was captured. | Re-render only if the preview looks wrong. |
 | `OVERLAY_LOW_CONTRAST` | `overlay_strength` is below 60 on a template whose text sits on the overlay, so the text may be hard to read on this photo. | Check the title and site name in the preview; if they are hard to read, raise `overlay_strength` (or leave it at 100). |
+| `LOW_CONTRAST` | The title, subtitle or button is below 3:1 contrast on the chosen palette. The message names the element, the ratio and up to five palettes that work with the template (worked out with the same elements shown). | Re-render once with a palette the message names, or one from the template's `readable_palettes`. If the user chose the palette, keep it: hide what fails (`show_cta: false` for the button, `show_description: false` for the subtitle) or switch to a template whose `readable_palettes` has it, and tell them why. A failing title can only be fixed by another palette or template. |
 | `OVERLAY_IGNORED` | `overlay_strength` was set on a template without an overlay (`overlay: "none"`). | Nothing changed in the pin; leave the parameter out next time. No re-render needed. |
 
 `image_focus`, `image_zoom` and `image_fit` apply to every photo in the pin and are meant for
 single-photo templates; `side-panels` and the two lower `lifestyle-collage` tiles ignore them.
 
-Apart from `OVERLAY_LOW_CONTRAST`, no warning flags low contrast. Faded small text (subtitle, site name or button text on a
-mid-tone color panel, or in a light color on a pale background) only shows in the preview, so
-check it there and use `template-colors.md` (readable palettes per template) and
-`style-selection.md`.
+`LOW_CONTRAST` judges only the title, subtitle and button against the palette's colours.
+The site name, small labels (a category or badge) and any text that sits on the photo are not
+judged, so check them in the preview: `template-colors.md` notes where the site name is faint, and
+`style-selection.md` explains the contrast rules.

@@ -20,8 +20,9 @@ A pin competes in a crowded grid, mostly on phones, where each pin is shown smal
    so they need even more contrast than the headline (a 4.5:1 contrast ratio or more); bold button
    labels need at least 3:1. Light text on a mid-tone panel or button (coral, orange, bright blue,
    lime, turquoise) works for a huge headline at best and fails for small text: use a dark panel,
-   or dark text on a light background. The `create-pin` skill's `references/template-colors.md`
-   lists the readable palettes for each template.
+   or dark text on a light background. `list_templates` gives each template's
+   `readable_palettes`, and the `create-pin` skill's `references/template-colors.md` adds notes on
+   the small text.
 4. **One focal point.** One clear photo subject and one headline. Not three ideas, not five text blocks.
 5. **Text on a calm area.** Put text on a solid band, panel or quiet part of the photo, never across
    faces, food or busy detail. If the photo is busy everywhere, choose a template with a text panel.

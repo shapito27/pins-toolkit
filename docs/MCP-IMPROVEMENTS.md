@@ -33,7 +33,7 @@ Keep these as they are:
 | - | - | - | - | - | - | - |
 | 1 | Verify URL fetching can't reach internal addresses (SSRF) | Security | Inferred | Critical if vulnerable | S | **Done** (deployed 2026-10-03, see below) |
 | 2 | `extract_url`: report blocked and bot-check pages as errors | Functions | Observed | High | S | **Done** (deployed 2026-10-03) |
-| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04); follow-ups below |
+| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04; author, logo, banner and infographic `hint`s in #92, #94, checked 2026-10-05); `likely_text` still open |
 | 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | **Done** (#67 controls, #86 `image_focus: "auto"`, #87 `overlay_strength`; checked 2026-10-05) |
 | 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | **Done** (#62 warnings, #79 `text_size: "auto"`, checked 2026-10-04); follow-ups below |
 | 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | **Done** (#88: `upload_image`, `create_upload_link`, `get_upload`; checked 2026-10-05) |
@@ -51,7 +51,7 @@ Keep these as they are:
 | 18 | Publish and schedule to Pinterest | Functions | Inferred | Very high | L | Later (big project) |
 | 19 | Batch rendering of variations | Functions | Inferred | Low-Medium | S | Later |
 | 20 | Larger preview on request, carousel pins, background removal | Misc | Inferred | Low-Medium | M | Later |
-| 21 | Readable small text: contrast-checked text colors and a `LOW_CONTRAST` warning | Templates | Observed (measured 2026-10-04) | High | S-M | **Partly done** (#85: colour map and `docs/TEMPLATE_COLOR_ROLES.md`; the plugin uses them); text colours and the warning still to do |
+| 21 | Readable small text: contrast-checked text colors and a `LOW_CONTRAST` warning | Templates | Observed (measured 2026-10-04) | High | S-M | **Done** (#85 colour map; #90 `LOW_CONTRAST` and `readable_palettes`; #91, #95 subtitle colours; #93 darker primaries; checked 2026-10-05). Site name not judged yet |
 
 "Now" means before or alongside directory submission. "Next" means the first improvement round,
 the biggest quality wins. "Later" means growth features.
@@ -369,6 +369,15 @@ palettes below 3:1), draw subtitles in the `text` colour instead of `secondary` 
 that use it, and report `LOW_CONTRAST` in `warnings`. A `readable_palettes` field per template in
 `list_templates` would let any client pick well without the plugin's table.
 
+**Update (2026-10-05, #90, #91, #93, #95):** all of that shipped. `render_pin` warns `LOW_CONTRAST`
+when the title, subtitle or button is below 3:1 on the chosen palette and names palettes that pass;
+`list_templates` gives each template's `readable_palettes`; the six subtitles drawn in `secondary`
+now use the `text` colour; the six light palettes have darker primaries (3.2:1 for light text). Every
+judged text now reaches 3:1 on all 15 palettes, so every template lists every palette. Still open:
+the site name and small labels are not judged and need 4.5:1; on most colour-panel templates the
+site name is fully readable only on midnight, berry-blush, dusty-rose and minimalist (see the notes
+in `template-colors.md`).
+
 ## Suggested order of work
 
 1. ~~**This week:** item 1 (security check) and item 2 (bot-check errors).~~ Done 2026-10-03.
@@ -392,10 +401,24 @@ Checked against the live server on 2026-10-05 (2 renders, 2 uploads):
 | 16. `overlay_strength` | `list_templates` now has `overlay` (`none`, `decor`, `text`). At 30 on `magazine-cover` (text on the overlay) the render added `OVERLAY_LOW_CONTRAST`. |
 | Annotations | All 8 tools have `annotations.title` and hints (#84 for the first 5, #88 for the upload tools). |
 
-Follow-ups: the privacy policy still says the connector doesn't receive "files you upload to the
-assistant"; `docs/POLICY-DRAFTS.md` has the replacement text. Clients that cached the old
+Follow-ups: the privacy policy said the connector doesn't receive "files you upload to the
+assistant"; the text from `docs/POLICY-DRAFTS.md` was published on 05.10.2026. Clients that cached the old
 `render_pin` definition still sent `image_focus: "auto"` and `overlay_strength` in this test, but a
 stricter client may refuse them; the skills leave them out if refused.
+
+## Check of the second October 5 deploy (#89 to #95)
+
+Checked against the live server on 2026-10-05 (1 render):
+
+| Item | Result |
+| - | - |
+| 21. `LOW_CONTRAST` | Before #93 and #95 reached production, `dashed-accent` with `ocean-breeze` and a subtitle returned "The subtitle is hard to read on the Ocean Breeze palette (contrast 1.9:1; 3:1 is the minimum). Palettes that work with this template: Minimalist." |
+| 21. `readable_palettes` | After the deploy, every one of the 38 templates lists all 15 palettes. `photo-quad` also has `overlay_text_fields` (its two photo labels sit on the overlay). |
+| 21. Palettes | `list_styles` returns darker primaries for forest-calm, cool-mint, sage, electric, sunset-glow and coral-reef (3.2:1 for light text), darker accents for electric and sunset-glow, and a darker text colour for coral-reef. |
+| 3. Image hints | On `insightpins.com/blog/best-pinterest-analytics-tools.html` the JSON-LD logo (`android-chrome-512x512.png`) now has `hint: "logo"` and is listed last; before #92 it ranked above a real screenshot. |
+
+The plugin (1.0.3) now picks palettes from `readable_palettes`, documents `LOW_CONTRAST`, never uses a
+hinted image, and its mocks match this deploy.
 
 ## Answers from the server side (2026-10-04)
 

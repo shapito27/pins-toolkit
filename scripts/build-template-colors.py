@@ -97,17 +97,20 @@ def build(doc):
         "`docs/TEMPLATE_COLOR_ROLES.md`. Do not edit by hand.",
         "",
         "\"Readable with\" lists the palettes on which the template's title, subtitle and button all",
-        "reach a 3:1 contrast ratio (enough for text of 24px and up). \"Also without a button\" lists",
-        "the palettes that become readable when you hide the button (`show_cta: false`). Pick the",
-        "palette from these lists first, then by mood (`style-selection.md`). Text drawn on the photo",
-        "depends on the photo.",
+        "reach a 3:1 contrast ratio (enough for text of 24px and up): the same list `list_templates`",
+        "gives as `readable_palettes`, which comes first when the server sends it. \"Also without a",
+        "button\" lists the palettes that become readable when you hide the button (`show_cta: false`).",
+        "The notes cover what the server doesn't judge: the site name, labels and text drawn on the",
+        "photo, which depends on the photo. Pick the palette from these lists first, then by mood",
+        "(`style-selection.md`).",
         "",
         "| Template | Readable with | Also without a button | Notes |",
         "| - | - | - | - |",
     ]
     for template in rows:
         ok, extra, notes = describe(template, rows[template])
-        lines.append(f"| `{template}` | {', '.join(ok) if ok else 'none'} | {', '.join(extra)} | "
+        readable = "all 15 palettes" if ok == ALL else (", ".join(ok) if ok else "none")
+        lines.append(f"| `{template}` | {readable} | {', '.join(extra)} | "
                      f"{'; '.join(notes)} |")
     return "\n".join(lines) + "\n", len(rows)
 

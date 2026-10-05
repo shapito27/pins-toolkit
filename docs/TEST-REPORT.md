@@ -137,3 +137,20 @@ Skill changes from this round: `create-pin/references/user-photos.md` (when and 
 user's own photo, never a shared or reference pin, the 7-day notice, limits and errors), `"auto"`
 focus and `overlay_strength` in `create-pin` step 8, the overlay warnings in `render-warnings.md`,
 and `remake-pin`, `optimize-pin` and `review-pin` updated to match.
+
+## Re-test after the second October 5 deploy (readable palettes, contrast warning, image hints)
+
+- `list_templates` returns `readable_palettes` for every template; after #93 and #95 it is all 15
+  palettes everywhere, and `template-colors.md` (regenerated from the new colour map) agrees with it
+  for all 38 templates (unit test `test_matches_readable_palettes_from_list_templates`).
+- One render on `dashed-accent` with `ocean-breeze`, made before #93 and #95 reached production,
+  returned `LOW_CONTRAST` for the subtitle (1.9:1) and suggested Minimalist; `image_focus: "auto"`
+  returned its point with `"source": "auto"`.
+- `extract_url` on an insightpins.com article marked the site logo with `hint: "logo"` and listed it
+  last.
+- Skills: palette choice now starts from `readable_palettes`; the "six weak palettes" and "hide the
+  subtitle on six templates" rules are gone; `LOW_CONTRAST` has a row in `render-warnings.md`; an
+  image with a `hint` is never the pin photo, even when it is the only portrait.
+- Evals: new case `hinted-photos`; graders that encoded the old weak palettes were removed
+  (`no-faded-panel`, `no-weak-palette`, `no-faded-badge-subtitle`, `no-faded-button`), the winter case
+  now checks the mood (`calm-palette`) and the brand case checks the button stays (`keeps-button`).

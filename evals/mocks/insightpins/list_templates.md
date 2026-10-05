@@ -12,7 +12,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "decor",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "image-focus",
@@ -23,7 +24,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "minimal-clean",
@@ -34,7 +36,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "dashed-accent",
@@ -45,7 +48,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "blog-card",
@@ -75,7 +79,8 @@ type: fixed
     "default_value": "Featured",
     "max_length": 30
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "product-spotlight",
@@ -86,7 +91,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "price-tag",
@@ -104,7 +110,8 @@ type: fixed
     "default_value": "$29.99",
     "max_length": 15
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "side-rail",
@@ -115,7 +122,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "numbered-steps",
@@ -126,7 +134,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "checklist",
@@ -137,7 +146,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "number-badge",
@@ -155,7 +165,8 @@ type: fixed
     "default_value": "10",
     "max_length": 3
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "centered-quote",
@@ -166,7 +177,8 @@ type: fixed
   "uses_photo": false,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "quote-with-image",
@@ -177,7 +189,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "decor",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "vine-corners",
@@ -195,7 +208,8 @@ type: fixed
     "default_value": "Featured",
     "max_length": 30
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "tulip-frame",
@@ -213,7 +227,8 @@ type: fixed
     "default_value": "Featured",
     "max_length": 30
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "recipe-card",
@@ -237,7 +252,8 @@ type: fixed
     "default_value": "4 servings",
     "max_length": 20
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "photo-stack",
@@ -248,7 +264,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": true,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "framed-bold",
@@ -259,7 +276,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "diagonal-cut",
@@ -270,7 +288,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "corner-badge",
@@ -281,7 +300,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "decor",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "split-horizontal",
@@ -292,7 +312,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "modern-minimal",
@@ -303,7 +324,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "gradient-wave",
@@ -314,7 +336,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "magazine-cover",
@@ -332,7 +355,8 @@ type: fixed
     "default_value": "Featured",
     "max_length": 30
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "text-focus",
@@ -343,7 +367,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "collage-style",
@@ -354,7 +379,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "story-card",
@@ -365,7 +391,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "decor",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "starburst-badge",
@@ -376,7 +403,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "arch-window",
@@ -387,7 +415,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "side-panels",
@@ -405,7 +434,8 @@ type: fixed
     "default_value": "10",
     "max_length": 3
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "travel-overlay",
@@ -429,7 +459,8 @@ type: fixed
     "default_value": "10",
     "max_length": 3
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "lifestyle-collage",
@@ -447,7 +478,8 @@ type: fixed
     "default_value": "10",
     "max_length": 3
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "destination-card",
@@ -465,7 +497,8 @@ type: fixed
     "default_value": "10",
     "max_length": 3
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "grid-lines",
@@ -489,7 +522,8 @@ type: fixed
     "default_value": "SAVE FOR LATER",
     "max_length": 20
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "overlap-collage",
@@ -500,7 +534,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": true,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "photo-quad",
@@ -511,6 +546,7 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": true,
   "overlay": "text",
+  "overlay_text_fields": ["photoLabelTop", "photoLabelBottom"],
   "custom_fields": [
    {
     "id": "photoLabelTop",
@@ -524,7 +560,8 @@ type: fixed
     "default_value": "Beauty",
     "max_length": 16
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "vertical-title",
@@ -535,7 +572,8 @@ type: fixed
   "uses_photo": true,
   "uses_extra_images": false,
   "overlay": "none",
-  "custom_fields": []
+  "custom_fields": [],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  },
  {
   "id": "fitness-grid",
@@ -559,6 +597,7 @@ type: fixed
     "default_value": "Featured",
     "max_length": 30
    }
-  ]
+  ],
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
  }
 ]
