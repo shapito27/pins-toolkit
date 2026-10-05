@@ -19,7 +19,7 @@
   },
   {
    "name": "list_templates",
-   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade. readable_palettes lists the palette ids on which the title, subtitle and button reach 3:1 contrast (text on the photo is not judged); choose the palette from it unless the user asks for another.",
+   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade. readable_palettes lists the palette ids on which the title, subtitle and button reach 3:1 contrast (text on the photo is not judged); choose the palette from it unless the user asks for another. photo_area says where the photo goes: full-bleed (fills the pin), panel (one framed area, from a small accent to most of the pin), multi (several photo boxes; uses_extra_images says whether they can show different photos) or none. best_photo is the photo shape that is cropped least: portrait (about 2:3), square, landscape (about 3:2), or any. preview_url is a sample image of the template (sample text and photo, palette ocean-breeze, font modern-sans).",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -34,6 +34,38 @@
        "creative"
       ],
       "description": "Only templates in this category"
+     }
+    }
+   }
+  },
+  {
+   "name": "preview_templates",
+   "description": "See what templates look like before choosing one. Pass category to get one contact sheet of every template in it (each cell is labelled with its template id), or template_ids (up to 6) for larger single previews of a shortlist. Previews use sample text and photo, palette ocean-breeze and font modern-sans; your pin uses your own content and style. Free: no render is used.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "category": {
+      "type": "string",
+      "enum": [
+       "blog",
+       "product",
+       "list",
+       "quote",
+       "recipe",
+       "creative"
+      ],
+      "description": "One contact sheet for this category"
+     },
+     "template_ids": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 64
+      },
+      "minItems": 1,
+      "maxItems": 6,
+      "description": "Up to 6 template ids from list_templates"
      }
     }
    }

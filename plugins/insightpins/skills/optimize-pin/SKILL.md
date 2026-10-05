@@ -41,7 +41,7 @@ the InsightPins connector. Each variant tests one change, so the user learns wha
      bigger, with a palette from the template's `readable_palettes` (in `list_templates`) and
      `text_size: "auto"`.
    - **C - Photo and color:** a different, stronger photo from the page (use `image_details`: a large
-     portrait photo whose `alt` matches the promise) and a palette that stands apart from it by
+     photo whose `alt` matches the promise and whose shape suits the template's `best_photo`) and a palette that stands apart from it by
      lightness and fits the topic's mood. It reuses B's template, so its palette must be in that
      template's `readable_palettes` too. Use `image_focus` or `image_zoom` when the subject was
      cut off or too small.

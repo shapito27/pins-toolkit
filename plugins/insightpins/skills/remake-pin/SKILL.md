@@ -24,7 +24,8 @@ works about that pin's style and fixes what doesn't.
    - what works and what's weak, using the `review-pin` rubric. Keep this short.
 
 3. **Map it to InsightPins.** Call `list_templates` and `list_styles` and pick the closest template,
-   palette and font pairing. Say in one line how close the match is ("closest layout is
+   palette and font pairing. To compare layouts with the reference, call `preview_templates` with
+   your shortlist (up to 6 `template_ids`; free) and pick the one that looks closest. Say in one line how close the match is ("closest layout is
    `split-horizontal`; the reference has a curved divider we don't have").
 
 4. **Get the content and photo.** Call `extract_url` on the destination URL and check that the page

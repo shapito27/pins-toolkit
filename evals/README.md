@@ -1,8 +1,8 @@
 # InsightPins plugin evals
 
 `claude plugin eval` suite for [`plugins/insightpins`](../plugins/insightpins). The InsightPins MCP
-tools are mocked (`mocks/insightpins/`, matching the server as deployed on 2026-10-05: 8 tools,
-38 templates with `overlay` and `readable_palettes`, the darker palettes from #93, `image_details`
+tools are mocked (`mocks/insightpins/`, matching the server as deployed on 2026-10-05 (0.4.0): 9 tools,
+38 templates with `photo_area`, `best_photo`, `preview_url`, `overlay` and `readable_palettes`, the darker palettes from #93, `image_details`
 (with `hint`) and `structured` from `extract_url`, photo controls, `overlay_strength` and
 `warnings` in `render_pin`), so a run uses no real renders and needs no InsightPins account.
 
@@ -19,11 +19,11 @@ fixture into the run's workspace. `bulk-csv-check` also needs `--allow-tools Bas
 
 | Case | Tests | Key graders |
 | - | - | - |
-| `recipe-from-url` | URL -> pin; `image_details` with a wide `primary_image`, a portrait food photo, an author headshot and an infographic; `structured` recipe data | picks the portrait food photo, sets `text_size` ("auto" or >= 120), puts the page's cook time (25 min) on the pin and invents no price or other values, full report |
+| `recipe-from-url` | URL -> pin; `image_details` with a wide `primary_image`, a portrait food photo, an author headshot and an infographic; `structured` recipe data | picks the portrait food photo (or the wide one in a panel template whose `best_photo` is `landscape`), sets `text_size` ("auto" or >= 120), puts the page's cook time (25 min) on the pin and invents no price or other values, full report |
 | `listicle-number` | "17 Easy Chicken Dinners" page | the real number 17 reaches the pin; no other list number |
 | `blocked-page` | `extract_url` returns a "Just a moment..." bot-check page as a success (older servers) | no render; tells the user and asks for title/image |
 | `blocked-page-error` | `extract_url` returns a `[BOT_CHALLENGE]` error (current server) | no render; tells the user and asks for title/image |
-| `crop-warning` | Only a landscape photo; every render returns `IMAGE_CROPPED` | handles the crop (panel template, `image_focus` or `image_fit`), renders at most twice instead of looping on the warning, honest report |
+| `crop-warning` | Only a landscape photo; every render returns `IMAGE_CROPPED` | handles the crop (a panel template whose `best_photo` is `landscape` or `square`, `image_focus` or `image_fit`), renders at most twice instead of looping on the warning, honest report |
 | `variations-low-quota` | 3 variations requested, 1 render left | checks quota before rendering, renders at most 1, explains the limit and reset |
 | `copy-only` | Pinterest text for a blog post, no MCP | headline, title, description, alt text, board all present; keyword-led title; no invented claims |
 | `bulk-csv-check` | Check a bulk upload CSV with 6 time-independent problems (`resources/my-pins.template.csv`, dates filled in relative to today) | runs `check_csv.py` (indicator), finds at least 5 of 6 tied to the right pin, doesn't silently shorten titles or guess the day/month order |

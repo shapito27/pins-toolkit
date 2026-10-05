@@ -30,7 +30,7 @@ hands you ready-to-paste Pinterest copy. No design tool, no templates to fill in
   or get improved versions to A/B test.
 - **Bulk upload without the rejections.** Build or check a Pinterest bulk upload CSV and catch every
   row Pinterest would refuse before you upload.
-- **Free to start.** 38 templates, 15 color palettes, 10 font pairings and 50 renders a day.
+- **Free to start.** 38 templates, 15 color palettes, 10 font pairings and 20 renders a day.
 
 ## See it in action
 
@@ -133,7 +133,8 @@ In claude.ai chat and Cowork you don't need commands: just describe what you wan
 | Tool | What it does |
 | - | - |
 | `extract_url` | Reads a page: title, description, photos with their size and shape, and recipe or product facts (cook time, servings, price) |
-| `list_templates` | Lists the 38 pin templates and the fields each one supports |
+| `list_templates` | Lists the 38 pin templates, the fields each one supports, where the photo goes and which photo shape suits it |
+| `preview_templates` | Shows sample images of templates (a shortlist or a whole category) so Claude can see them before choosing. Uses no render |
 | `list_styles` | Lists the 15 color palettes and 10 font pairings |
 | `render_pin` | Renders a 1000x1500 pin and returns a preview, an image link, an edit link and warnings. It can find the photo's subject on its own and fade a template's colour overlay |
 | `get_quota` | Shows how many renders you have left today |
@@ -156,8 +157,8 @@ The connector's server is `https://app.insightpins.com/api/mcp`. Its tools and l
 
 ## Usage limits
 
-Each rendered pin counts against your InsightPins daily render limit (currently 50 free renders per
-account per day), and each photo you upload against a daily upload limit (30 a day). Both reset at
+Each rendered pin counts against your InsightPins daily render limit (currently 20 free renders per
+account per day), and each photo you upload against a daily upload limit (10 a day). Both reset at
 00:00 UTC.
 Claude checks your remaining renders before making several pins and only re-renders when you ask
 for a change or the preview has a real defect. Plans with higher limits may be offered on
@@ -200,7 +201,7 @@ What InsightPins keeps:
 - **Rendered images**, for 7 days. Anyone with an image's link can open it, so share links with care.
 - **Uploaded photos**, for 7 days, after their location and camera data is removed. Like rendered
   images, anyone with the link can open them. A record of each upload (time, size, format) stays
-  with your account and counts your daily upload limit (30 a day).
+  with your account and counts your daily upload limit (10 a day).
 - **Server logs**, including failed page fetches or renders with your account ID and the URL involved.
 The plugin sends no data to any other service. See the InsightPins
 [privacy policy](https://insightpins.com/privacy.html) and

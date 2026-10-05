@@ -154,3 +154,21 @@ and `remake-pin`, `optimize-pin` and `review-pin` updated to match.
 - Evals: new case `hinted-photos`; graders that encoded the old weak palettes were removed
   (`no-faded-panel`, `no-weak-palette`, `no-faded-badge-subtitle`, `no-faded-button`), the winter case
   now checks the mood (`calm-palette`) and the brand case checks the button stays (`keeps-button`).
+
+## Re-test after the October 5 evening deploy (template photo fields, promo hints, lower limits)
+
+- `list_templates` returns `photo_area`, `best_photo` and `preview_url`; the mock is rebuilt from the
+  server's generated catalog, and the skills now match photos to `best_photo` instead of a
+  hand-written list of full-bleed templates (that list had `bold-title` and `gradient-wave`, which
+  now put the photo in a panel).
+- `extract_url` on a BBC Good Food recipe now marks the presenter headshot `author` and three promos
+  `promo`, and ranks the pancake photo first.
+- Limits are 20 renders and 10 uploads a day in the terms; the plugin, its mocks and the docs follow.
+- Template guide: the leftover advice to hide the subtitle on `number-badge` and `side-panels` (drawn
+  in a readable colour since #91) is gone.
+- Graders: `crop-warning` accepts any panel template whose `best_photo` is `landscape` or `square`;
+  `recipe-from-url` also accepts the wide food photo in a panel template whose `best_photo` is
+  `landscape`. Unit tests build both lists from the template mock.
+- `preview_templates` (#108) returned labelled sample images for `recipe-card` and `split-horizontal`
+  without using a render; `create-pin` and `remake-pin` now call it to compare a shortlist, and the
+  mocks list it as the ninth tool. `get_quota` now returns `"limit": 20`.

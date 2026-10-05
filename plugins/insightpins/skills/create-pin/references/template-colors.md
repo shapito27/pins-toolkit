@@ -43,8 +43,8 @@ photo, which depends on the photo. Pick the palette from these lists first, then
 | `starburst-badge` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
 | `arch-window` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
 | `side-panels` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `travel-overlay` | all 15 palettes |  | subtitle sits on the photo: pick a calm, darker area with `image_focus` |
-| `lifestyle-collage` | all 15 palettes |  | subtitle sits on the photo: pick a calm, darker area with `image_focus` |
+| `travel-overlay` | all 15 palettes |  |  |
+| `lifestyle-collage` | all 15 palettes |  |  |
 | `destination-card` | all 15 palettes |  |  |
 | `grid-lines` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
 | `overlap-collage` | all 15 palettes |  |  |

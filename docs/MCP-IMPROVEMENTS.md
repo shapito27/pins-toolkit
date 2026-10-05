@@ -33,12 +33,12 @@ Keep these as they are:
 | - | - | - | - | - | - | - |
 | 1 | Verify URL fetching can't reach internal addresses (SSRF) | Security | Inferred | Critical if vulnerable | S | **Done** (deployed 2026-10-03, see below) |
 | 2 | `extract_url`: report blocked and bot-check pages as errors | Functions | Observed | High | S | **Done** (deployed 2026-10-03) |
-| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04; author, logo, banner and infographic `hint`s in #92, #94, checked 2026-10-05; `promo` hint and small declared images kept in #97); `likely_text` still open |
+| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04; author, logo, banner and infographic `hint`s in #92, #94, checked 2026-10-05; `promo` hint and small declared images kept in #97; roles from embedded page JSON in #99); `likely_text` still open |
 | 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | **Done** (#67 controls, #86 `image_focus: "auto"`, #87 `overlay_strength`; checked 2026-10-05) |
 | 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | **Done** (#62 warnings, #79 `text_size: "auto"`, checked 2026-10-04); follow-ups below |
 | 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | **Done** (#88: `upload_image`, `create_upload_link`, `get_upload`; checked 2026-10-05) |
 | 7 | `extract_url`: structured data (recipe times, servings, product price) | Functions | Observed | Medium-High | S | **Done** (#56, checked 2026-10-04); description still cut mid-sentence |
-| 8 | Template previews in `list_templates` | Templates | Inferred | Medium-High | S | Next |
+| 8 | Template previews in `list_templates` | Templates | Inferred | Medium-High | S | **Done** (#105: `photo_area`, `best_photo`, `preview_url`; #108: `preview_templates` returns the images; checked 2026-10-05) |
 | 9 | List items for list templates | Templates | Inferred | Medium-High | M | Next |
 | 10 | Brand kit: custom colors, logo, saved defaults | Controls | Inferred | High for repeat users | M | Before paid plans |
 | 11 | Dark and high-contrast backgrounds | Templates | Observed | Medium | S-M | Next |
@@ -226,6 +226,10 @@ image") and never sees the template. Add `preview_url` (a small sample image) to
 Add `photo_area` too (`full-bleed`, `panel`, `none`, `multi`) plus the best photo orientation, so
 templates can be matched to photos without guessing. The plugin's template guide now does this by
 hand, and it will go stale as you add templates.
+
+**Update (#105, 2026-10-05):** shipped as proposed. The plugin now matches photos with `photo_area`
+and `best_photo` instead of its own lists, which had gone stale: `bold-title` and `gradient-wave`
+now put the photo in a panel (`best_photo: "square"`), not full-bleed.
 
 ### 9. List items for list templates (next)
 
@@ -419,6 +423,21 @@ Checked against the live server on 2026-10-05 (1 render):
 
 The plugin (1.0.3) now picks palettes from `readable_palettes`, documents `LOW_CONTRAST`, never uses a
 hinted image, and its mocks match this deploy.
+
+## Check of the October 5 evening deploy (#96 to #105)
+
+Checked against the live server on 2026-10-05 (no renders):
+
+| Item | Result |
+| - | - |
+| 8. Template previews | `list_templates` gives `photo_area`, `best_photo` and `preview_url` (for example `recipe-card`: `panel`, `square`, `https://app.insightpins.com/template-previews/recipe-card.jpg`). Four descriptions changed to say where the photo is. |
+| 3. Image hints | On `bbcgoodfood.com/recipes/easy-pancakes` the presenter headshot is now `hint: "author"`, three app and podcast promos are `promo`, and the pancake photo (the page's `og:image`) is `primary_image`; before #97 and #99 the headshot was `primary_image` and the pancake photo was missing. |
+| Limits (#103) | The terms say 20 renders and 10 uploads a day (published 05.10.2026). `get_quota` still returned `"limit": 50` at first; a later check returned `"limit": 20`. |
+| 8. `preview_templates` (#108, 0.4.0) | Free and read-only: two `template_ids` returned two labelled sample images and a note to choose colours from `readable_palettes`, not from the preview. |
+| Colours (#101) | `lifestyle-collage`, `fitness-grid` and `travel-overlay` draw their text on a light box instead of the photo; `template-colors.md` is regenerated. |
+
+The plugin (1.0.4) uses the new photo fields, says 20 renders and 10 uploads, and its mocks match the
+#105 catalog.
 
 ## Answers from the server side (2026-10-04)
 

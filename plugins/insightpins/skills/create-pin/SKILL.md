@@ -64,6 +64,11 @@ still draft the copy without it.
    left off the pin, so omit any you don't have a real value for (never invent a price, cook time or
    count). Exception: `number-badge` and `side-panels` always show a number, so use them only when the
    content has one.
+   **See before you choose:** when two to six templates fit and the descriptions don't settle it,
+   call `preview_templates` with them (`template_ids`; it is free and uses no render) and compare
+   the images. Previews use sample text and photo, the ocean-breeze palette and modern-sans, so judge
+   the layout, the photo area and the room for the headline, not the colours. If the tool isn't
+   available, choose from the descriptions.
 
 5. **Pick the style.** Call `list_styles` and choose a palette and font pairing with
    [references/style-selection.md](references/style-selection.md): first a palette from the
@@ -82,26 +87,30 @@ still draft the copy without it.
 6. **Pick the photo.** You can't see the images before rendering, so use `image_details`: each entry
    has `width`, `height`, `orientation` (portrait, landscape, square), `animated`, `alt` text,
    `source` (og, content, json-ld), `low_resolution`, and sometimes a `hint`.
-   - Choose a photo whose `alt` matches the headline, prefer `portrait`, and skip `animated` and
-     `low_resolution` ones.
+   - Choose a photo whose `alt` matches the headline and whose shape suits the template (see
+     "Match the photo to the template" below), and skip `animated` and `low_resolution` ones.
    - `primary_image` is the page's share image. It is a good default, but not always the best photo:
      check its `alt` and shape like any other.
    - **Never use an image with a `hint`** (such as `author`, `logo`, `promo`, `banner` or
      `infographic`; the list can grow): the server marks images that are probably not a photo for
-     the pin and lists them after the real ones. This beats every other rule here, including "prefer `portrait`": a portrait author headshot is not a
-     pin photo. If only hinted images are left (even `primary_image`), ask the user for a photo or
+     the pin and lists them after the real ones. This beats every other rule here, including the photo shape: a portrait author headshot is not
+     a pin photo. If only hinted images are left (even `primary_image`), ask the user for a photo or
      use a template with `uses_photo: false`.
    - Skip photos whose `alt` or file name points to text or a person rather than the subject:
      "infographic", "chart", "before and after", "screenshot", "quote", author headshots and logos
      (the server doesn't catch them all).
    - If a page gives no `image_details` (older responses), judge by file name: a size like
      `689x1024` hints at orientation, and `.gif`, `pixel`, `logo` or `200x200` mean skip.
-   **Match the photo to the template:** full-bleed templates (photo fills the whole pin, such as
-   `bold-title`, `gradient-wave`, `corner-badge`, `travel-overlay`, `destination-card`) need a
-   portrait photo, or heads and products get cut off. For a landscape or square photo, use a template
-   that puts the photo in a wide panel: `split-horizontal`, `recipe-card` or `product-spotlight`
-   (tested), or `minimal-clean`. If a full-bleed template is still the right choice, set
-   `image_focus` to the subject (see step 8).
+   **Match the photo to the template:** `list_templates` gives each template's `photo_area`
+   (`full-bleed`: the photo fills the pin; `panel`: one framed area, from a small accent to most of
+   the pin; `multi`: several photo boxes; `none`) and `best_photo`, the photo shape it crops least
+   (`portrait` about 2:3, `square`, `landscape` about 3:2, or `any`). Pick the template and the photo
+   together so the photo's `orientation` matches `best_photo`. A landscape or square photo in a
+   `full-bleed` template loses its sides, and heads and products get cut off: prefer a `panel`
+   template whose `best_photo` is `landscape` or `square`. If a `full-bleed` template is still the
+   right choice, set `image_focus` to the subject (see step 8). Each template also has a
+   `preview_url`, a sample image of it (sample text and photo, palette ocean-breeze): when the user
+   wants to choose a template themselves, give them a few of these links.
    `list_templates` marks templates with no photo (`uses_photo: false`) and collage templates that
    take extra photos (`uses_extra_images: true`, up to 3 in `additional_image_urls`). Use extra
    photos only with those templates, and only photos that clearly belong together.

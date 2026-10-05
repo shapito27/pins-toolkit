@@ -46,7 +46,7 @@ has returned its `image_url`.
 | - | - |
 | Not JPEG, PNG or WebP (for example HEIC, the iPhone default) | Ask for a JPEG or PNG copy of the photo |
 | Too large (over 4.5 MB through the link, 3 MB through `upload_image`, or over 40 megapixels) | Ask for a smaller version, or a JPEG export |
-| Daily upload limit reached (30 per account per day) | Say so, say it resets at 00:00 UTC, and offer to use a photo URL instead |
+| Daily upload limit reached (10 per account per day) | Say so, say it resets at 00:00 UTC, and offer to use a photo URL instead |
 | 5 upload links already open | Use one of them, or wait 15 minutes |
 
 ## After rendering
