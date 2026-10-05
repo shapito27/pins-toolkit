@@ -10,8 +10,9 @@ InsightPins call is needed, so a review uses none of the user's render limit.
 
 ## Steps
 
-1. **Get the pin.** An image shared in the chat is best. If the user gives only a link to a Pinterest pin
-   page, ask them to upload the image (you may not be able to see it through the link). Ask for the
+1. **Get the pin.** An image shared in the chat is best. If the user gives only a link to a
+   Pinterest pin page, ask them to share the image in the chat (you may not be able to see it
+   through the link). Ask for the
    pin title, description and destination URL too if they want those reviewed; they're optional.
    A review reads the image in the conversation only: never upload it to InsightPins.
 

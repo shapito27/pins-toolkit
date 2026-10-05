@@ -32,8 +32,7 @@ works about that pin's style and fixes what doesn't.
    fits the reference's look (similar framing and brightness) and the `pin-design` rules. If the
    user wants their own photo on the new pin, upload it as described in `create-pin`'s
    `references/user-photos.md` (and tell them it is kept on InsightPins for 7 days). Never upload the
-   reference pin itself: its text is baked in, and if
-   it isn't theirs, it isn't theirs to reuse.
+   reference pin itself: its text is baked in, and a pin that isn't theirs isn't theirs to reuse.
 
 5. **Write better copy** with the `pin-copy` skill: keep the reference's angle if it fits the
    content, but make the headline more specific and readable. Use only facts the user's page

@@ -90,8 +90,8 @@ the InsightPins connector. Each variant tests one change, so the user learns wha
 ## Without a destination URL
 
 You can still re-render with a photo URL the user provides, or with their original photo (the one
-without text), uploaded as described in `create-pin`'s `references/user-photos.md` (and tell them it is
-kept on InsightPins for 7 days). Never upload the
-old pin itself: its text is baked in and would show under the new text. If no usable photo is
+without text), uploaded as described in `create-pin`'s `references/user-photos.md` (and tell them
+it is kept on InsightPins for 7 days). Never upload the old pin itself: its text is baked in and
+would show under the new text. If no usable photo is
 available, deliver the review, the improved copy and the exact template/palette/font settings so
 the user can apply them on insightpins.com.
