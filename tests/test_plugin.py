@@ -105,24 +105,24 @@ def template_colors():
     for line in read(TEMPLATE_COLORS).splitlines():
         m = re.match(r"^\| `([a-z-]+)` \| (.*?) \| (.*?) \| (.*?) \|$", line)
         if m:
-            split = lambda cell: [p.strip() for p in cell.split(",") if p.strip() and p.strip() != "none"]
+            split = lambda cell: (list(palettes()) if cell.strip() == "all 15 palettes" else
+                                  [p.strip() for p in cell.split(",") if p.strip() and p.strip() != "none"])
             rows[m.group(1)] = (split(m.group(2)), split(m.group(3)), m.group(4))
     return rows
 
 
-def mood_table_columns():
-    """Palettes named in the 'On panel templates' and 'On light templates' columns."""
+def mood_table_palettes():
+    """Palettes named in the mood table's 'Palettes' column."""
     text = read(STYLE_GUIDE)
     section = text.split("## Palette by mood and topic", 1)[1].split("\n## ", 1)[0]
-    panel, light = set(), set()
+    named = set()
     for line in section.splitlines():
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
-        if len(cells) != 3 or cells[0] in ("Mood / topic", "-"):
+        if len(cells) != 2 or cells[0] in ("Mood / topic", "-"):
             continue
-        for cell, out in ((cells[1], panel), (cells[2], light)):
-            cell = re.sub(r"\([^)]*\)", "", cell)  # "berry-blush (desserts)" names one palette
-            out.update(name.strip() for name in cell.split(",") if name.strip())
-    return panel, light
+        cell = re.sub(r"\([^)]*\)", "", cells[1])  # "berry-blush (desserts)" names one palette
+        named.update(name.strip() for name in cell.split(",") if name.strip())
+    return named
 
 
 class ContrastFormulaTest(unittest.TestCase):
@@ -173,32 +173,23 @@ class StyleGuideTest(unittest.TestCase):
             self.assertTrue(rating.startswith(rating_for(exact)),
                             f"{pid}: {exact:.3f} is rated '{rating}', expected '{rating_for(exact)}'")
 
-    def test_panel_suggestions_are_readable_on_panel_templates(self):
-        panel, _ = mood_table_columns()
-        self.assertTrue(panel, "mood table has no panel column entries")
+    def test_mood_table_suggests_every_palette_and_only_readable_ones(self):
+        named = mood_table_palettes()
+        self.assertEqual(named, set(self.palettes), "the mood table should name each palette at least once")
         colors = template_colors()
-        for pid in panel:
-            self.assertIn(pid, self.table, f"unknown palette {pid} in mood table")
+        for pid in named:
             for template in ("split-horizontal", "diagonal-cut"):
                 self.assertIn(pid, colors[template][0], f"{pid} is not readable on {template}")
-
-    def test_light_suggestions_have_readable_buttons(self):
-        _, light = mood_table_columns()
-        self.assertTrue(light, "mood table has no light column entries")
-        for pid in light:
-            self.assertIn(pid, self.palettes, f"unknown palette {pid} in mood table")
-            self.assertGreaterEqual(light_on_primary(self.palettes[pid]), 3.0,
-                                    f"{pid}: button text below 3:1")
 
     def test_every_palette_passes_for_headline_on_light_templates(self):
         for pid, c in self.palettes.items():
             self.assertGreaterEqual(contrast(c["text"], c["background"]), 4.5, pid)
 
-    def test_left_out_palettes_fail_buttons(self):
-        text = read(STYLE_GUIDE).split("## Palette by mood and topic", 1)[1].split("## Font", 1)[0]
-        for pid in ("forest-calm", "cool-mint", "sage", "electric", "coral-reef", "sunset-glow"):
-            self.assertIn(pid, text)
-            self.assertLess(light_on_primary(self.palettes[pid]), 3.0, pid)
+    def test_every_palette_reaches_3_on_primary(self):
+        # Since the October 5 palette update (pin-generator-tool #93), the guide says so.
+        for pid, c in self.palettes.items():
+            self.assertGreaterEqual(light_on_primary(c), 3.0, pid)
+        self.assertNotIn("Fails", read(STYLE_GUIDE))
 
 
 class TemplateColorsTest(unittest.TestCase):
@@ -229,13 +220,16 @@ class TemplateColorsTest(unittest.TestCase):
             for pid in readable:
                 self.assertGreaterEqual(light_on_primary(self.palettes[pid]), 3.0, f"{template}: {pid}")
 
-    def test_style_guide_names_the_secondary_subtitle_templates(self):
-        flagged = sorted(t for t, (_, _, notes) in self.rows.items() if "never readable" in notes)
-        self.assertEqual(flagged, sorted(["number-badge", "dashed-accent", "starburst-badge",
-                                          "arch-window", "side-panels", "lifestyle-collage"]))
-        guide = read(STYLE_GUIDE)
-        for template in flagged:
-            self.assertIn(f"`{template}`", guide)
+    def test_matches_readable_palettes_from_list_templates(self):
+        # The server's readable_palettes and this file come from the same colour map.
+        _, body = strip_frontmatter(read(os.path.join(EVALS, "mocks", "insightpins", "list_templates.md")))
+        for entry in json.loads(body):
+            self.assertEqual(entry["readable_palettes"], self.rows[entry["id"]][0], entry["id"])
+
+    def test_no_template_flags_a_secondary_subtitle(self):
+        # pin-generator-tool #91 and #95 drew every subtitle in a readable colour.
+        flagged = [t for t, (_, _, notes) in self.rows.items() if "never readable" in notes]
+        self.assertEqual(flagged, [])
 
     def test_up_to_date_with_the_colour_map(self):
         source = os.path.join(ROOT, "..", "pin-generator-tool", "docs", "TEMPLATE_COLOR_ROLES.md")
@@ -615,59 +609,73 @@ class EvalSuiteTest(unittest.TestCase):
                     script = os.path.join(path, m.group(1))
                     self.assertTrue(os.access(script, os.X_OK), f"{name}: {m.group(1)} not executable")
 
-    def test_no_faded_panel_grader(self):
-        _, pattern, _ = grader("winter-palette", "no-faded-panel")
-        rx = re.compile(pattern)
-        bad = [render_input(template_id="split-horizontal", title="T", palette_id="coral-reef"),
-               render_input(palette_id="ocean-breeze", title="T", template_id="diagonal-cut")]
-        good = [render_input(template_id="diagonal-cut", title="T", palette_id="midnight"),
-                render_input(template_id="split-horizontal", title="T", palette_id="rose-gold"),
-                render_input(template_id="minimal-clean", title="T", palette_id="coral-reef"),
-                render_input(template_id="split-horizontal", title="T")]
-        for s in bad:
-            self.assertTrue(rx.search(s), s)
-        for s in good:
-            self.assertFalse(rx.search(s), s)
-
-    def test_weak_palette_graders(self):
-        _, winter, _ = grader("winter-palette", "no-weak-palette")
-        _, optimize, _ = grader("optimize-variants", "no-weak-palette")
-        self.assertTrue(re.search(winter, render_input(template_id="minimal-clean", palette_id="coral-reef")))
-        self.assertFalse(re.search(winter, render_input(template_id="minimal-clean", palette_id="midnight")))
-        # optimize: a failing palette is fine only without a button, and never on a colour panel
-        self.assertTrue(re.search(optimize, render_input(template_id="minimal-clean", palette_id="coral-reef")))
-        self.assertFalse(re.search(optimize, render_input(template_id="minimal-clean", palette_id="sage",
-                                                          show_cta=False)))
-        self.assertTrue(re.search(optimize, render_input(template_id="split-horizontal", palette_id="sage",
-                                                         show_cta=False)))
-        self.assertTrue(re.search(optimize, render_input(palette_id="ocean-breeze", template_id="split-horizontal")))
-        self.assertFalse(re.search(optimize, render_input(template_id="split-horizontal", palette_id="lavender")))
-        self.assertFalse(re.search(optimize, render_input(template_id="collage-style", palette_id="sage")))
-
-    def test_number_badge_subtitle_grader(self):
-        _, pattern, _ = grader("listicle-number", "no-faded-badge-subtitle")
-        rx = re.compile(pattern)
-        self.assertTrue(rx.search(render_input(template_id="number-badge", description="Sub")))
-        self.assertTrue(rx.search(render_input(description="Sub", show_description=True,
-                                               template_id="number-badge")))
-        self.assertFalse(rx.search(render_input(template_id="number-badge", description="Sub",
-                                                show_description=False)))
-        self.assertFalse(rx.search(render_input(template_id="number-badge", title="T")))
-        self.assertFalse(rx.search(render_input(template_id="numbered-steps", description="Sub")))
+    def test_calm_palette_grader(self):
+        _, pattern, _ = grader("winter-palette", "calm-palette")
+        for pid in ("coral-reef", "sunset-glow", "terracotta"):
+            self.assertTrue(re.search(pattern, render_input(template_id="minimal-clean", palette_id=pid)), pid)
+        for pid in ("midnight", "ocean-breeze", "minimalist"):
+            self.assertFalse(re.search(pattern, render_input(template_id="minimal-clean", palette_id=pid)), pid)
 
     def test_brand_palette_graders(self):
         _, keeps, _ = grader("brand-palette", "keeps-brand-palette")
-        _, panel, _ = grader("brand-palette", "no-faded-panel")
-        _, button, _ = grader("brand-palette", "no-faded-button")
-        self.assertTrue(re.search(keeps, render_input(template_id="minimal-clean", palette_id="coral-reef")))
+        _, button, _ = grader("brand-palette", "keeps-button")
+        self.assertTrue(re.search(keeps, render_input(template_id="split-horizontal", palette_id="coral-reef")))
         self.assertFalse(re.search(keeps, render_input(template_id="minimal-clean", palette_id="midnight")))
-        self.assertTrue(re.search(panel, render_input(template_id="split-horizontal", palette_id="coral-reef")))
-        self.assertFalse(re.search(panel, render_input(template_id="minimal-clean", palette_id="coral-reef")))
-        self.assertTrue(re.search(button, render_input(template_id="minimal-clean", palette_id="coral-reef")))
-        self.assertFalse(re.search(button, render_input(template_id="minimal-clean", palette_id="coral-reef",
-                                                        show_cta=False)))
-        self.assertFalse(re.search(button, render_input(template_id="collage-style", palette_id="coral-reef")))
-        self.assertFalse(re.search(button, render_input(template_id="minimal-clean", palette_id="midnight")))
+        self.assertTrue(re.search(button, render_input(palette_id="coral-reef", show_cta=False)))
+        self.assertFalse(re.search(button, render_input(palette_id="coral-reef")))
+
+    def test_hinted_photo_graders(self):
+        _, hinted, _ = grader("hinted-photos", "no-hinted-image")
+        _, page, _ = grader("hinted-photos", "uses-page-photo")
+        _, body = strip_frontmatter(read(os.path.join(EVALS, "hinted-photos", "mocks", "insightpins",
+                                                      "extract_url.md")))
+        page_data = json.loads(body)
+        hinted_urls = [d["url"] for d in page_data["image_details"] if "hint" in d]
+        real_urls = [d["url"] for d in page_data["image_details"] if "hint" not in d]
+        self.assertEqual(len(hinted_urls), 2)
+        # the hinted portrait is the only portrait, so "prefer portrait" alone would pick it
+        self.assertEqual([d["orientation"] for d in page_data["image_details"] if "hint" not in d],
+                         ["landscape", "landscape"])
+        self.assertNotIn(page_data["primary_image"], hinted_urls)
+        for url in hinted_urls:
+            self.assertTrue(re.search(hinted, render_input(image_url=url)), url)
+            self.assertFalse(re.search(page, render_input(image_url=url)), url)
+        for url in real_urls:
+            self.assertFalse(re.search(hinted, render_input(image_url=url)), url)
+            self.assertTrue(re.search(page, render_input(image_url=url)), url)
+
+
+class McpFeaturesTest(unittest.TestCase):
+    """What the October 5 server added is documented in the skills and present in the mocks."""
+
+    def test_every_warning_code_is_documented(self):
+        tools = json.loads(read(os.path.join(EVALS, "mocks", "insightpins", "_tools.json")))["tools"]
+        description = next(t for t in tools if t["name"] == "render_pin")["description"]
+        codes = set(re.findall(r"\b[A-Z]+(?:_[A-Z]+)+\b", description))
+        self.assertIn("LOW_CONTRAST", codes)
+        guide = read(os.path.join(SKILLS, "create-pin", "references", "render-warnings.md"))
+        for code in codes:
+            self.assertIn(f"| `{code}` |", guide, code)
+
+    def test_skills_use_readable_palettes_and_hints(self):
+        create = read(os.path.join(SKILLS, "create-pin", "SKILL.md"))
+        self.assertIn("`readable_palettes`", create)
+        self.assertIn("Never use an image with a `hint`", create)
+        self.assertIn("`LOW_CONTRAST`", create)
+        for skill in ("optimize-pin", "remake-pin"):
+            self.assertIn("readable_palettes", read(os.path.join(SKILLS, skill, "SKILL.md")), skill)
+        for skill in ("create-pin", "optimize-pin", "remake-pin"):
+            self.assertNotIn('"Readable with" list', read(os.path.join(SKILLS, skill, "SKILL.md")).replace(
+                'use the "Readable with" list in', ""), skill)
+
+    def test_list_templates_mock_has_the_new_fields(self):
+        _, body = strip_frontmatter(read(os.path.join(EVALS, "mocks", "insightpins", "list_templates.md")))
+        templates = json.loads(body)
+        ids = set(palettes())
+        for t in templates:
+            self.assertTrue(set(t["readable_palettes"]) <= ids, t["id"])
+        quad = next(t for t in templates if t["id"] == "photo-quad")
+        self.assertEqual(quad["overlay_text_fields"], ["photoLabelTop", "photoLabelBottom"])
 
 if __name__ == "__main__":
     unittest.main()

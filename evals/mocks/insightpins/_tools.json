@@ -2,7 +2,7 @@
  "tools": [
   {
    "name": "extract_url",
-   "description": "Fetch a web page (blog post, product page, recipe...) and return its title, description, site name and up to 10 image URLs, ready to put on a pin.",
+   "description": "Fetch a web page (blog post, product page, recipe...) and return its title, description, site name and up to 10 image URLs, ready to put on a pin. Each entry of image_details has its size, orientation, alt text and low_resolution. An entry with a hint (author, infographic, banner, logo or promo) is probably not a photo for the pin, so avoid it; it is listed after the real photos and is never the primary_image unless nothing else exists.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -19,7 +19,7 @@
   },
   {
    "name": "list_templates",
-   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade.",
+   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade. readable_palettes lists the palette ids on which the title, subtitle and button reach 3:1 contrast (text on the photo is not judged); choose the palette from it unless the user asks for another.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -56,7 +56,7 @@
   },
   {
    "name": "render_pin",
-   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. The result also has an edit_url. When a short title looks small for its space, re-render with text_size \"auto\". When a photo is cropped badly or too small in its frame, re-render with image_focus, image_zoom or image_fit \"contain\". Counts against the daily render limit; failed renders are not counted. The result has a warnings list (each with a code and a message) when something looks wrong. Read it, but re-render only when a warning matters. Codes: TITLE_CLAMPED, DESCRIPTION_CUT, IMAGE_CROPPED, IMAGE_UPSCALED, TITLE_SHRUNK, TITLE_SMALL, SUBTITLE_HIDDEN, EXTRA_IMAGES_IGNORED, IMAGE_IGNORED, LAYOUT_UNSETTLED. When a photo looks washed out or too dark under the template's colour overlay, re-render with overlay_strength (0-100). IMAGE_CROPPED is raised only while image_focus is the default centre or \"auto\". overlay_strength adds OVERLAY_IGNORED and OVERLAY_LOW_CONTRAST.",
+   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. The result also has an edit_url. When a short title looks small for its space, re-render with text_size \"auto\". When a photo is cropped badly or too small in its frame, re-render with image_focus, image_zoom or image_fit \"contain\". Counts against the daily render limit; failed renders are not counted. The result has a warnings list (each with a code and a message) when something looks wrong. Read it, but re-render only when a warning matters. Codes: TITLE_CLAMPED, DESCRIPTION_CUT, IMAGE_CROPPED, IMAGE_UPSCALED, TITLE_SHRUNK, TITLE_SMALL, SUBTITLE_HIDDEN, EXTRA_IMAGES_IGNORED, IMAGE_IGNORED, LAYOUT_UNSETTLED. When a photo looks washed out or too dark under the template's colour overlay, re-render with overlay_strength (0-100). IMAGE_CROPPED is raised only while image_focus is the default centre or \"auto\". overlay_strength adds OVERLAY_IGNORED and OVERLAY_LOW_CONTRAST. LOW_CONTRAST means the title, subtitle or button is hard to read on the chosen palette; its message names palettes that work with the template.",
    "inputSchema": {
     "type": "object",
     "required": [

@@ -45,7 +45,7 @@ type: fixed
    "name": "Forest Calm",
    "category": "Greens & Teals",
    "colors": {
-    "primary": "#43A047",
+    "primary": "#409844",
     "secondary": "#81C784",
     "accent": "#2E7D32",
     "text": "#1B5E20",
@@ -57,7 +57,7 @@ type: fixed
    "name": "Cool Mint",
    "category": "Greens & Teals",
    "colors": {
-    "primary": "#26A69A",
+    "primary": "#229489",
     "secondary": "#80CBC4",
     "accent": "#00897B",
     "text": "#004D40",
@@ -69,7 +69,7 @@ type: fixed
    "name": "Sage",
    "category": "Greens & Teals",
    "colors": {
-    "primary": "#7CB342",
+    "primary": "#689637",
     "secondary": "#AED581",
     "accent": "#558B2F",
     "text": "#33691E",
@@ -81,9 +81,9 @@ type: fixed
    "name": "Electric",
    "category": "Greens & Teals",
    "colors": {
-    "primary": "#00BCD4",
+    "primary": "#0095A9",
     "secondary": "#4DD0E1",
-    "accent": "#0097A7",
+    "accent": "#007B88",
     "text": "#006064",
     "background": "#E0F7FA"
    }
@@ -93,9 +93,9 @@ type: fixed
    "name": "Sunset Glow",
    "category": "Warm Tones",
    "colors": {
-    "primary": "#FF7043",
+    "primary": "#EC4B19",
     "secondary": "#FFAB91",
-    "accent": "#E64A19",
+    "accent": "#C13E15",
     "text": "#BF360C",
     "background": "#FBE9E7"
    }
@@ -117,10 +117,10 @@ type: fixed
    "name": "Coral Reef",
    "category": "Warm Tones",
    "colors": {
-    "primary": "#FF5252",
+    "primary": "#FF3131",
     "secondary": "#FF8A80",
     "accent": "#D32F2F",
-    "text": "#B71C1C",
+    "text": "#AA1A1A",
     "background": "#FFEBEE"
    }
   },

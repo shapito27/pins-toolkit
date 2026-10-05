@@ -1,6 +1,6 @@
 ---
 plugins: ["../../plugins/insightpins"]
-description: Winter travel page with a bright, snowy landscape photo; tests that the palette keeps small text readable and fits the topic's mood
+description: Winter travel page with a bright, snowy landscape photo; tests that the palette fits the calm winter mood (no red, coral or orange palette)
 tags: [mcp, create, color]
 max_turns: 25
 allowed_tools: [Skill]

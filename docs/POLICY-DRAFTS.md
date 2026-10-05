@@ -1,5 +1,9 @@
 # Privacy policy and terms: changes for photo uploads
 
+**Published on 05.10.2026** at `insightpins.com/privacy.html` and `terms-of-use.html`. The
+deletion lag ("up to a day later") was kept; the AI-training line was left out in favour of "We do
+not use your photos for anything else". This file stays as the record of what changed.
+
 The connector can now receive the user's own photos (`upload_image`, `create_upload_link`), which
 the current privacy policy (updated 03.10.2026) rules out: "We do not receive your conversation,
 files you upload to the assistant, or anything else from your account there." Publish these changes
