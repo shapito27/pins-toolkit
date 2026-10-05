@@ -33,7 +33,7 @@ Keep these as they are:
 | - | - | - | - | - | - | - |
 | 1 | Verify URL fetching can't reach internal addresses (SSRF) | Security | Inferred | Critical if vulnerable | S | **Done** (deployed 2026-10-03, see below) |
 | 2 | `extract_url`: report blocked and bot-check pages as errors | Functions | Observed | High | S | **Done** (deployed 2026-10-03) |
-| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04; author, logo, banner and infographic `hint`s in #92, #94, checked 2026-10-05); `likely_text` still open |
+| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04; author, logo, banner and infographic `hint`s in #92, #94, checked 2026-10-05; `promo` hint and small declared images kept in #97); `likely_text` still open |
 | 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | **Done** (#67 controls, #86 `image_focus: "auto"`, #87 `overlay_strength`; checked 2026-10-05) |
 | 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | **Done** (#62 warnings, #79 `text_size: "auto"`, checked 2026-10-04); follow-ups below |
 | 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | **Done** (#88: `upload_image`, `create_upload_link`, `get_upload`; checked 2026-10-05) |

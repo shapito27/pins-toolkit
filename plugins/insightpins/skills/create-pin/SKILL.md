@@ -86,9 +86,9 @@ still draft the copy without it.
      `low_resolution` ones.
    - `primary_image` is the page's share image. It is a good default, but not always the best photo:
      check its `alt` and shape like any other.
-   - **Never use an image with a `hint`** (`author`, `logo`, `banner` or `infographic`): the server
-     marks images that are probably not a photo for the pin and lists them after the real ones. This
-     beats every other rule here, including "prefer `portrait`": a portrait author headshot is not a
+   - **Never use an image with a `hint`** (such as `author`, `logo`, `promo`, `banner` or
+     `infographic`; the list can grow): the server marks images that are probably not a photo for
+     the pin and lists them after the real ones. This beats every other rule here, including "prefer `portrait`": a portrait author headshot is not a
      pin photo. If only hinted images are left (even `primary_image`), ask the user for a photo or
      use a template with `uses_photo: false`.
    - Skip photos whose `alt` or file name points to text or a person rather than the subject:

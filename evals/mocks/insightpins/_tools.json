@@ -2,7 +2,7 @@
  "tools": [
   {
    "name": "extract_url",
-   "description": "Fetch a web page (blog post, product page, recipe...) and return its title, description, site name and up to 10 image URLs, ready to put on a pin. Each entry of image_details has its size, orientation, alt text and low_resolution. An entry with a hint (author, infographic, banner or logo) is probably not a photo for the pin, so avoid it; it is listed after the real photos and is never the primary_image unless nothing else exists.",
+   "description": "Fetch a web page (blog post, product page, recipe...) and return its title, description, site name and up to 10 image URLs, ready to put on a pin. Each entry of image_details has its size, orientation, alt text and low_resolution. An entry with a hint (author, infographic, banner, logo or promo) is probably not a photo for the pin, so avoid it; it is listed after the real photos and is never the primary_image unless nothing else exists.",
    "inputSchema": {
     "type": "object",
     "properties": {
