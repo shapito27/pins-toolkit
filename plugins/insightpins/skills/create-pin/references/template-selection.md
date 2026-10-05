@@ -34,10 +34,15 @@ October 2026 and chosen here from their descriptions, not yet tested.
 - **Calm vertical photo with empty space**: full-bleed overlays work (`bold-title`, `gradient-wave`, `corner-badge`).
 - **Weak or small photo**: use a typography-led template (`text-focus`, `split-horizontal`) so the photo is small.
 - **No photo at all**: use a template with `uses_photo: false` (`centered-quote`, `vine-corners`,
-  `tulip-frame`). Every other template needs a photo, so ask the user for an image URL first.
+  `tulip-frame`). Every other template needs a photo: ask the user for an image URL or their own
+  photo first (see `user-photos.md`).
 - **A full-bleed template with a landscape photo**: if it must be full-bleed, set `image_focus` on
-  the subject (for example `left` or `top`), or `image_fit: "contain"` to show the whole photo with
-  bars. A panel template is usually better.
+  the subject (for example `left` or `top`, or `"auto"` when you don't know where it is), or
+  `image_fit: "contain"` to show the whole photo with bars. A panel template is usually better.
+- **A colour overlay over the photo**: `list_templates` gives each template's `overlay`: `none`,
+  `decor` (a colour wash or gradient over the photo, with the text elsewhere) or `text` (the text sits
+  on the overlay). If the overlay makes a photo look washed out or muddy, fade it with
+  `overlay_strength`; on `text` overlays keep it at 60 or more so the text stays readable.
 
 ## Custom fields
 

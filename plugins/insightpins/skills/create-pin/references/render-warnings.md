@@ -10,17 +10,19 @@ real problem in the preview, and never twice for the same warning.
 | `DESCRIPTION_CUT` | The subtitle (or the end of the title) is longer than the template shows. | Shorten the subtitle, or choose a template with more room. |
 | `TITLE_SHRUNK` | The title was shrunk well below the requested size to fit. | Shorten the headline if it now looks small in the preview. |
 | `TITLE_SMALL` | The title uses only a small part of its room. | Re-render with `text_size: "auto"`. It doesn't fire on every template (for example `recipe-card`), so judge the title size in the preview too, and use "auto" from the first render. |
-| `IMAGE_CROPPED` | Only part of the photo is visible (for example a wide photo in a tall frame). | Look at the preview. If the subject is cut off, set `image_focus` on it, or `image_fit: "contain"`, or choose a panel template. If the subject is in view, keep the pin: the warning stays because the crop itself doesn't change. |
+| `IMAGE_CROPPED` | Only part of the photo is visible (for example a wide photo in a tall frame). It is raised while `image_focus` is the default centre or `"auto"`, and not once you set a point or side yourself. | Look at the preview. If the subject is in view, keep the pin. If it is cut off, set `image_focus` on it (or use `"auto"` on the first render); to show more of the photo, use `image_fit: "contain"`, a panel template or another photo. `image_focus` only chooses which part shows, not how much. |
 | `IMAGE_UPSCALED` | A small photo is enlarged a lot, so it may look soft. | Prefer a larger photo from `image_details` or a template with a smaller photo area. Fine to keep if the preview looks sharp enough; lower `image_zoom` if you raised it. |
 | `SUBTITLE_HIDDEN` | The template has no subtitle, so the description isn't shown. | Expected if you chose that template on purpose; otherwise pick one with `supports_subtitle: true`. No re-render needed just for this. |
 | `IMAGE_IGNORED` | The template has no photo (`uses_photo: false`). | Expected for text-only templates. |
 | `EXTRA_IMAGES_IGNORED` | Extra photos were sent to a one-photo template. | Use a template with `uses_extra_images: true`, or leave the extras out next time. |
 | `LAYOUT_UNSETTLED` | The title size hadn't settled when the pin was captured. | Re-render only if the preview looks wrong. |
+| `OVERLAY_LOW_CONTRAST` | `overlay_strength` is below 60 on a template whose text sits on the overlay, so the text may be hard to read on this photo. | Check the title and site name in the preview; if they are hard to read, raise `overlay_strength` (or leave it at 100). |
+| `OVERLAY_IGNORED` | `overlay_strength` was set on a template without an overlay (`overlay: "none"`). | Nothing changed in the pin; leave the parameter out next time. No re-render needed. |
 
 `image_focus`, `image_zoom` and `image_fit` apply to every photo in the pin and are meant for
 single-photo templates; `side-panels` and the two lower `lifestyle-collage` tiles ignore them.
 
-No warning flags low contrast yet. Faded small text (subtitle, site name or button text on a
+Apart from `OVERLAY_LOW_CONTRAST`, no warning flags low contrast. Faded small text (subtitle, site name or button text on a
 mid-tone color panel, or in a light color on a pale background) only shows in the preview, so
 check it there and use `template-colors.md` (readable palettes per template) and
 `style-selection.md`.

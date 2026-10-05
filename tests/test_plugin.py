@@ -392,6 +392,65 @@ class PluginFilesTest(unittest.TestCase):
                 self.assertNotIn("–", text, os.path.relpath(path, PLUGIN))
 
 
+class UserPhotosTest(unittest.TestCase):
+    """Uploading the user's own photo: one shared reference, and nothing the security scan reads as
+    "sends files to a host" in the plugin's own files."""
+
+    GUIDE = os.path.join(SKILLS, "create-pin", "references", "user-photos.md")
+
+    def test_guide_covers_the_rules(self):
+        text = read(self.GUIDE)
+        for needle in ("create_upload_link", "upload_page_url", "get_upload", "upload_image",
+                       "7 days", "15 minutes", "30 per account per day", "review-pin", "remake-pin",
+                       "Never call `get_upload` in a loop"):
+            self.assertIn(needle, text)
+
+    def test_skills_point_to_the_guide(self):
+        for skill in ("create-pin", "remake-pin", "optimize-pin"):
+            self.assertIn("user-photos.md", read(os.path.join(SKILLS, skill, "SKILL.md")), skill)
+
+    def test_no_skill_says_uploads_are_impossible(self):
+        for path in plugin_files():
+            if path.endswith(".md"):
+                self.assertNotIn("can't be used as the pin photo", read(path), path)
+                self.assertNotIn("cannot be used as the pin photo", read(path), path)
+
+    def test_review_never_uploads(self):
+        self.assertIn("never upload it", read(os.path.join(SKILLS, "review-pin", "SKILL.md")))
+
+    def test_no_upload_commands_in_plugin_files(self):
+        pattern = re.compile(r"\bcurl\b|-F\s+file=|/api/uploads|multipart", re.I)
+        for path in plugin_files():
+            if path.endswith((".md", ".py", ".json")):
+                self.assertIsNone(pattern.search(read(path)), os.path.relpath(path, PLUGIN))
+
+    def test_guard_catches_a_curl_line(self):
+        pattern = re.compile(r"\bcurl\b|-F\s+file=|/api/uploads|multipart", re.I)
+        self.assertTrue(pattern.search("curl -sS -F file=@photo.jpg https://x/api/uploads/link"))
+
+
+class McpMocksTest(unittest.TestCase):
+    def test_tools_match_the_server(self):
+        tools = json.loads(read(os.path.join(EVALS, "mocks", "insightpins", "_tools.json")))["tools"]
+        names = sorted(t["name"] for t in tools)
+        self.assertEqual(names, sorted(["extract_url", "list_templates", "list_styles", "get_quota",
+                                        "render_pin", "upload_image", "create_upload_link",
+                                        "get_upload"]))
+        render = next(t for t in tools if t["name"] == "render_pin")["inputSchema"]["properties"]
+        self.assertIn("auto", render["image_focus"]["anyOf"][0]["enum"])
+        self.assertEqual((render["overlay_strength"]["minimum"], render["overlay_strength"]["maximum"]),
+                         (0, 100))
+
+    def test_templates_have_overlay(self):
+        _, body = strip_frontmatter(read(os.path.join(EVALS, "mocks", "insightpins", "list_templates.md")))
+        templates = json.loads(body)
+        kinds = {t["id"]: t["overlay"] for t in templates}
+        self.assertTrue(set(kinds.values()) <= {"none", "decor", "text"})
+        self.assertEqual(sorted(k for k, v in kinds.items() if v == "text"), ["magazine-cover", "photo-quad"])
+        self.assertEqual(sorted(k for k, v in kinds.items() if v == "decor"),
+                         ["bold-title", "corner-badge", "quote-with-image", "story-card"])
+
+
 # --- CSV scripts --------------------------------------------------------------------------
 
 # Patterns the directory's scanner reads as "uses the installer's environment" or as network
@@ -507,7 +566,7 @@ def render_input(**fields):
 class EvalSuiteTest(unittest.TestCase):
     def test_cases_are_well_formed(self):
         cases = list(eval_cases())
-        self.assertGreaterEqual(len(cases), 11)
+        self.assertGreaterEqual(len(cases), 17)
         for name, path in cases:
             front, body = strip_frontmatter(read(os.path.join(path, "prompt.md")))
             self.assertIsNotNone(front, f"{name}: prompt.md has no frontmatter")

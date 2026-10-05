@@ -13,7 +13,7 @@ already have, and builds or checks Pinterest bulk upload CSV files.
 - **Optimize** a pin into improved versions, or **remake** one you like in your own style
 - **Check and build** Pinterest bulk upload CSV files before Pinterest rejects them
 
-7 skills, 2 commands and the InsightPins connector (5 tools). Full list, examples and data handling
+7 skills, 2 commands and the InsightPins connector (8 tools). Full list, examples and data handling
 in the [plugin README](plugins/insightpins/README.md).
 
 | Path | What it is |

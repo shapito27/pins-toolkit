@@ -24,6 +24,8 @@ hands you ready-to-paste Pinterest copy. No design tool, no templates to fill in
   see them.
 - **Copy and SEO included.** Every pin comes with a keyword-rich Pinterest title, description, alt
   text and a board suggestion. Facts come only from your page: no invented prices or claims.
+- **Your own photos work too.** Give Claude a photo file, or paste a photo into the chat, and it
+  uploads it to InsightPins so it can go on the pin.
 - **A designer's eye on pins you already have.** Upload a pin for an honest score and ranked fixes,
   or get improved versions to A/B test.
 - **Bulk upload without the rejections.** Build or check a Pinterest bulk upload CSV and catch every
@@ -109,7 +111,7 @@ Claude picks the right skill from what you ask.
 
 | Skill | What it does |
 | - | - |
-| `create-pin` | The full workflow from a URL to a finished pin: reads the page, picks the photo, template and style, renders, checks the result and writes the copy. Also makes sets of variations. |
+| `create-pin` | The full workflow from a URL to a finished pin: reads the page, picks the photo (or uploads your own), template and style, renders, checks the result and writes the copy. Also makes sets of variations. |
 | `pin-design` | Visual best practices: readability at phone size, layout, photo choice, color, fonts and branding. Used to choose a design and to spot defects in a preview. |
 | `pin-copy` | Headlines, Pinterest titles, descriptions, alt text, board names and keywords, written for search and clicks. |
 | `review-pin` | Scores an uploaded pin on an 8-point rubric and ranks the fixes by impact. Uses no renders. |
@@ -133,8 +135,11 @@ In claude.ai chat and Cowork you don't need commands: just describe what you wan
 | `extract_url` | Reads a page: title, description, photos with their size and shape, and recipe or product facts (cook time, servings, price) |
 | `list_templates` | Lists the 38 pin templates and the fields each one supports |
 | `list_styles` | Lists the 15 color palettes and 10 font pairings |
-| `render_pin` | Renders a 1000x1500 pin and returns a preview, an image link, an edit link and warnings |
+| `render_pin` | Renders a 1000x1500 pin and returns a preview, an image link, an edit link and warnings. It can find the photo's subject on its own and fade a template's colour overlay |
 | `get_quota` | Shows how many renders you have left today |
+| `create_upload_link` | Makes a one-time link for uploading your own photo, from a file or through an upload page |
+| `upload_image` | Uploads a small photo directly |
+| `get_upload` | Checks whether an upload has arrived and returns its image link |
 
 ## Setup
 
@@ -152,7 +157,8 @@ The connector's server is `https://app.insightpins.com/api/mcp`. Its tools and l
 ## Usage limits
 
 Each rendered pin counts against your InsightPins daily render limit (currently 50 free renders per
-account per day), which resets at 00:00 UTC.
+account per day), and each photo you upload against a daily upload limit (30 a day). Both reset at
+00:00 UTC.
 Claude checks your remaining renders before making several pins and only re-renders when you ask
 for a change or the preview has a real defect. Plans with higher limits may be offered on
 insightpins.com; see the website for current plans.
@@ -163,7 +169,10 @@ This plugin contains instructions (skills and commands), a connector reference, 
 scripts in the `pinterest-bulk-csv` skill (`build_csv.py`, `check_csv.py`). Claude runs those scripts
 only when you ask it to build or check a bulk upload CSV. They use only Python's standard library,
 read and write the CSV and JSON files you work with, and make no network requests: your CSV is not
-sent to InsightPins or anywhere else. Nothing else in the plugin runs code.
+sent to InsightPins or anywhere else. Nothing else in the plugin runs code. When you ask for one of
+your photo files to go on a pin, Claude may run one command that sends that file to
+`app.insightpins.com`, following the upload tool's own instructions; Claude Code asks before running
+it unless you have allowed such commands.
 
 When you use it, Claude sends the following to the InsightPins server at `app.insightpins.com`
 through the connector:
@@ -171,10 +180,13 @@ through the connector:
 - the page URLs you ask it to turn into pins (the server fetches the page to read its title, description and images)
 - the pin text (headline, subtitle, button text, site name) and the image URLs chosen for the pin
 - your template, palette, font and text size choices, and template fields such as a price or cook time
+- **your own photo, only when you ask for it to be on a pin.** Claude sends the file through a
+  one-time upload link (in Claude Code or Cowork), or gives you a link to an upload page where you
+  add it yourself (in chat)
 
 The server fetches the page and the images to draw the pin, and doesn't keep the page content.
-It never receives your conversation or files you upload to Claude: pins you upload for review or
-remakes are read by Claude in the conversation only.
+It never receives your conversation. Pins you share only for a review, or as a style reference for
+a remake, are read by Claude in the conversation and are never uploaded.
 
 What InsightPins keeps:
 
@@ -186,6 +198,9 @@ What InsightPins keeps:
 - **Render records.** For each pin: the time, template, colors, font, image format and size, and the
   headline. They count your daily limit and list your recent pins, and stay as long as your account.
 - **Rendered images**, for 7 days. Anyone with an image's link can open it, so share links with care.
+- **Uploaded photos**, for 7 days, after their location and camera data is removed. Like rendered
+  images, anyone with the link can open them. A record of each upload (time, size, format) stays
+  with your account and counts your daily upload limit (30 a day).
 - **Server logs**, including failed page fetches or renders with your account ID and the URL involved.
 The plugin sends no data to any other service. See the InsightPins
 [privacy policy](https://insightpins.com/privacy.html) and
@@ -199,9 +214,10 @@ Email [ruslan@insightpins.com](mailto:ruslan@insightpins.com) or see
 ## Images and copyright
 
 Pins often use photos from the page you link. Claude always tells you where the photo came from.
-Make sure you have the right to publish it, or use your own images or licensed stock photos. When
-you upload someone else's pin for inspiration, Claude creates an original design and copy rather
-than copying their image or text.
+Make sure you have the right to publish it, or use your own images or licensed stock photos. If you
+upload a photo that shows other people, make sure they are happy for it to be published. When you
+share someone else's pin for inspiration, Claude creates an original design and copy rather than
+copying their image or text, and never uploads that pin.
 
 The example pins on this page use photos from the U.S. National Park Service (nps.gov), which are
 in the public domain.

@@ -11,7 +11,7 @@ the InsightPins connector. Each variant tests one change, so the user learns wha
 ## Steps
 
 1. **Get the inputs.**
-   - The current pin: an uploaded image (best), or the settings of a pin you made earlier in this conversation.
+   - The current pin: an image shared in the chat (best), or the settings of a pin you made earlier in this conversation.
    - The destination URL (the page the pin links to). You need it to get usable photos and to keep
      the copy honest. Ask for it if missing.
    - Optional: performance numbers (impressions, saves, outbound clicks) and the current title and description.
@@ -34,7 +34,9 @@ the InsightPins connector. Each variant tests one change, so the user learns wha
    Give each one a short hypothesis: what it changes and why it should do better. Each changes one
    main lever:
    - **A - Headline:** the closest layout, palette and photo to the original, with a stronger
-     headline using a different `pin-copy` angle (a number, an outcome, a problem solved).
+     headline using a different `pin-copy` angle (a number, an outcome, a problem solved). "Same
+     photo" means the original photo from the page (or the user's original, uploaded), never the old
+     pin image.
    - **B - Layout and readability:** a template that puts the headline on a solid panel or makes it
      bigger, with a palette from the template's "Readable with" list in `create-pin`'s `references/template-colors.md` and `text_size: "auto"`.
    - **C - Photo and color:** a different, stronger photo from the page (use `image_details`: a large
@@ -87,8 +89,9 @@ the InsightPins connector. Each variant tests one change, so the user learns wha
 
 ## Without a destination URL
 
-You can still re-render using a photo URL the user provides. An image uploaded into the chat
-can't be used as the pin photo because the tool needs a URL, and the old pin can't be used as the
-background because its text is baked in. If no usable photo is available, deliver the review, the
-improved copy and the exact template/palette/font settings so the user can apply them on
-insightpins.com.
+You can still re-render with a photo URL the user provides, or with their original photo (the one
+without text), uploaded as described in `create-pin`'s `references/user-photos.md` (and tell them it is
+kept on InsightPins for 7 days). Never upload the
+old pin itself: its text is baked in and would show under the new text. If no usable photo is
+available, deliver the review, the improved copy and the exact template/palette/font settings so
+the user can apply them on insightpins.com.

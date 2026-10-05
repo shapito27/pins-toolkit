@@ -11,7 +11,7 @@ works about that pin's style and fixes what doesn't.
 ## Steps
 
 1. **Get the inputs.**
-   - The reference pin (uploaded image).
+   - The reference pin (an image shared in the chat).
    - Their content: the destination URL for the new pin. If the reference pin is their own, this
      may be the same page. Ask for it if missing.
    - Whose pin is it? If it isn't clearly theirs, treat it as inspiration only (see Originality).
@@ -29,9 +29,11 @@ works about that pin's style and fixes what doesn't.
 
 4. **Get the content and photo.** Call `extract_url` on the destination URL and check that the page
    really loaded, as in `create-pin` step 1 (bot-check pages come back without an error). Choose a photo that
-   fits the reference's look (similar framing and brightness) and the `pin-design` rules.
-   An image uploaded into the chat can't be used as the pin photo (the tool needs a URL), and the
-   reference pin can't be used as a background because its text is baked in.
+   fits the reference's look (similar framing and brightness) and the `pin-design` rules. If the
+   user wants their own photo on the new pin, upload it as described in `create-pin`'s
+   `references/user-photos.md` (and tell them it is kept on InsightPins for 7 days). Never upload the
+   reference pin itself: its text is baked in, and if
+   it isn't theirs, it isn't theirs to reuse.
 
 5. **Write better copy** with the `pin-copy` skill: keep the reference's angle if it fits the
    content, but make the headline more specific and readable. Use only facts the user's page

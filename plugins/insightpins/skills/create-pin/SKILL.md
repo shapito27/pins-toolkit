@@ -30,8 +30,15 @@ still draft the copy without it.
      and it has no images. Never build a pin from such a page.
    - The page's description is often a chatty intro, not a summary. Write your own copy from what the
      page is about.
-   - No URL: ask for the topic, the headline idea, an image URL and the site name. Don't invent a site name.
-   - An image uploaded into the chat cannot be used as the pin photo (the tool needs a URL). Ask for a URL for it, or use a page image.
+   - No URL: ask for the topic, the headline idea, a photo (an image URL, or their own photo) and the
+     site name. Don't invent a site name.
+   - **The user's own photo** (a file, or a photo pasted into the chat): upload it as described in
+     [references/user-photos.md](references/user-photos.md) and use the `image_url` it returns. Upload
+     only a photo the user wants on the pin, never a pin they shared for review or as a style reference.
+     In short: call `create_upload_link`; if you can read the file and run commands, send it as the
+     result explains, otherwise give the user its `upload_page_url` and wait for them to say it's done,
+     then call `get_upload` once. In the same message, tell them the photo is kept on InsightPins for
+     7 days (location and camera data removed) and that anyone with its link can open it.
 
 2. **Classify the content**: how-to/blog post, listicle (has a number), product, recipe, quote,
    travel/destination, or lifestyle/inspiration. Pull out facts the templates can show: the list
@@ -89,6 +96,8 @@ still draft the copy without it.
    `list_templates` marks templates with no photo (`uses_photo: false`) and collage templates that
    take extra photos (`uses_extra_images: true`, up to 3 in `additional_image_urls`). Use extra
    photos only with those templates, and only photos that clearly belong together.
+   For an uploaded photo there are no `image_details`: the upload result gives its `width` and
+   `height`, so judge its shape from those.
 
 7. **Check quota before more than one render.** Call `get_quota` when making variations or when a
    render failed for limits. Tell the user how many renders a plan will use if they're running low.
@@ -108,10 +117,18 @@ still draft the copy without it.
    left/top); `image_zoom` 100-200 enlarges a small product in a big frame (it softens a small
    photo); `image_fit: "contain"` shows the whole photo with bars in the palette's secondary color.
    Set `image_focus` up front when you already know where the subject is, for example `top` for a
-   person in a wide photo.
-   **If the tool refuses these options** (an app that still has the older tool definitions only
-   allows a number for `text_size` and has no photo controls), use `text_size` 130-160 instead of
-   "auto", and pick a template whose frame matches the photo's shape instead of `image_focus`.
+   person in a wide photo. When a landscape or square photo goes into a tall frame and you don't know
+   where the subject is, use `image_focus: "auto"`: the server finds the busiest, most colourful area
+   and returns the point it used as `image_focus_used`. If the preview shows it picked the wrong
+   part, set the point yourself.
+   **Overlay strength**: templates whose `overlay` in `list_templates` is `decor` or `text` lay a
+   colour over the photo. If the preview shows the photo washed out or too dark under it, set
+   `overlay_strength` (0-100, 100 is the design; it can only fade the overlay). Where text sits on the
+   overlay (`overlay: "text"`), stay at 60 or more, or the text loses contrast
+   (`OVERLAY_LOW_CONTRAST`). On templates with `overlay: "none"` it does nothing.
+   **If the tool refuses these options** (an app that still has older tool definitions), leave out
+   what it refuses: use `text_size` 130-160 instead of "auto", pick a template whose frame matches the
+   photo's shape instead of `image_focus`, and skip `overlay_strength`.
 
 9. **Check the preview and the warnings.** The preview image is about 200x300, roughly how the pin
    looks in a phone feed, so use it as the thumbnail test against the `pin-design` checklist. Then
@@ -120,9 +137,11 @@ still draft the copy without it.
    unreadable or cut-off text (`TITLE_CLAMPED`, `DESCRIPTION_CUT`), a photo cropped so the subject is
    lost, a wrong photo, or a field showing a value that isn't true. Check the small text too: if the
    subtitle, site name or button text looks faded against its background, switch to a palette
-   from the template's "Readable with" list, or hide the subtitle (`show_description: false`). Some warnings describe the pin
-   rather than a defect: `IMAGE_CROPPED` stays after you've set `image_focus` well, because the crop
-   itself doesn't change. Judge by the preview, and never re-render twice for the same warning.
+   from the template's "Readable with" list, or hide the subtitle (`show_description: false`). Some
+   warnings describe the pin rather than a defect: `IMAGE_CROPPED` says how much of the photo shows;
+   setting `image_focus` doesn't change that, it only chooses which part. Re-render for it only when
+   the preview shows the subject cut off. Judge by the preview, and never re-render twice for the
+   same warning.
    Fix the one thing that's wrong and keep the rest. Don't re-render for taste alone unless the user asks.
 
 10. **Report** (keep it short):
@@ -130,7 +149,8 @@ still draft the copy without it.
       for editing without using a render);
     - template, palette and font used;
     - the link expires in 7 days, so download the image;
-    - where the photo came from, and that they need the right to publish it;
+    - where the photo came from, and that they need the right to publish it; for an uploaded photo,
+      that it is kept for 7 days, so the `edit_url` stops showing it after that;
     - ready to paste: **Pinterest title**, **description**, **alt text**, **suggested board**,
       and the destination link (the source URL).
 
