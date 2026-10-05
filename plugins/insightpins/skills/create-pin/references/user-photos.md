@@ -24,7 +24,8 @@ message as the link. Their request to use the photo is their go-ahead; you don't
 
 1. **You can read the file and run commands** (Claude Code, Cowork; the user gave a file path or the
    file is in the working folder): call `create_upload_link` and send the file the way its result
-   explains. If that fails (no network, the command isn't allowed), use step 2 with the same link.
+   explains. If that fails (no network, the command isn't allowed), use step 2 with the same link,
+   and include the 7-day notice in that message even though you meant to send the file yourself.
 2. **You can't read the file** (a photo pasted into a chat, or into the terminal): call
    `create_upload_link`, give the user its `upload_page_url` together with the 7-day notice above,
    ask them to upload the photo there and say when it's done, and end your turn. Don't render yet.

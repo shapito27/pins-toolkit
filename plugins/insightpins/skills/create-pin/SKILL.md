@@ -37,8 +37,9 @@ still draft the copy without it.
      only a photo the user wants on the pin, never a pin they shared for review or as a style reference.
      In short: call `create_upload_link`; if you can read the file and run commands, send it as the
      result explains, otherwise give the user its `upload_page_url` and wait for them to say it's done,
-     then call `get_upload` once. In the same message, tell them the photo is kept on InsightPins for
-     7 days (location and camera data removed) and that anyone with its link can open it.
+     then call `get_upload` once. Whenever you give them the upload page (also after sending the file
+     failed), tell them in the same message that the photo is kept on InsightPins for 7 days
+     (location and camera data removed) and that anyone with its link can open it.
 
 2. **Classify the content**: how-to/blog post, listicle (has a number), product, recipe, quote,
    travel/destination, or lifestyle/inspiration. Pull out facts the templates can show: the list
