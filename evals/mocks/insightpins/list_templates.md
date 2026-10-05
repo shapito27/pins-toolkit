@@ -7,13 +7,16 @@ type: fixed
   "id": "bold-title",
   "name": "Bold Title",
   "category": "blog",
-  "description": "Full-bleed image with bold title overlay",
+  "description": "Bold title on a color band at the top, photo filling the lower three quarters",
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "decor",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/bold-title.jpg"
  },
  {
   "id": "image-focus",
@@ -23,9 +26,12 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/image-focus.jpg"
  },
  {
   "id": "minimal-clean",
@@ -35,9 +41,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/minimal-clean.jpg"
  },
  {
   "id": "dashed-accent",
@@ -47,9 +56,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "landscape",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/dashed-accent.jpg"
  },
  {
   "id": "blog-card",
@@ -59,6 +71,8 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [
    {
@@ -80,7 +94,8 @@ type: fixed
     "max_length": 30
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/blog-card.jpg"
  },
  {
   "id": "product-spotlight",
@@ -90,9 +105,12 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/product-spotlight.jpg"
  },
  {
   "id": "price-tag",
@@ -102,6 +120,8 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [
    {
@@ -111,7 +131,8 @@ type: fixed
     "max_length": 15
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/price-tag.jpg"
  },
  {
   "id": "side-rail",
@@ -121,9 +142,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/side-rail.jpg"
  },
  {
   "id": "numbered-steps",
@@ -133,9 +157,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/numbered-steps.jpg"
  },
  {
   "id": "checklist",
@@ -145,9 +172,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/checklist.jpg"
  },
  {
   "id": "number-badge",
@@ -157,6 +187,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [
    {
@@ -166,7 +198,8 @@ type: fixed
     "max_length": 3
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/number-badge.jpg"
  },
  {
   "id": "centered-quote",
@@ -176,21 +209,27 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": false,
   "uses_extra_images": false,
+  "photo_area": "none",
+  "best_photo": "any",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/centered-quote.jpg"
  },
  {
   "id": "quote-with-image",
   "name": "Quote with Image",
   "category": "quote",
-  "description": "Quote paired with background image",
+  "description": "Quote in the top half, photo in the bottom half",
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "landscape",
   "overlay": "decor",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/quote-with-image.jpg"
  },
  {
   "id": "vine-corners",
@@ -200,6 +239,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": false,
   "uses_extra_images": false,
+  "photo_area": "none",
+  "best_photo": "any",
   "overlay": "none",
   "custom_fields": [
    {
@@ -209,7 +250,8 @@ type: fixed
     "max_length": 30
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/vine-corners.jpg"
  },
  {
   "id": "tulip-frame",
@@ -219,6 +261,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": false,
   "uses_extra_images": false,
+  "photo_area": "none",
+  "best_photo": "any",
   "overlay": "none",
   "custom_fields": [
    {
@@ -228,7 +272,8 @@ type: fixed
     "max_length": 30
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/tulip-frame.jpg"
  },
  {
   "id": "recipe-card",
@@ -238,6 +283,8 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [
    {
@@ -253,7 +300,8 @@ type: fixed
     "max_length": 20
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/recipe-card.jpg"
  },
  {
   "id": "photo-stack",
@@ -263,9 +311,12 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": true,
+  "photo_area": "multi",
+  "best_photo": "any",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/photo-stack.jpg"
  },
  {
   "id": "framed-bold",
@@ -275,9 +326,12 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/framed-bold.jpg"
  },
  {
   "id": "diagonal-cut",
@@ -287,9 +341,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/diagonal-cut.jpg"
  },
  {
   "id": "corner-badge",
@@ -299,9 +356,12 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "full-bleed",
+  "best_photo": "portrait",
   "overlay": "decor",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/corner-badge.jpg"
  },
  {
   "id": "split-horizontal",
@@ -311,9 +371,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "landscape",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/split-horizontal.jpg"
  },
  {
   "id": "modern-minimal",
@@ -323,21 +386,27 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "full-bleed",
+  "best_photo": "portrait",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/modern-minimal.jpg"
  },
  {
   "id": "gradient-wave",
   "name": "Gradient Wave",
   "category": "creative",
-  "description": "Organic wavy gradient over full image",
+  "description": "Title and button on a color block that fades down, photo in the lower half",
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/gradient-wave.jpg"
  },
  {
   "id": "magazine-cover",
@@ -347,6 +416,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "full-bleed",
+  "best_photo": "portrait",
   "overlay": "text",
   "custom_fields": [
    {
@@ -356,7 +427,8 @@ type: fixed
     "max_length": 30
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/magazine-cover.jpg"
  },
  {
   "id": "text-focus",
@@ -366,9 +438,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/text-focus.jpg"
  },
  {
   "id": "collage-style",
@@ -378,21 +453,27 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "portrait",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/collage-style.jpg"
  },
  {
   "id": "story-card",
   "name": "Story Card",
   "category": "creative",
-  "description": "Vertical split with overlapping story card",
+  "description": "Full-bleed photo with a rounded story card over its upper part",
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "full-bleed",
+  "best_photo": "portrait",
   "overlay": "decor",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/story-card.jpg"
  },
  {
   "id": "starburst-badge",
@@ -402,9 +483,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "full-bleed",
+  "best_photo": "portrait",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/starburst-badge.jpg"
  },
  {
   "id": "arch-window",
@@ -414,9 +498,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "square",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/arch-window.jpg"
  },
  {
   "id": "side-panels",
@@ -426,6 +513,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "multi",
+  "best_photo": "any",
   "overlay": "none",
   "custom_fields": [
    {
@@ -435,7 +524,8 @@ type: fixed
     "max_length": 3
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/side-panels.jpg"
  },
  {
   "id": "travel-overlay",
@@ -445,6 +535,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "full-bleed",
+  "best_photo": "portrait",
   "overlay": "none",
   "custom_fields": [
    {
@@ -460,7 +552,8 @@ type: fixed
     "max_length": 3
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/travel-overlay.jpg"
  },
  {
   "id": "lifestyle-collage",
@@ -470,6 +563,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": true,
+  "photo_area": "multi",
+  "best_photo": "any",
   "overlay": "none",
   "custom_fields": [
    {
@@ -479,7 +574,8 @@ type: fixed
     "max_length": 3
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/lifestyle-collage.jpg"
  },
  {
   "id": "destination-card",
@@ -489,6 +585,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "full-bleed",
+  "best_photo": "portrait",
   "overlay": "none",
   "custom_fields": [
    {
@@ -498,7 +596,8 @@ type: fixed
     "max_length": 3
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/destination-card.jpg"
  },
  {
   "id": "grid-lines",
@@ -508,6 +607,8 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "full-bleed",
+  "best_photo": "portrait",
   "overlay": "none",
   "custom_fields": [
    {
@@ -523,7 +624,8 @@ type: fixed
     "max_length": 20
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/grid-lines.jpg"
  },
  {
   "id": "overlap-collage",
@@ -533,9 +635,12 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": true,
+  "photo_area": "multi",
+  "best_photo": "any",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/overlap-collage.jpg"
  },
  {
   "id": "photo-quad",
@@ -545,6 +650,8 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": true,
+  "photo_area": "multi",
+  "best_photo": "any",
   "overlay": "text",
   "overlay_text_fields": ["photoLabelTop", "photoLabelBottom"],
   "custom_fields": [
@@ -561,7 +668,8 @@ type: fixed
     "max_length": 16
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/photo-quad.jpg"
  },
  {
   "id": "vertical-title",
@@ -571,9 +679,12 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "photo_area": "panel",
+  "best_photo": "portrait",
   "overlay": "none",
   "custom_fields": [],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/vertical-title.jpg"
  },
  {
   "id": "fitness-grid",
@@ -583,6 +694,8 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": true,
+  "photo_area": "multi",
+  "best_photo": "any",
   "overlay": "none",
   "custom_fields": [
    {
@@ -598,6 +711,7 @@ type: fixed
     "max_length": 30
    }
   ],
-  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"]
+  "readable_palettes": ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric", "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose", "warm-earth", "minimalist"],
+  "preview_url": "https://app.insightpins.com/template-previews/fitness-grid.jpg"
  }
 ]

@@ -111,6 +111,11 @@ def template_colors():
     return rows
 
 
+def list_templates_mock():
+    _, body = strip_frontmatter(read(os.path.join(EVALS, "mocks", "insightpins", "list_templates.md")))
+    return json.loads(body)
+
+
 def mood_table_palettes():
     """Palettes named in the mood table's 'Palettes' column."""
     text = read(STYLE_GUIDE)
@@ -395,7 +400,7 @@ class UserPhotosTest(unittest.TestCase):
     def test_guide_covers_the_rules(self):
         text = read(self.GUIDE)
         for needle in ("create_upload_link", "upload_page_url", "get_upload", "upload_image",
-                       "7 days", "15 minutes", "30 per account per day", "review-pin", "remake-pin",
+                       "7 days", "15 minutes", "10 per account per day", "review-pin", "remake-pin",
                        "Never call `get_upload` in a loop"):
             self.assertIn(needle, text)
 
@@ -645,6 +650,22 @@ class EvalSuiteTest(unittest.TestCase):
             self.assertTrue(re.search(page, render_input(image_url=url)), url)
 
 
+    def test_photo_shape_graders_follow_the_catalog(self):
+        templates = list_templates_mock()
+        _, crop, _ = grader("crop-warning", "handles-crop")
+        _, photo, _ = grader("recipe-from-url", "good-photo")
+        for entry in templates:
+            fits_wide = entry["photo_area"] == "panel" and entry["best_photo"] in ("landscape", "square")
+            self.assertEqual(bool(re.search(crop, render_input(template_id=entry["id"]))), fits_wide, entry["id"])
+            wide = render_input(template_id=entry["id"],
+                                image_url="https://plantbasedweeknights.example/wp-content/uploads/vegan-fried-rice-1200x630.jpg")
+            landscape_panel = entry["photo_area"] == "panel" and entry["best_photo"] == "landscape"
+            self.assertEqual(bool(re.search(photo, wide)), landscape_panel, entry["id"])
+        self.assertTrue(re.search(crop, render_input(template_id="corner-badge", image_focus="auto")))
+        self.assertTrue(re.search(photo, render_input(
+            template_id="corner-badge", image_url="https://x.example/uploads/vegan-fried-rice-crispy-tofu-683x1024.jpg")))
+
+
 class McpFeaturesTest(unittest.TestCase):
     """What the October 5 server added is documented in the skills and present in the mocks."""
 
@@ -667,6 +688,28 @@ class McpFeaturesTest(unittest.TestCase):
         for skill in ("create-pin", "optimize-pin", "remake-pin"):
             self.assertNotIn('"Readable with" list', read(os.path.join(SKILLS, skill, "SKILL.md")).replace(
                 'use the "Readable with" list in', ""), skill)
+
+    def test_photo_fields_in_the_template_mock(self):
+        for entry in list_templates_mock():
+            self.assertIn(entry["photo_area"], ("full-bleed", "panel", "multi", "none"), entry["id"])
+            self.assertIn(entry["best_photo"], ("portrait", "square", "landscape", "any"), entry["id"])
+            self.assertEqual(entry["photo_area"] == "none", not entry["uses_photo"], entry["id"])
+            self.assertEqual(entry["preview_url"],
+                             f"https://app.insightpins.com/template-previews/{entry['id']}.jpg")
+
+    def test_template_guide_examples_match_photo_fields(self):
+        fields = {e["id"]: (e["photo_area"], e["best_photo"]) for e in list_templates_mock()}
+        guide = read(os.path.join(SKILLS, "create-pin", "references", "template-selection.md"))
+        calm = guide.split("**Calm portrait photo with empty space**", 1)[1].split("\n- ", 1)[0]
+        for tid in re.findall(r"`([a-z-]+)`", calm):
+            if tid in fields:
+                self.assertEqual(fields[tid][0], "full-bleed", tid)
+        shape = guide.split("**Photo shape matters most.**", 1)[1].split("\n- ", 1)[0]
+        self.assertEqual(fields["split-horizontal"], ("panel", "landscape"))
+        for tid in ("recipe-card", "minimal-clean", "bold-title"):
+            self.assertIn(f"`{tid}`", shape)
+            self.assertEqual(fields[tid], ("panel", "square"), tid)
+        self.assertNotIn("drawn too faint", guide)
 
     def test_list_templates_mock_has_the_new_fields(self):
         _, body = strip_frontmatter(read(os.path.join(EVALS, "mocks", "insightpins", "list_templates.md")))

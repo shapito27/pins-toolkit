@@ -19,7 +19,7 @@
   },
   {
    "name": "list_templates",
-   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade. readable_palettes lists the palette ids on which the title, subtitle and button reach 3:1 contrast (text on the photo is not judged); choose the palette from it unless the user asks for another.",
+   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade. readable_palettes lists the palette ids on which the title, subtitle and button reach 3:1 contrast (text on the photo is not judged); choose the palette from it unless the user asks for another. photo_area says where the photo goes: full-bleed (fills the pin), panel (one framed area, from a small accent to most of the pin), multi (several photo boxes; uses_extra_images says whether they can show different photos) or none. best_photo is the photo shape that is cropped least: portrait (about 2:3), square, landscape (about 3:2), or any. preview_url is a sample image of the template (sample text and photo, palette ocean-breeze, font modern-sans).",
    "inputSchema": {
     "type": "object",
     "properties": {
