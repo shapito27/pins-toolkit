@@ -108,8 +108,8 @@ connector, then re-validate the plugin so **Connects to** shows it as registered
 | Step | Answer |
 | - | - |
 | Connection | `https://app.insightpins.com/api/mcp` (or pick the custom connector you already added). One URL for everyone |
-| Tools | Should sync 5 tools with no missing-annotation flags |
-| Listing | Name: **InsightPins**. One-liner (max 200): "Turn any blog post, product page or recipe into a Pinterest pin: read the page, pick a template and render a 1000x1500 pin." Description: what the 5 tools do, the 38 templates, 50 free renders a day, 7-day image links, and that a Google sign-in is needed. Categories: Design, Marketing (or the closest offered). Documentation URL: `https://app.insightpins.com/mcp`. Privacy policy: `https://insightpins.com/privacy.html`. Support: `ruslan@insightpins.com`. Icon: the same 512x512 logo. Slug: `insightpins` (permanent once published) |
+| Tools | Should sync 8 tools (5 plus the 3 upload tools added in #88) with no missing-annotation flags |
+| Listing | Name: **InsightPins**. One-liner (max 200): "Turn any blog post, product page or recipe into a Pinterest pin: read the page, pick a template and render a 1000x1500 pin." Description: what the 8 tools do (including uploading your own photo), the 38 templates, 50 free renders and 30 uploads a day, 7-day image links, and that a Google sign-in is needed. Data handling: the connector receives photos users choose to upload, which may show people; they are cleaned of location and camera data and deleted after 7 days. Categories: Design, Marketing (or the closest offered). Documentation URL: `https://app.insightpins.com/mcp`. Privacy policy: `https://insightpins.com/privacy.html`. Support: `ruslan@insightpins.com`. Icon: the same 512x512 logo. Slug: `insightpins` (permanent once published) |
 | Use cases | Create pins from a URL; make pin variations; render pins for a bulk upload. Before connecting: an InsightPins account, created by signing in with Google (free). Reads and writes: reads web pages, writes (creates) pin images |
 | Company | InsightPins, `https://insightpins.com`, contact Ruslan Saifullin, `ruslan@insightpins.com` |
 | Authentication | **OAuth with dynamic client registration** |
@@ -166,9 +166,9 @@ Services in section 1, with their daily render limits.
 
    | Question | Answer | Why |
    | - | - | - |
-   | Does the plugin read or store personal data? | **Yes** | The plugin files store nothing, but signing in to the connector creates an InsightPins account with the user's email, Google account ID, name and account dates. Answering Yes and describing this is safer than a No that a reviewer could see contradicted by the sign-in screen and privacy policy. Pin content sent (page URLs, pin text, image URLs) isn't personal data. |
+   | Does the plugin read or store personal data? | **Yes** | The plugin files store nothing, but signing in to the connector creates an InsightPins account with the user's email, Google account ID, name and account dates. Answering Yes and describing this is safer than a No that a reviewer could see contradicted by the sign-in screen and privacy policy. Pin content sent (page URLs, pin text, image URLs) isn't personal data. Since 1.0.2, a photo the user asks to put on a pin is uploaded and can show people: mention it. |
    | Does it send data to services other than its declared connectors? | **No** | Only `app.insightpins.com` (declared in `.mcp.json`). |
-   | How long is data kept? | Account data (email, Google account ID, name) and render records (time, design choices, headline) as long as the account exists; rendered images 7 days; unused connections expire after 30 days; extracted page content is not kept. | Matches the README and the privacy policy updated 03.10.2026. |
+   | How long is data kept? | Account data (email, Google account ID, name) and render records (time, design choices, headline) as long as the account exists; rendered images and uploaded photos 7 days (upload records, without the photo, as long as the account exists); unused connections expire after 30 days; extracted page content is not kept. | Matches the README. Publish the privacy policy changes in `POLICY-DRAFTS.md` before 1.0.2 is reviewed. |
    | Intended for people under 18? | **No** | |
 
 5. **Compliance:** contact email `ruslan@insightpins.com`, and select all four acknowledgements.

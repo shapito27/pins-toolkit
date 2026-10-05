@@ -120,3 +120,20 @@ buttons; the templates use the palette's lighter `background` colour, so contras
 (forest-calm's button is 2.9:1, not 3.2). The plugin's palette table now uses that pair, a generated
 `template-colors.md` lists the readable palettes per template, and the gallery's text-only pin moved
 from `forest-calm` to `dusty-rose` (4.9:1 button).
+
+## Re-test after the October 5 server deploy (uploads, auto focus, overlay strength)
+
+2 renders and 2 uploads on 2026-10-05; details in
+[MCP-IMPROVEMENTS.md, "Check of the October 5 deploy"](MCP-IMPROVEMENTS.md#check-of-the-october-5-deploy-86-87-88).
+
+| Test | Result |
+| - | - |
+| Upload a 1000x740 JPEG through `create_upload_link` (file posted from the command line), then `get_upload` | `ready`, `image_url` returned; a second post to the same link refused (`LINK_USED`) |
+| `upload_image` with an 80x60 JPEG as base64 | Stored and returned an `image_url` |
+| `bold-title` with the uploaded photo, `image_focus: "auto"`, `overlay_strength: 60` | Focus chosen at x 0.69, y 0.28 (cliffs and waterfall); `image_focus_used` returned; only `IMAGE_UPSCALED` (small photo) |
+| `magazine-cover`, `image_focus: "auto"`, `overlay_strength: 30` | `OVERLAY_LOW_CONTRAST` raised as documented, with `IMAGE_CROPPED` and `TITLE_SMALL` |
+
+Skill changes from this round: `create-pin/references/user-photos.md` (when and how to upload the
+user's own photo, never a shared or reference pin, the 7-day notice, limits and errors), `"auto"`
+focus and `overlay_strength` in `create-pin` step 8, the overlay warnings in `render-warnings.md`,
+and `remake-pin`, `optimize-pin` and `review-pin` updated to match.

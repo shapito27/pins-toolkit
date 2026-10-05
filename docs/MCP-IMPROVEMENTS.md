@@ -34,9 +34,9 @@ Keep these as they are:
 | 1 | Verify URL fetching can't reach internal addresses (SSRF) | Security | Inferred | Critical if vulnerable | S | **Done** (deployed 2026-10-03, see below) |
 | 2 | `extract_url`: report blocked and bot-check pages as errors | Functions | Observed | High | S | **Done** (deployed 2026-10-03) |
 | 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04); follow-ups below |
-| 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | **Done** (#67, checked 2026-10-04); overlay strength and smart cropping not done |
+| 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | **Done** (#67 controls, #86 `image_focus: "auto"`, #87 `overlay_strength`; checked 2026-10-05) |
 | 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | **Done** (#62 warnings, #79 `text_size: "auto"`, checked 2026-10-04); follow-ups below |
-| 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | Next |
+| 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | **Done** (#88: `upload_image`, `create_upload_link`, `get_upload`; checked 2026-10-05) |
 | 7 | `extract_url`: structured data (recipe times, servings, product price) | Functions | Observed | Medium-High | S | **Done** (#56, checked 2026-10-04); description still cut mid-sentence |
 | 8 | Template previews in `list_templates` | Templates | Inferred | Medium-High | S | Next |
 | 9 | List items for list templates | Templates | Inferred | Medium-High | M | Next |
@@ -46,7 +46,7 @@ Keep these as they are:
 | 13 | Better page fetching for big sites | Functions | Observed (6 of 10 failed) | Medium | M-L | Later |
 | 14 | Stock photo search with license info | Functions | Inferred | High | M | Later |
 | 15 | Pin history (`list_my_pins`, `get_pin`) and longer-lived links | Functions | Inferred | Medium | M | Later |
-| 16 | More pin elements: badge, overlay strength, text alignment | Controls | Partly observed | Medium | M | Later |
+| 16 | More pin elements: badge, overlay strength, text alignment | Controls | Partly observed | Medium | M | Overlay strength **done** (#87); badge and text alignment later |
 | 17 | Keyword tools | Functions | Planned | High | L | Planned |
 | 18 | Publish and schedule to Pinterest | Functions | Inferred | Very high | L | Later (big project) |
 | 19 | Batch rendering of variations | Functions | Inferred | Low-Medium | S | Later |
@@ -380,6 +380,22 @@ that use it, and report `LOW_CONTRAST` in `warnings`. A `readable_palettes` fiel
 When an item ships, the plugin skills can be simplified. For example, once `extract_url` returns
 image dimensions, the skill no longer needs to guess orientation from file names. Tell me which
 items ship and I'll update the skills and evals.
+
+## Check of the October 5 deploy (#86, #87, #88)
+
+Checked against the live server on 2026-10-05 (2 renders, 2 uploads):
+
+| Item | Result |
+| - | - |
+| 6. Uploads | `create_upload_link` returned a one-time link (15 minutes, 4.5 MB); a file posted to it was stored (1000x740 JPEG, 7 days) and `get_upload` returned `ready` with its `image_url`. Posting to the same link again returned 409 `LINK_USED`. `upload_image` with a small base64 JPEG worked. Both image URLs rendered. |
+| 4. `image_focus: "auto"` | On a wide photo in `bold-title` it chose x 0.69, y 0.28 (the cliffs and waterfall) and returned it as `image_focus_used`; the `edit_url` carries the point. |
+| 16. `overlay_strength` | `list_templates` now has `overlay` (`none`, `decor`, `text`). At 30 on `magazine-cover` (text on the overlay) the render added `OVERLAY_LOW_CONTRAST`. |
+| Annotations | All 8 tools have `annotations.title` and hints (#84 for the first 5, #88 for the upload tools). |
+
+Follow-ups: the privacy policy still says the connector doesn't receive "files you upload to the
+assistant"; `docs/POLICY-DRAFTS.md` has the replacement text. Clients that cached the old
+`render_pin` definition still sent `image_focus: "auto"` and `overlay_strength` in this test, but a
+stricter client may refuse them; the skills leave them out if refused.
 
 ## Answers from the server side (2026-10-04)
 

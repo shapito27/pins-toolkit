@@ -19,7 +19,7 @@
   },
   {
    "name": "list_templates",
-   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time.",
+   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade.",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -56,7 +56,7 @@
   },
   {
    "name": "render_pin",
-   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. The result also has an edit_url. When a short title looks small for its space, re-render with text_size \"auto\". When a photo is cropped badly or too small in its frame, re-render with image_focus, image_zoom or image_fit \"contain\". Counts against the daily render limit; failed renders are not counted. The result has a warnings list (each with a code and a message) when something looks wrong. Read it, but re-render only when a warning matters. Codes: TITLE_CLAMPED, DESCRIPTION_CUT, IMAGE_CROPPED, IMAGE_UPSCALED, TITLE_SHRUNK, TITLE_SMALL, SUBTITLE_HIDDEN, EXTRA_IMAGES_IGNORED, IMAGE_IGNORED, LAYOUT_UNSETTLED.",
+   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. The result also has an edit_url. When a short title looks small for its space, re-render with text_size \"auto\". When a photo is cropped badly or too small in its frame, re-render with image_focus, image_zoom or image_fit \"contain\". Counts against the daily render limit; failed renders are not counted. The result has a warnings list (each with a code and a message) when something looks wrong. Read it, but re-render only when a warning matters. Codes: TITLE_CLAMPED, DESCRIPTION_CUT, IMAGE_CROPPED, IMAGE_UPSCALED, TITLE_SHRUNK, TITLE_SMALL, SUBTITLE_HIDDEN, EXTRA_IMAGES_IGNORED, IMAGE_IGNORED, LAYOUT_UNSETTLED. When a photo looks washed out or too dark under the template's colour overlay, re-render with overlay_strength (0-100). IMAGE_CROPPED is raised only while image_focus is the default centre or \"auto\". overlay_strength adds OVERLAY_IGNORED and OVERLAY_LOW_CONTRAST.",
    "inputSchema": {
     "type": "object",
     "required": [
@@ -254,7 +254,8 @@
          "top",
          "bottom",
          "left",
-         "right"
+         "right",
+         "auto"
         ]
        },
        {
@@ -277,7 +278,7 @@
         ]
        }
       ],
-      "description": "Which part of the photo to keep in view when it is cropped: center, top, bottom, left, right, or { \"x\": 0.5, \"y\": 0.3 } with each from 0 (left/top) to 1 (right/bottom). Default center."
+      "description": "Which part of the photo to keep in view when it is cropped: center, top, bottom, left, right, or { \"x\": 0.5, \"y\": 0.3 } with each from 0 (left/top) to 1 (right/bottom). Default center. \"auto\": the server picks the point from the photo itself and returns it as image_focus_used. Use it on a first render when the subject may be off-centre."
      },
      "image_zoom": {
       "type": "integer",
@@ -292,8 +293,62 @@
        "contain"
       ],
       "description": "cover (default) fills the frame and crops the photo; contain shows the whole photo with the palette's secondary color in the empty bars."
+     },
+     "overlay_strength": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "How strongly the template's colour or gradient overlay covers the photo, as a percent of the design: 100 (default) = as designed, 0 = no overlay. It cannot make the overlay stronger. Templates without an overlay ignore it (see list_templates \"overlay\"). Text that sits on the overlay can become hard to read at low values; a warning says so."
      }
     }
+   }
+  },
+  {
+   "name": "upload_image",
+   "description": "Upload the user's own photo so render_pin can use it. Returns image_url (pass it to render_pin as image_url or in additional_image_urls) plus its size and format. The image is checked and cleaned: location and camera data are removed and it is turned upright. It is kept for 7 days (expires_at). Counts against a daily upload limit.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "data": {
+      "type": "string",
+      "minLength": 16,
+      "maxLength": 4000000,
+      "description": "The image file, base64-encoded (no data: prefix). JPEG, PNG or WebP, up to 3 MB. Base64 is slow for large files: if you can run shell commands, call create_upload_link and POST the file to its upload_api_url instead."
+     },
+     "filename": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Original file name, for your reference only; not stored"
+     }
+    },
+    "required": [
+     "data"
+    ]
+   }
+  },
+  {
+   "name": "create_upload_link",
+   "description": "Use when the user has a photo you cannot read as a file (for example one pasted into the chat). Returns a page where the user uploads it. Give the user upload_page_url, ask them to tell you when it is done, then call get_upload. If you can run shell commands and can read the file, instead POST it to upload_api_url as multipart with fields \"token\" and \"file\" (curl_example shows how). The link works once, for 15 minutes. JPEG, PNG or WebP, up to 4.5 MB.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {}
+   }
+  },
+  {
+   "name": "get_upload",
+   "description": "The state of an upload from create_upload_link (or upload_image): waiting (the link is open, nothing uploaded yet), expired (the link expired unused; make a new one) or ready, with image_url to pass to render_pin.",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "upload_id": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "upload_id from create_upload_link or upload_image"
+     }
+    },
+    "required": [
+     "upload_id"
+    ]
    }
   }
  ]

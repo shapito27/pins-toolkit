@@ -11,6 +11,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "decor",
   "custom_fields": []
  },
  {
@@ -21,6 +22,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -31,6 +33,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -41,6 +44,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -51,6 +55,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "listPrefix",
@@ -80,6 +85,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -90,6 +96,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "price",
@@ -107,6 +114,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -117,6 +125,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -127,6 +136,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -137,6 +147,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "listNumber",
@@ -154,6 +165,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": false,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -164,6 +176,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "decor",
   "custom_fields": []
  },
  {
@@ -174,6 +187,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": false,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "categoryLabel",
@@ -191,6 +205,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": false,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "categoryLabel",
@@ -208,6 +223,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "cookTime",
@@ -231,6 +247,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": true,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -241,6 +258,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -251,6 +269,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -261,6 +280,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "decor",
   "custom_fields": []
  },
  {
@@ -271,6 +291,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -281,6 +302,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -291,6 +313,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -301,6 +324,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "text",
   "custom_fields": [
    {
     "id": "categoryLabel",
@@ -318,6 +342,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -328,6 +353,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -338,6 +364,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "decor",
   "custom_fields": []
  },
  {
@@ -348,6 +375,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -358,6 +386,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -368,6 +397,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "listNumber",
@@ -385,6 +415,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "listPrefix",
@@ -408,6 +439,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": true,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "listNumber",
@@ -425,6 +457,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "listNumber",
@@ -442,6 +475,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "badgeTop",
@@ -465,6 +499,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": true,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -475,6 +510,7 @@ type: fixed
   "supports_subtitle": false,
   "uses_photo": true,
   "uses_extra_images": true,
+  "overlay": "text",
   "custom_fields": [
    {
     "id": "photoLabelTop",
@@ -498,6 +534,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": false,
+  "overlay": "none",
   "custom_fields": []
  },
  {
@@ -508,6 +545,7 @@ type: fixed
   "supports_subtitle": true,
   "uses_photo": true,
   "uses_extra_images": true,
+  "overlay": "none",
   "custom_fields": [
    {
     "id": "listNumber",
