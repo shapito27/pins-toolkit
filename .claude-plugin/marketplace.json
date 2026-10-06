@@ -11,7 +11,8 @@
     {
       "name": "insightpins",
       "source": "./plugins/insightpins",
-      "description": "Create, review and optimize Pinterest pins from any article, product or recipe URL with InsightPins templates and pin design best practices."
+      "description": "Create, review and optimize Pinterest pins from any article, product or recipe URL with InsightPins templates and pin design best practices.",
+      "keywords": ["pinterest", "pinterest pins", "pinterest marketing", "pin design", "bulk upload", "csv"]
     }
   ]
 }
