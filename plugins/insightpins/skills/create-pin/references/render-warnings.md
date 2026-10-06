@@ -8,6 +8,7 @@ real problem in the preview, and never twice for the same warning.
 | - | - | - |
 | `TITLE_CLAMPED` | The title is cut off even at the smallest size. | Always fix: shorten the headline. |
 | `DESCRIPTION_CUT` | The subtitle (or the end of the title) is longer than the template shows. | Shorten the subtitle, or choose a template with more room. |
+| `LIST_ITEMS_CUT` | On `numbered-steps` or `checklist`, some list items were left off (only so many fit at this text size) or cut short. The message says which. | Give fewer items, shorten the long ones (about 45 characters), or use a smaller `text_size`. |
 | `TITLE_SHRUNK` | The title was shrunk well below the requested size to fit. | Shorten the headline if it now looks small in the preview. |
 | `TITLE_SMALL` | The title uses only a small part of its room. | Re-render with `text_size: "auto"`. It doesn't fire on every template (for example `recipe-card`), so judge the title size in the preview too, and use "auto" from the first render. |
 | `IMAGE_CROPPED` | Only part of the photo is visible (for example a wide photo in a tall frame). It is raised while `image_focus` is the default centre or `"auto"`, and not once you set a point or side yourself. | Look at the preview. If the subject is in view, keep the pin. If it is cut off, set `image_focus` on it (or use `"auto"` on the first render); to show more of the photo, use `image_fit: "contain"`, a panel template or another photo. `image_focus` only chooses which part shows, not how much. |

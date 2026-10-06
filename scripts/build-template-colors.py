@@ -17,12 +17,15 @@ OUT = os.path.join(HERE, "..", "plugins", "insightpins", "skills", "create-pin",
 
 ALL = ["ocean-breeze", "midnight", "lavender", "forest-calm", "cool-mint", "sage", "electric",
        "sunset-glow", "terracotta", "coral-reef", "berry-blush", "rose-gold", "dusty-rose",
-       "warm-earth", "minimalist"]
+       "warm-earth", "minimalist", "charcoal", "deep-navy", "forest-night", "plum-night",
+       "black-gold"]
+# Display names that don't match the id (the colour doc uses display names).
+NAME_TO_ID = {"indigo": "midnight"}
 LARGE = ("Title", "Subtitle", "Button")  # 24px and up at default size: 3:1 is enough
 
 
 def palettes(cell):
-    """'9/15: Ocean Breeze, Midnight' -> ids; '15/15: all' -> all; '0/15: none' or '-' -> []."""
+    """'9/20: Ocean Breeze, Indigo' -> ids; '20/20: all' -> all; '0/20: none' or '-' -> []."""
     cell = cell.strip()
     if cell in ("-", "") or cell.endswith(": none"):
         return []
@@ -30,6 +33,7 @@ def palettes(cell):
     if names == "all":
         return list(ALL)
     ids = [n.strip().lower().replace(" ", "-") for n in names.split(",")]
+    ids = [NAME_TO_ID.get(i, i) for i in ids]
     unknown = [i for i in ids if i not in ALL]
     if unknown:
         sys.exit(f"unknown palette(s) {unknown} in: {cell}")
@@ -109,7 +113,7 @@ def build(doc):
     ]
     for template in rows:
         ok, extra, notes = describe(template, rows[template])
-        readable = "all 15 palettes" if ok == ALL else (", ".join(ok) if ok else "none")
+        readable = f"all {len(ALL)} palettes" if ok == ALL else (", ".join(ok) if ok else "none")
         lines.append(f"| `{template}` | {readable} | {', '.join(extra)} | "
                      f"{'; '.join(notes)} |")
     return "\n".join(lines) + "\n", len(rows)

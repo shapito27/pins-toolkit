@@ -13,41 +13,41 @@ photo, which depends on the photo. Pick the palette from these lists first, then
 
 | Template | Readable with | Also without a button | Notes |
 | - | - | - | - |
-| `bold-title` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `image-focus` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `minimal-clean` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `dashed-accent` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `blog-card` | all 15 palettes |  | its label is drawn in the light secondary colour (faint) |
-| `product-spotlight` | all 15 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, terracotta, berry-blush, rose-gold, warm-earth, minimalist |
-| `price-tag` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `side-rail` | all 15 palettes |  |  |
-| `numbered-steps` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `checklist` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `number-badge` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `centered-quote` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `quote-with-image` | all 15 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, terracotta, berry-blush, rose-gold, warm-earth, minimalist |
-| `vine-corners` | all 15 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, cool-mint, terracotta, coral-reef, berry-blush, rose-gold, dusty-rose, warm-earth, minimalist |
-| `tulip-frame` | all 15 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, cool-mint, terracotta, coral-reef, berry-blush, rose-gold, dusty-rose, warm-earth, minimalist |
-| `recipe-card` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `photo-stack` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `framed-bold` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `diagonal-cut` | all 15 palettes |  | site name fully readable only on minimalist |
-| `corner-badge` | all 15 palettes |  |  |
-| `split-horizontal` | all 15 palettes |  | site name fully readable only on minimalist |
-| `modern-minimal` | all 15 palettes |  |  |
-| `gradient-wave` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `magazine-cover` | all 15 palettes |  | title sits on the photo: pick a calm, darker area with `image_focus` |
-| `text-focus` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `collage-style` | all 15 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, forest-calm, electric, sunset-glow, terracotta, berry-blush, rose-gold, dusty-rose, warm-earth, minimalist |
-| `story-card` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `starburst-badge` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `arch-window` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `side-panels` | all 15 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
-| `travel-overlay` | all 15 palettes |  |  |
-| `lifestyle-collage` | all 15 palettes |  |  |
-| `destination-card` | all 15 palettes |  |  |
-| `grid-lines` | all 15 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist |
-| `overlap-collage` | all 15 palettes |  |  |
-| `photo-quad` | all 15 palettes |  |  |
-| `vertical-title` | all 15 palettes |  |  |
-| `fitness-grid` | all 15 palettes |  |  |
+| `bold-title` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `image-focus` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `minimal-clean` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `dashed-accent` | all 20 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
+| `blog-card` | all 20 palettes |  | its label is drawn in the light secondary colour (faint) |
+| `product-spotlight` | all 20 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, terracotta, berry-blush, rose-gold, warm-earth, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `price-tag` | all 20 palettes |  | site name fully readable only on charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `side-rail` | all 20 palettes |  |  |
+| `numbered-steps` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `checklist` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `number-badge` | all 20 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
+| `centered-quote` | all 20 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
+| `quote-with-image` | all 20 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, terracotta, berry-blush, rose-gold, warm-earth, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `vine-corners` | all 20 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, cool-mint, terracotta, coral-reef, berry-blush, rose-gold, dusty-rose, warm-earth, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `tulip-frame` | all 20 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, cool-mint, terracotta, coral-reef, berry-blush, rose-gold, dusty-rose, warm-earth, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `recipe-card` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `photo-stack` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `framed-bold` | all 20 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
+| `diagonal-cut` | all 20 palettes |  | site name fully readable only on minimalist, charcoal, black-gold |
+| `corner-badge` | all 20 palettes |  |  |
+| `split-horizontal` | all 20 palettes |  | site name fully readable only on minimalist, charcoal, black-gold |
+| `modern-minimal` | all 20 palettes |  |  |
+| `gradient-wave` | all 20 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
+| `magazine-cover` | all 20 palettes |  | title sits on the photo: pick a calm, darker area with `image_focus` |
+| `text-focus` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `collage-style` | all 20 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, forest-calm, electric, sunset-glow, terracotta, berry-blush, rose-gold, dusty-rose, warm-earth, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `story-card` | all 20 palettes |  | site name fully readable only on charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `starburst-badge` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `arch-window` | all 20 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
+| `side-panels` | all 20 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
+| `travel-overlay` | all 20 palettes |  |  |
+| `lifestyle-collage` | all 20 palettes |  |  |
+| `destination-card` | all 20 palettes |  |  |
+| `grid-lines` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `overlap-collage` | all 20 palettes |  |  |
+| `photo-quad` | all 20 palettes |  |  |
+| `vertical-title` | all 20 palettes |  |  |
+| `fitness-grid` | all 20 palettes |  |  |

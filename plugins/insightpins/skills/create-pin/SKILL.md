@@ -122,8 +122,10 @@ still draft the copy without it.
 
 8. **Render** with `render_pin`: template, palette, font, headline as `title`, subtitle as
    `description` (only on templates that support it, and not where the notes in
-   `template-colors.md` say the subtitle is never readable: send `show_description: false` there),
-   `site_name`, `image_url`, and a CTA that fits
+   `template-colors.md` say the subtitle is never readable: send `show_description: false` there;
+   on `numbered-steps` and `checklist` pass the page's real steps as `list_items` instead, one short
+   line each, unnumbered, best 3-6; if the tool refuses `list_items`, put them in `description`,
+   one per line; see `template-selection.md`), `site_name`, `image_url`, and a CTA that fits
    the content ("Get the Recipe", "Read the Guide", "Shop Now", "See the List"; 30 characters max).
    **Set the text size on the first render**; the template default (100) is usually too small at
    thumbnail size. Use `text_size: "auto"`: it fits the title to its area (never smaller than

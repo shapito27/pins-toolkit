@@ -30,7 +30,7 @@ hands you ready-to-paste Pinterest copy. No design tool, no templates to fill in
   or get improved versions to A/B test.
 - **Bulk upload without the rejections.** Build or check a Pinterest bulk upload CSV and catch every
   row Pinterest would refuse before you upload.
-- **Free to start.** 38 templates, 15 color palettes, 10 font pairings and 20 renders a day.
+- **Free to start.** 38 templates, 20 color palettes (15 light and 5 dark), 10 font pairings and 20 renders a day.
 
 ## See it in action
 
@@ -135,7 +135,7 @@ In claude.ai chat and Cowork you don't need commands: just describe what you wan
 | `extract_url` | Reads a page: title, description, photos with their size and shape, and recipe or product facts (cook time, servings, price) |
 | `list_templates` | Lists the 38 pin templates, the fields each one supports, where the photo goes and which photo shape suits it |
 | `preview_templates` | Shows sample images of templates (a shortlist or a whole category) so Claude can see them before choosing. Uses no render |
-| `list_styles` | Lists the 15 color palettes and 10 font pairings |
+| `list_styles` | Lists the 20 color palettes (light and dark) and 10 font pairings |
 | `render_pin` | Renders a 1000x1500 pin and returns a preview, an image link, an edit link and warnings. It can find the photo's subject on its own and fade a template's colour overlay |
 | `get_quota` | Shows how many renders you have left today |
 | `create_upload_link` | Makes a one-time link for uploading your own photo, from a file or through an upload page |
