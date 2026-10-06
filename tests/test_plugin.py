@@ -666,6 +666,25 @@ class EvalSuiteTest(unittest.TestCase):
             template_id="corner-badge", image_url="https://x.example/uploads/vegan-fried-rice-crispy-tofu-683x1024.jpg")))
 
 
+    def test_list_template_graders(self):
+        _, empty, _ = grader("steps-list", "no-sample-steps")
+        _, lines, _ = grader("steps-list", "one-step-per-line")
+        _, numbered, _ = grader("steps-list", "unnumbered")
+        steps = "Water the plant the day before\nPick a pot one size up\nLoosen the roots"
+        self.assertTrue(re.search(empty, render_input(template_id="numbered-steps", title="T")))
+        self.assertTrue(re.search(empty, render_input(template_id="checklist", title="T", description="")))
+        self.assertFalse(re.search(empty, render_input(template_id="checklist", title="T", show_description=False)))
+        self.assertFalse(re.search(empty, render_input(template_id="numbered-steps", description=steps)))
+        self.assertFalse(re.search(empty, render_input(template_id="bold-title", title="T")))
+        self.assertTrue(re.search(lines, render_input(template_id="numbered-steps", description=steps)))
+        self.assertFalse(re.search(lines, render_input(template_id="numbered-steps",
+                                                       description="Water it. Pick a pot. Loosen roots.")))
+        self.assertTrue(re.search(numbered, render_input(description="1. Water it\n2. Pick a pot")))
+        self.assertTrue(re.search(numbered, render_input(description="Water it\n- Pick a pot")))
+        self.assertFalse(re.search(numbered, render_input(description=steps)))
+        self.assertFalse(re.search(numbered, render_input(description="Add 3.5 cups of mix\nWater it")))
+
+
 class McpFeaturesTest(unittest.TestCase):
     """What the October 5 server added is documented in the skills and present in the mocks."""
 
@@ -684,6 +703,7 @@ class McpFeaturesTest(unittest.TestCase):
         self.assertIn("Never use an image with a `hint`", create)
         self.assertIn("`LOW_CONTRAST`", create)
         self.assertIn("`preview_templates`", create)
+        self.assertIn("sample steps", create)
         self.assertIn("`preview_templates`", read(os.path.join(SKILLS, "remake-pin", "SKILL.md")))
         for skill in ("optimize-pin", "remake-pin"):
             self.assertIn("readable_palettes", read(os.path.join(SKILLS, skill, "SKILL.md")), skill)

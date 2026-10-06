@@ -39,7 +39,7 @@ Keep these as they are:
 | 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | **Done** (#88: `upload_image`, `create_upload_link`, `get_upload`; checked 2026-10-05) |
 | 7 | `extract_url`: structured data (recipe times, servings, product price) | Functions | Observed | Medium-High | S | **Done** (#56, checked 2026-10-04); description still cut mid-sentence |
 | 8 | Template previews in `list_templates` | Templates | Inferred | Medium-High | S | **Done** (#105: `photo_area`, `best_photo`, `preview_url`; #108: `preview_templates` returns the images; checked 2026-10-05) |
-| 9 | List items for list templates | Templates | Inferred | Medium-High | M | Next |
+| 9 | List items for list templates | Templates | Inferred | Medium-High | M | **Partly done** (#114, #115: the templates draw items from the description, one per line; a `list_items` parameter is planned) |
 | 10 | Brand kit: custom colors, logo, saved defaults | Controls | Inferred | High for repeat users | M | Before paid plans |
 | 11 | Dark and high-contrast backgrounds | Templates | Observed | Medium | S-M | Next |
 | 12 | Quota errors with plan info and an upgrade link | Plans | Inferred | High when billing starts | S | **Before paid plans** |
@@ -237,6 +237,15 @@ now put the photo in a panel (`best_photo: "square"`), not full-bleed.
 but `render_pin` only takes a title and a description. There's no way to pass the actual steps or
 items, so a "checklist" pin can't show a checklist.
 **Proposal:** `items: string[]` (3-7 short lines) for list templates, with a sensible max length per item.
+
+**Update (#114, #115, checked 2026-10-06):** `numbered-steps` and `checklist` now draw list items:
+the given items, else the description split into lines (or sentences when it has no line break,
+keeping "3.5 cups" whole), else sample steps. At most 7 items of 80 characters are shown, as many as
+fit above the photo, and an item left off or cut raises `DESCRIPTION_CUT`. `render_pin` doesn't take
+`list_items` yet (planned), so the plugin (1.0.5) sends the real steps in `description`, one per
+line and unnumbered, and never leaves it empty on these templates (the sample steps would show). A
+live render with four lines drew four items and kept "3.5" whole.
+Still open: `list_items` in `render_pin`; a warning when the sample steps are drawn; `fitness-grid`.
 
 ### 10. Brand kit (before paid plans)
 

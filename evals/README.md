@@ -11,6 +11,10 @@ claude plugin eval . --scaffold --no-publish          # all cases, 3 runs each, 
 claude plugin eval . --case copy-only --runs 1        # one case
 ```
 
+The quota mocks (`get_quota.md` and the limit error in `optimize-no-renders`) carry a reset time.
+Keep it in the future when you run the suite: a reset time that is already past makes Claude say the
+quota looks stale instead of when it resets.
+
 `--scaffold` is needed by `review-uploaded-pin` and `bulk-csv-check`, whose `fixture.sh` copies a
 fixture into the run's workspace. `bulk-csv-check` also needs `--allow-tools Bash` (and, on Linux,
 `bubblewrap` and `socat` for the sandbox). Results go to `results/` (git-ignored).
@@ -33,6 +37,7 @@ fixture into the run's workspace. `bulk-csv-check` also needs `--allow-tools Bas
 | `optimize-one-render` | Same, with 1 render left | checks quota first, renders exactly once, says the one version combines fixes and can't show which helped, offers the rest for later |
 | `optimize-no-renders` | Same, with 0 renders left (render returns a limit error) | no render; still delivers the review, copy and settings, and says when the limit resets |
 | `brand-palette` | User asks for their brand palette `coral-reef` (readable on every template since #93) | keeps `coral-reef`; doesn't hide the button; invents no recipe facts |
+| `steps-list` | A step-by-step page and a request for a numbered-steps pin | uses `numbered-steps` or `checklist`; the description holds the page's steps, one per line and unnumbered, never empty (the template would draw sample steps); honest copy |
 | `hinted-photos` | The page's only portrait image is an author headshot with `hint: "author"`; a logo has `hint: "logo"` | never renders a hinted image, uses one of the two landscape page photos, honest report |
 | `own-photo-file` | The user's own photo is a file in the folder | creates an upload link, no base64 upload, no render before the upload, at most one `get_upload`, gives the 7-day notice |
 | `own-photo-pasted` | The user pasted their photo into the chat (only `Skill` allowed) | creates an upload link, gives the upload page and the 7-day notice, waits; no render, no polling |

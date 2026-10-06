@@ -172,3 +172,13 @@ and `remake-pin`, `optimize-pin` and `review-pin` updated to match.
 - `preview_templates` (#108) returned labelled sample images for `recipe-card` and `split-horizontal`
   without using a render; `create-pin` and `remake-pin` now call it to compare a shortlist, and the
   mocks list it as the ninth tool. `get_quota` now returns `"limit": 20`.
+
+## Re-test after the list items deploy (2026-10-06)
+
+- A `numbered-steps` render with four steps in `description`, one per line, drew four numbered
+  items and kept "3.5" whole, with no warnings.
+- Skills: `create-pin` step 8 and `template-selection.md` say the description is the list on
+  `numbered-steps` and `checklist` (real steps, one per line, unnumbered, 3-6 items), and that an
+  empty description shows sample steps; `render-warnings.md` explains `DESCRIPTION_CUT` on a list.
+- New eval case `steps-list`: never renders a list template without a description (or with
+  `show_description: false`), one step per line, unnumbered, honest copy.
