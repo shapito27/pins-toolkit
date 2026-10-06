@@ -1,6 +1,6 @@
 {
   "name": "insightpins",
-  "displayName": "InsightPins",
+  "displayName": "InsightPins for Pinterest",
   "version": "1.0.5",
   "description": "Create, review and optimize Pinterest pins from any article, product or recipe URL, and build or check Pinterest bulk upload CSV files. Renders 1000x1500 pins from InsightPins templates and applies pin design and copywriting best practices.",
   "author": {
@@ -12,6 +12,8 @@
   "license": "MIT",
   "keywords": [
     "pinterest",
+    "pinterest pins",
+    "pinterest marketing",
     "pins",
     "pin design",
     "marketing",
