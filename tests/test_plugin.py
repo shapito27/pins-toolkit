@@ -105,7 +105,7 @@ def template_colors():
     for line in read(TEMPLATE_COLORS).splitlines():
         m = re.match(r"^\| `([a-z-]+)` \| (.*?) \| (.*?) \| (.*?) \|$", line)
         if m:
-            split = lambda cell: (list(palettes()) if cell.strip() == "all 15 palettes" else
+            split = lambda cell: (list(palettes()) if re.fullmatch(r"all \d+ palettes", cell.strip()) else
                                   [p.strip() for p in cell.split(",") if p.strip() and p.strip() != "none"])
             rows[m.group(1)] = (split(m.group(2)), split(m.group(3)), m.group(4))
     return rows
@@ -160,7 +160,7 @@ class StyleGuideTest(unittest.TestCase):
 
     def test_table_covers_every_palette_once(self):
         self.assertEqual(set(self.table), set(self.palettes))
-        self.assertEqual(len(self.table), 15)
+        self.assertEqual(len(self.table), 20)
 
     def test_ratios_match_palette_colors(self):
         for pid, (ratio, _) in self.table.items():
@@ -667,22 +667,26 @@ class EvalSuiteTest(unittest.TestCase):
 
 
     def test_list_template_graders(self):
-        _, empty, _ = grader("steps-list", "no-sample-steps")
-        _, lines, _ = grader("steps-list", "one-step-per-line")
+        _, empty, _ = grader("steps-list", "no-empty-list")
+        _, items, _ = grader("steps-list", "uses-list-items")
         _, numbered, _ = grader("steps-list", "unnumbered")
-        steps = "Water the plant the day before\nPick a pot one size up\nLoosen the roots"
+        _, hidden, _ = grader("steps-list", "no-list-and-hidden")
+        steps = ["Water the plant the day before", "Pick a pot one size up", "Loosen the roots"]
         self.assertTrue(re.search(empty, render_input(template_id="numbered-steps", title="T")))
         self.assertTrue(re.search(empty, render_input(template_id="checklist", title="T", description="")))
-        self.assertFalse(re.search(empty, render_input(template_id="checklist", title="T", show_description=False)))
-        self.assertFalse(re.search(empty, render_input(template_id="numbered-steps", description=steps)))
+        self.assertFalse(re.search(empty, render_input(template_id="numbered-steps", list_items=steps)))
+        self.assertFalse(re.search(empty, render_input(template_id="checklist", description="A\nB\nC")))
         self.assertFalse(re.search(empty, render_input(template_id="bold-title", title="T")))
-        self.assertTrue(re.search(lines, render_input(template_id="numbered-steps", description=steps)))
-        self.assertFalse(re.search(lines, render_input(template_id="numbered-steps",
-                                                       description="Water it. Pick a pot. Loosen roots.")))
-        self.assertTrue(re.search(numbered, render_input(description="1. Water it\n2. Pick a pot")))
+        self.assertTrue(re.search(items, render_input(template_id="numbered-steps", list_items=steps)))
+        self.assertFalse(re.search(items, render_input(template_id="numbered-steps", list_items=steps[:2])))
+        self.assertFalse(re.search(items, render_input(template_id="numbered-steps", description="A\nB\nC")))
+        self.assertTrue(re.search(numbered, render_input(list_items=["1. Water it", "2. Pick a pot"])))
+        self.assertTrue(re.search(numbered, render_input(list_items=["Water it", "- Pick a pot"])))
         self.assertTrue(re.search(numbered, render_input(description="Water it\n- Pick a pot")))
-        self.assertFalse(re.search(numbered, render_input(description=steps)))
-        self.assertFalse(re.search(numbered, render_input(description="Add 3.5 cups of mix\nWater it")))
+        self.assertFalse(re.search(numbered, render_input(list_items=steps)))
+        self.assertFalse(re.search(numbered, render_input(list_items=["Add 3.5 cups of mix", "Water it"])))
+        self.assertTrue(re.search(hidden, render_input(list_items=steps, show_description=False)))
+        self.assertFalse(re.search(hidden, render_input(list_items=steps)))
 
 
 class McpFeaturesTest(unittest.TestCase):
@@ -703,7 +707,7 @@ class McpFeaturesTest(unittest.TestCase):
         self.assertIn("Never use an image with a `hint`", create)
         self.assertIn("`LOW_CONTRAST`", create)
         self.assertIn("`preview_templates`", create)
-        self.assertIn("sample steps", create)
+        self.assertIn("`list_items`", create)
         self.assertIn("`preview_templates`", read(os.path.join(SKILLS, "remake-pin", "SKILL.md")))
         for skill in ("optimize-pin", "remake-pin"):
             self.assertIn("readable_palettes", read(os.path.join(SKILLS, skill, "SKILL.md")), skill)

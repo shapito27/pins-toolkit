@@ -29,15 +29,25 @@ Rule 1 wins over everything else, then rule 2, then rule 3 and the mood table be
 
 ## Contrast: which palettes keep text readable
 
-Since October 5, 2026 every palette keeps the title, subtitle and button readable on every
-template: `list_templates` lists all 15 in each template's `readable_palettes`. Most templates draw
-some text in the palette's light `background` colour on its `primary` colour (the button on almost
-every template, and the title and subtitle on colour-panel templates such as `split-horizontal`,
-`diagonal-cut` and `bold-title`), and that pair now reaches 3:1 on every palette:
+Every palette keeps the title, subtitle and button readable on every template: `list_templates` lists
+all 20 in each template's `readable_palettes`. Fifteen palettes are light (pale backgrounds, dark
+text). Five, in the `Dark` category of `list_styles`, have near-black backgrounds with light text:
+`charcoal`, `deep-navy`, `forest-night`, `plum-night` and `black-gold`. The palette with the id
+`midnight` is shown as "Indigo" on the website; use its id.
 
-| Palette | Light text on primary | Rating |
+Most templates draw some text in the palette's `background` colour on its `primary` colour (the
+button on almost every template, and the title and subtitle on colour-panel templates such as
+`split-horizontal`, `diagonal-cut` and `bold-title`). On light palettes that is light text on a
+mid-tone; on dark palettes it is near-black text on a light primary. It reaches 3:1 everywhere:
+
+| Palette | Background colour on primary | Rating |
 | - | - | - |
 | minimalist | 15.4 | Strong: all text reads, including small text |
+| black-gold | 14.0 | Strong (dark) |
+| charcoal | 12.9 | Strong (dark) |
+| forest-night | 8.3 | Strong (dark) |
+| plum-night | 7.8 | Strong (dark) |
+| deep-navy | 7.7 | Strong (dark) |
 | berry-blush | 5.8 | Strong |
 | midnight | 5.7 | Strong |
 | dusty-rose | 4.9 | Strong |
@@ -45,8 +55,8 @@ every template, and the title and subtitle on colour-panel templates such as `sp
 | terracotta | 4.0 | Good |
 | warm-earth | 3.9 | Good |
 | rose-gold | 3.5 | Good |
-| ocean-breeze | 3.2 | Good |
 | forest-calm | 3.2 | Good |
+| ocean-breeze | 3.2 | Good |
 | sage | 3.2 | Good |
 | electric | 3.2 | Good |
 | sunset-glow | 3.2 | Good |
@@ -78,17 +88,20 @@ Every palette keeps the pin readable, so choose by the topic's mood and by the p
 | Food, cooking, baking, autumn | terracotta, warm-earth, sunset-glow, berry-blush (desserts) |
 | Home decor, interiors, wedding, beauty | dusty-rose, rose-gold, warm-earth, berry-blush |
 | Health, wellness, gardening, nature | forest-calm, sage, cool-mint, warm-earth, lavender |
-| Travel, outdoors, water, winter | ocean-breeze, midnight, electric, cool-mint, minimalist |
-| Finance, business, career, tech | midnight, minimalist, electric |
+| Travel, outdoors, water, winter | ocean-breeze, midnight, electric, cool-mint, minimalist, deep-navy |
+| Finance, business, career, tech | midnight, minimalist, electric, charcoal, deep-navy |
 | Kids, crafts, parties, fun | coral-reef, sunset-glow, berry-blush, electric |
-| Fashion, luxury, minimal aesthetic | minimalist, berry-blush, rose-gold |
-| Spirituality, self-care, quotes | lavender, midnight, dusty-rose |
-| Sales, deals, urgent or bold | coral-reef, sunset-glow, terracotta, berry-blush |
+| Fashion, luxury, minimal aesthetic | minimalist, berry-blush, rose-gold, black-gold, charcoal |
+| Spirituality, self-care, quotes | lavender, midnight, dusty-rose, plum-night |
+| Sales, deals, urgent or bold | coral-reef, sunset-glow, terracotta, berry-blush, black-gold |
+| Night, moody, cosy, cocktails, Halloween | charcoal, deep-navy, forest-night, plum-night, black-gold |
 
 These are starting points: check the photo against rule 2 and switch to another palette from the
 row when the panel colour and the photo blend together (a blue panel above a blue sky, a green
-panel next to a salad). Red, coral and orange palettes (coral-reef, sunset-glow, terracotta) still
-say energy and urgency, so keep them off calm topics such as winter, wellness and luxury.
+panel next to a salad). A dark palette stands out next to a bright photo (snow, beach, white
+kitchen) and in a feed of pale pins, but blends into a dark, moody photo. Red, coral and orange
+palettes (coral-reef, sunset-glow, terracotta) still say energy and urgency, so keep them off calm
+topics such as winter, wellness and luxury.
 
 ## Font pairing by mood
 

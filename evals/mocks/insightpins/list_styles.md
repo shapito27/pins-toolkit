@@ -18,7 +18,7 @@ type: fixed
   },
   {
    "id": "midnight",
-   "name": "Midnight",
+   "name": "Indigo",
    "category": "Blues & Purples",
    "colors": {
     "primary": "#3F51B5",
@@ -182,6 +182,66 @@ type: fixed
     "accent": "#424242",
     "text": "#212121",
     "background": "#FAFAFA"
+   }
+  },
+  {
+   "id": "charcoal",
+   "name": "Charcoal",
+   "category": "Dark",
+   "colors": {
+    "primary": "#E0E0E0",
+    "secondary": "#787878",
+    "accent": "#BDBDBD",
+    "text": "#FAFAFA",
+    "background": "#1C1C1C"
+   }
+  },
+  {
+   "id": "deep-navy",
+   "name": "Deep Navy",
+   "category": "Dark",
+   "colors": {
+    "primary": "#6CB4EE",
+    "secondary": "#5A7397",
+    "accent": "#F2B544",
+    "text": "#F1F5FB",
+    "background": "#0F1B2D"
+   }
+  },
+  {
+   "id": "forest-night",
+   "name": "Forest Night",
+   "category": "Dark",
+   "colors": {
+    "primary": "#8BC79A",
+    "secondary": "#5E8A6B",
+    "accent": "#E8C468",
+    "text": "#EEF5EC",
+    "background": "#10241A"
+   }
+  },
+  {
+   "id": "plum-night",
+   "name": "Plum Night",
+   "category": "Dark",
+   "colors": {
+    "primary": "#F28DB2",
+    "secondary": "#9A5C80",
+    "accent": "#F6C177",
+    "text": "#FBEFF4",
+    "background": "#2A0F1F"
+   }
+  },
+  {
+   "id": "black-gold",
+   "name": "Black Gold",
+   "category": "Dark",
+   "colors": {
+    "primary": "#FFD60A",
+    "secondary": "#8A7433",
+    "accent": "#FFFFFF",
+    "text": "#FFFFFF",
+    "background": "#0A0A0A"
    }
   }
  ],

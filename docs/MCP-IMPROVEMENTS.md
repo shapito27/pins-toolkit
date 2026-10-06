@@ -39,9 +39,9 @@ Keep these as they are:
 | 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | **Done** (#88: `upload_image`, `create_upload_link`, `get_upload`; checked 2026-10-05) |
 | 7 | `extract_url`: structured data (recipe times, servings, product price) | Functions | Observed | Medium-High | S | **Done** (#56, checked 2026-10-04); description still cut mid-sentence |
 | 8 | Template previews in `list_templates` | Templates | Inferred | Medium-High | S | **Done** (#105: `photo_area`, `best_photo`, `preview_url`; #108: `preview_templates` returns the images; checked 2026-10-05) |
-| 9 | List items for list templates | Templates | Inferred | Medium-High | M | **Partly done** (#114, #115: the templates draw items from the description, one per line; a `list_items` parameter is planned) |
+| 9 | List items for list templates | Templates | Inferred | Medium-High | M | **Done** (#114, #115, #116: `render_pin` takes `list_items`, `LIST_ITEMS_CUT`; checked 2026-10-06) |
 | 10 | Brand kit: custom colors, logo, saved defaults | Controls | Inferred | High for repeat users | M | Before paid plans |
-| 11 | Dark and high-contrast backgrounds | Templates | Observed | Medium | S-M | Next |
+| 11 | Dark and high-contrast backgrounds | Templates | Observed | Medium | S-M | **Done** (#118: five Dark palettes; checked 2026-10-06) |
 | 12 | Quota errors with plan info and an upgrade link | Plans | Inferred | High when billing starts | S | **Before paid plans** |
 | 13 | Better page fetching for big sites | Functions | Observed (6 of 10 failed) | Medium | M-L | Later |
 | 14 | Stock photo search with license info | Functions | Inferred | High | M | Later |
@@ -242,10 +242,15 @@ items, so a "checklist" pin can't show a checklist.
 the given items, else the description split into lines (or sentences when it has no line break,
 keeping "3.5 cups" whole), else sample steps. At most 7 items of 80 characters are shown, as many as
 fit above the photo, and an item left off or cut raises `DESCRIPTION_CUT`. `render_pin` doesn't take
-`list_items` yet (planned), so the plugin (1.0.5) sends the real steps in `description`, one per
-line and unnumbered, and never leaves it empty on these templates (the sample steps would show). A
+`list_items` yet (planned), so a first draft of plugin 1.0.5 sent the steps in `description`, one
+per line; the released 1.0.5 uses `list_items` (next update) and keeps that only as a fallback. A
 live render with four lines drew four items and kept "3.5" whole.
-Still open: `list_items` in `render_pin`; a warning when the sample steps are drawn; `fitness-grid`.
+**Update (#116, checked 2026-10-06):** `render_pin` takes `list_items` (up to 7 items of 80
+characters, best 3-6 of 45), refuses it on other templates or with `show_description: false`, warns
+`LIST_ITEMS_CUT` and never draws the sample steps on a render: with neither items nor a description
+the list is left off. `list_templates` marks the two list templates with their `list_items` limits.
+A live render passed four items through a client with older tool definitions and drew them in order.
+Still open: `fitness-grid`.
 
 ### 10. Brand kit (before paid plans)
 
@@ -267,6 +272,10 @@ standard Material Design colors, so pins can look generic.
 - add dark palettes (charcoal, navy, forest, black and gold);
 - add a `background_style: light | dark | photo` option on text-led templates;
 - add a few more distinctive palettes (muted, earthy and editorial tones).
+
+**Update (#118, checked 2026-10-06):** five Dark palettes shipped (`charcoal`, `deep-navy`,
+`forest-night`, `plum-night`, `black-gold`), readable on all 38 templates; `midnight` is now shown
+as "Indigo". A live `numbered-steps` render on `charcoal` came out near-black with light text.
 
 ### 12. Quota errors and plan info (before paid plans)
 

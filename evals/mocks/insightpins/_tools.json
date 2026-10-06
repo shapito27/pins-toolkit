@@ -19,7 +19,7 @@
   },
   {
    "name": "list_templates",
-   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade. readable_palettes lists the palette ids on which the title, subtitle and button reach 3:1 contrast (text on the photo is not judged); choose the palette from it unless the user asks for another. photo_area says where the photo goes: full-bleed (fills the pin), panel (one framed area, from a small accent to most of the pin), multi (several photo boxes; uses_extra_images says whether they can show different photos) or none. best_photo is the photo shape that is cropped least: portrait (about 2:3), square, landscape (about 3:2), or any. preview_url is a sample image of the template (sample text and photo, palette ocean-breeze, font modern-sans).",
+   "description": "List the pin templates, optionally for one category. Each entry says whether it shows a subtitle (the description) and which extra fields it supports, such as a price or cook time, and whether a colour overlay covers its photo (overlay: none, decor, or text when text sits on it), which render_pin overlay_strength can fade. readable_palettes lists the palette ids on which the title, subtitle and button reach 3:1 contrast (text on the photo is not judged); choose the palette from it unless the user asks for another. photo_area says where the photo goes: full-bleed (fills the pin), panel (one framed area, from a small accent to most of the pin), multi (several photo boxes; uses_extra_images says whether they can show different photos) or none. best_photo is the photo shape that is cropped least: portrait (about 2:3), square, landscape (about 3:2), or any. list_items marks the two templates that draw a list (numbered-steps and checklist): pass the items to render_pin as list_items, up to max_items items of max_length characters (best recommended_items items of up to recommended_length characters). preview_url is a sample image of the template (sample text and photo, palette ocean-breeze, font modern-sans).",
    "inputSchema": {
     "type": "object",
     "properties": {
@@ -72,7 +72,7 @@
   },
   {
    "name": "list_styles",
-   "description": "List the color palettes (with their hex colors) and font pairings a pin can use.",
+   "description": "List the color palettes (with their hex colors) and font pairings a pin can use. Palettes come in light and dark: the Dark category has near-black backgrounds with light text.",
    "inputSchema": {
     "type": "object",
     "properties": {}
@@ -88,7 +88,7 @@
   },
   {
    "name": "render_pin",
-   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. The result also has an edit_url. When a short title looks small for its space, re-render with text_size \"auto\". When a photo is cropped badly or too small in its frame, re-render with image_focus, image_zoom or image_fit \"contain\". Counts against the daily render limit; failed renders are not counted. The result has a warnings list (each with a code and a message) when something looks wrong. Read it, but re-render only when a warning matters. Codes: TITLE_CLAMPED, DESCRIPTION_CUT, IMAGE_CROPPED, IMAGE_UPSCALED, TITLE_SHRUNK, TITLE_SMALL, SUBTITLE_HIDDEN, EXTRA_IMAGES_IGNORED, IMAGE_IGNORED, LAYOUT_UNSETTLED. When a photo looks washed out or too dark under the template's colour overlay, re-render with overlay_strength (0-100). IMAGE_CROPPED is raised only while image_focus is the default centre or \"auto\". overlay_strength adds OVERLAY_IGNORED and OVERLAY_LOW_CONTRAST. LOW_CONTRAST means the title, subtitle or button is hard to read on the chosen palette; its message names palettes that work with the template.",
+   "description": "Render a 1000x1500 Pinterest pin and return a preview plus a link to the full image (JPEG by default). The link expires after 7 days. The result also has an edit_url. When a short title looks small for its space, re-render with text_size \"auto\". When a photo is cropped badly or too small in its frame, re-render with image_focus, image_zoom or image_fit \"contain\". Counts against the daily render limit; failed renders are not counted. The result has a warnings list (each with a code and a message) when something looks wrong. Read it, but re-render only when a warning matters. Codes: TITLE_CLAMPED, DESCRIPTION_CUT, LIST_ITEMS_CUT, IMAGE_CROPPED, IMAGE_UPSCALED, TITLE_SHRUNK, TITLE_SMALL, SUBTITLE_HIDDEN, EXTRA_IMAGES_IGNORED, IMAGE_IGNORED, LAYOUT_UNSETTLED. When a photo looks washed out or too dark under the template's colour overlay, re-render with overlay_strength (0-100). IMAGE_CROPPED is raised only while image_focus is the default centre or \"auto\". overlay_strength adds OVERLAY_IGNORED and OVERLAY_LOW_CONTRAST. LOW_CONTRAST means the title, subtitle or button is hard to read on the chosen palette; its message names palettes that work with the template. For numbered-steps and checklist, pass the list itself as list_items (one short line per item, no numbering) rather than in the description; LIST_ITEMS_CUT says which items were left off or cut.",
    "inputSchema": {
     "type": "object",
     "required": [
@@ -181,7 +181,12 @@
        "rose-gold",
        "dusty-rose",
        "warm-earth",
-       "minimalist"
+       "minimalist",
+       "charcoal",
+       "deep-navy",
+       "forest-night",
+       "plum-night",
+       "black-gold"
       ],
       "description": "From list_styles"
      },
@@ -331,6 +336,17 @@
       "minimum": 0,
       "maximum": 100,
       "description": "How strongly the template's colour or gradient overlay covers the photo, as a percent of the design: 100 (default) = as designed, 0 = no overlay. It cannot make the overlay stronger. Templates without an overlay ignore it (see list_templates \"overlay\"). Text that sits on the overlay can become hard to read at low values; a warning says so."
+     },
+     "list_items": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 7,
+      "items": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 80
+      },
+      "description": "numbered-steps and checklist only. The items of the list, in order, one short line each with no numbering or bullets (the template draws its own; one leading \"1.\" or \"-\" is removed). Best 3-6 items of up to 45 characters; up to 7 items of 80 characters are accepted, but not all of them always fit: with the button shown numbered-steps fits 6 at the default text size, both fit 5 at text_size 130 and fewer above, and LIST_ITEMS_CUT reports any item left off or cut. Replaces the description on these templates; do not combine it with show_description: false."
      }
     }
    }
