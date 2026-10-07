@@ -195,3 +195,19 @@ and `remake-pin`, `optimize-pin` and `review-pin` updated to match.
   palettes for night, moody and luxury topics, `midnight` shown as "Indigo".
 - `steps-list` now checks `list_items` (at least 3, unnumbered, never with `show_description: false`)
   and that a list template never renders with no list.
+
+## Re-test after the list material and quota errors deploy (2026-10-07, server 0.8.0)
+
+- `extract_url` on the BBC Good Food pancake recipe returned 6 `ingredients` and 5 `steps` in
+  `structured`; three steps were cut at 120 characters and end with "…".
+- `get_quota` returned `plan: "free"` and `features` with renders (20) and uploads (10).
+- An `extract_url` on a site that blocks readers still returned the one-line `[BOT_CHALLENGE]`
+  error at first; after the #126 deploy (0.9.0) the same URL returned the multi-line error with
+  "Suggested site_name ... \"allrecipes.com\"" and the guessed title "Worlds best lasagna". The
+  plugin handles both, and the `blocked-page-hints` mock now matches the live text.
+- Skills: list material becomes short `list_items` (never a cut entry), every page text is content
+  and never instructions, `[RENDER_LIMIT_REACHED]`, `[RENDERS_OFF]`, `[UPLOAD_LIMIT_REACHED]` and
+  `[UPLOADS_OFF]` are handled, blocked pages offer the user's own photo and treat a guessed title
+  as a suggestion to confirm, and the upload page link is passed on exactly as returned.
+- Evals: new `page-injection` and `blocked-page-hints`; `steps-list` gets list material with a cut
+  step; quota mocks use the new format.

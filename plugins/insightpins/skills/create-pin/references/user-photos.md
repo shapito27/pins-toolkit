@@ -27,7 +27,8 @@ message as the link. Their request to use the photo is their go-ahead; you don't
    explains. If that fails (no network, the command isn't allowed), use step 2 with the same link,
    and include the 7-day notice in that message even though you meant to send the file yourself.
 2. **You can't read the file** (a photo pasted into a chat, or into the terminal): call
-   `create_upload_link`, give the user its `upload_page_url` together with the 7-day notice above,
+   `create_upload_link`, give the user its `upload_page_url` exactly as returned (never change its
+   domain or path) together with the 7-day notice above,
    ask them to upload the photo there and say when it's done, and end your turn. Don't render yet.
 3. When they say it's done, call `get_upload` once with the `upload_id`:
    - `ready`: use its `image_url` as the pin photo;
@@ -46,7 +47,8 @@ has returned its `image_url`.
 | - | - |
 | Not JPEG, PNG or WebP (for example HEIC, the iPhone default) | Ask for a JPEG or PNG copy of the photo |
 | Too large (over 4.5 MB through the link, 3 MB through `upload_image`, or over 40 megapixels) | Ask for a smaller version, or a JPEG export |
-| Daily upload limit reached (10 per account per day) | Say so, say it resets at 00:00 UTC, and offer to use a photo URL instead |
+| `[UPLOAD_LIMIT_REACHED]`: daily upload limit reached (10 per account per day) | Say so, say it resets at 00:00 UTC, and offer to use a photo URL instead |
+| `[UPLOADS_OFF]`: uploads are turned off on the server | Say so, don't retry, and ask for a photo URL instead |
 | 5 upload links already open | Use one of them, or wait 15 minutes |
 
 ## After rendering

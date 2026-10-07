@@ -3,4 +3,4 @@ type: fixed
 error: true
 ---
 
-Daily render limit reached: 20 of 20 renders used today. The limit resets at 2026-10-07T00:00:00Z.
+[RENDER_LIMIT_REACHED] Daily render limit reached (20/20). It resets at 2026-10-09T00:00:00.000Z.

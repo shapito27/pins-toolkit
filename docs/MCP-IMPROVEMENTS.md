@@ -42,8 +42,8 @@ Keep these as they are:
 | 9 | List items for list templates | Templates | Inferred | Medium-High | M | **Done** (#114, #115, #116: `render_pin` takes `list_items`, `LIST_ITEMS_CUT`; checked 2026-10-06) |
 | 10 | Brand kit: custom colors, logo, saved defaults | Controls | Inferred | High for repeat users | M | Before paid plans |
 | 11 | Dark and high-contrast backgrounds | Templates | Observed | Medium | S-M | **Done** (#118: five Dark palettes; checked 2026-10-06) |
-| 12 | Quota errors with plan info and an upgrade link | Plans | Inferred | High when billing starts | S | **Before paid plans** |
-| 13 | Better page fetching for big sites | Functions | Observed (6 of 10 failed) | Medium | M-L | Later |
+| 12 | Quota errors with plan info and an upgrade link | Plans | Inferred | High when billing starts | S | **Partly done** (#124: `[RENDER_LIMIT_REACHED]`, `[RENDERS_OFF]`, `[UPLOAD_LIMIT_REACHED]`, `[UPLOADS_OFF]`, `get_quota` plan and features; no upgrade link yet) |
+| 13 | Better page fetching for big sites | Functions | Observed (6 of 10 failed) | Medium | M-L | **Partly done** (#126: the error says how to go on without the page, with a suggested site_name and a guessed title; live on 2026-10-07) |
 | 14 | Stock photo search with license info | Functions | Inferred | High | M | Later |
 | 15 | Pin history (`list_my_pins`, `get_pin`) and longer-lived links | Functions | Inferred | Medium | M | Later |
 | 16 | More pin elements: badge, overlay strength, text alignment | Controls | Partly observed | Medium | M | Overlay strength **done** (#87); badge and text alignment later |
@@ -250,6 +250,10 @@ characters, best 3-6 of 45), refuses it on other templates or with `show_descrip
 `LIST_ITEMS_CUT` and never draws the sample steps on a render: with neither items nor a description
 the list is left off. `list_templates` marks the two list templates with their `list_items` limits.
 A live render passed four items through a client with older tool definitions and drew them in order.
+**Update (#121, #122, checked 2026-10-07):** `extract_url` returns list material from the page's
+schema.org data: a Recipe's `ingredients` and `steps`, a HowTo's `steps`, an ItemList's `items` (up
+to 12 entries of 120 characters, `*_total` when there are more). The plugin (1.0.6) shortens them
+into `list_items` and treats all page text as untrusted content.
 Still open: `fitness-grid`.
 
 ### 10. Brand kit (before paid plans)
