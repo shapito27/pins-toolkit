@@ -43,7 +43,7 @@ Keep these as they are:
 | 10 | Brand kit: custom colors, logo, saved defaults | Controls | Inferred | High for repeat users | M | Before paid plans |
 | 11 | Dark and high-contrast backgrounds | Templates | Observed | Medium | S-M | **Done** (#118: five Dark palettes; checked 2026-10-06) |
 | 12 | Quota errors with plan info and an upgrade link | Plans | Inferred | High when billing starts | S | **Partly done** (#124: `[RENDER_LIMIT_REACHED]`, `[RENDERS_OFF]`, `[UPLOAD_LIMIT_REACHED]`, `[UPLOADS_OFF]`, `get_quota` plan and features; no upgrade link yet) |
-| 13 | Better page fetching for big sites | Functions | Observed (6 of 10 failed) | Medium | M-L | **Partly done** (#126: the error says how to go on without the page, with a suggested site_name and a guessed title; merged, not live on 2026-10-07) |
+| 13 | Better page fetching for big sites | Functions | Observed (6 of 10 failed) | Medium | M-L | **Partly done** (#126: the error says how to go on without the page, with a suggested site_name and a guessed title; live on 2026-10-07) |
 | 14 | Stock photo search with license info | Functions | Inferred | High | M | Later |
 | 15 | Pin history (`list_my_pins`, `get_pin`) and longer-lived links | Functions | Inferred | Medium | M | Later |
 | 16 | More pin elements: badge, overlay strength, text alignment | Controls | Partly observed | Medium | M | Overlay strength **done** (#87); badge and text alignment later |
