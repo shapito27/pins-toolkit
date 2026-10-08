@@ -1,0 +1,188 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "InsightPins",
+    "subtitle": "Pinterest pins from any link",
+    "description": "InsightPins turns a blog post, product page or recipe URL into a finished 1000x1500 Pinterest pin. It reads the page, suggests a template, colour palette and font, renders the pin from professional templates, and returns the image with an edit link. Users can also use their own photo, preview templates before choosing, and check how many free renders they have left today.",
+    "category": "DESIGN"
+  },
+  "tools": {
+    "extract_url": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only fetches the public web page the user names and returns its title, description, images and recipe or product facts; nothing is saved or changed.",
+        "open_world_justification": "Reads a public page on the open internet chosen by the user, but never posts, submits or changes anything there.",
+        "destructive_justification": "Does not delete, overwrite or revoke anything."
+      }
+    },
+    "list_templates": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only lists the available pin templates and their layout details.",
+        "open_world_justification": "Only reads InsightPins' own catalog; does not reach or change any outside system.",
+        "destructive_justification": "Does not delete, overwrite or revoke anything."
+      }
+    },
+    "preview_templates": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only returns preview images of templates; it does not count against the user's daily render limit or create a pin.",
+        "open_world_justification": "Only reads InsightPins' own catalog; does not reach or change any outside system.",
+        "destructive_justification": "Does not delete, overwrite or revoke anything."
+      }
+    },
+    "list_styles": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only lists the colour palettes and font pairings.",
+        "open_world_justification": "Only reads InsightPins' own catalog; does not reach or change any outside system.",
+        "destructive_justification": "Does not delete, overwrite or revoke anything."
+      }
+    },
+    "get_quota": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only returns how many renders and uploads the user has left today.",
+        "open_world_justification": "Only reads the user's own InsightPins usage; does not reach or change any outside system.",
+        "destructive_justification": "Does not delete, overwrite or revoke anything."
+      }
+    },
+    "render_pin": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates a new pin image on InsightPins, adds it to the user's recent pins and counts one render against the user's daily limit.",
+        "open_world_justification": "The finished image is hosted at an unlisted link that anyone with the link can open for 7 days; it is never posted to Pinterest or anywhere else.",
+        "destructive_justification": "Always creates a new image and never changes or removes earlier pins."
+      }
+    },
+    "upload_image": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Stores a photo the user chose to use in a pin on InsightPins for 7 days and counts one upload against the daily limit.",
+        "open_world_justification": "The photo stays on InsightPins at an unlisted link and is not published or sent to any other service.",
+        "destructive_justification": "Adds a new photo and never replaces or removes existing ones."
+      }
+    },
+    "create_upload_link": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Creates a one-time upload link, valid for 15 minutes, so the user can upload their own photo.",
+        "open_world_justification": "The link only accepts a photo into the user's own InsightPins account; nothing is published.",
+        "destructive_justification": "Only creates a new link; nothing existing is changed or removed."
+      }
+    },
+    "get_upload": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only checks whether a photo has arrived through an upload link and returns its image link.",
+        "open_world_justification": "Only reads the user's own upload; does not reach or change any outside system.",
+        "destructive_justification": "Does not delete, overwrite or revoke anything."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Make a pin from a recipe page.",
+      "user_prompt": "Make a Pinterest pin for this recipe: https://minimalistbaker.com/easy-vegan-fried-rice/",
+      "file_attachment_urls": null,
+      "tools_triggered": "extract_url, list_templates, list_styles, render_pin",
+      "expected_output": "A 1000x1500 pin image of the fried rice recipe with a short headline, the cook time and servings, plus an edit link, the template, palette and font used, a note that the link expires in 7 days, and a ready-to-paste Pinterest title, description and alt text.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Show template options before rendering.",
+      "user_prompt": "Show me what your recipe pin templates look like.",
+      "file_attachment_urls": null,
+      "tools_triggered": "list_templates, preview_templates",
+      "expected_output": "A preview image of the recipe templates with a short description of each; no pin is rendered and no render is used.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Report the daily limit.",
+      "user_prompt": "How many pins can I still make today?",
+      "file_attachment_urls": null,
+      "tools_triggered": "get_quota",
+      "expected_output": "The number of renders and uploads left today and when the limit resets.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Use the user's own photo.",
+      "user_prompt": "I want to use my own photo for a pin for https://minimalistbaker.com/easy-vegan-fried-rice/. I can't attach files here.",
+      "file_attachment_urls": null,
+      "tools_triggered": "extract_url, create_upload_link",
+      "expected_output": "A one-time upload page link with a one-line notice that the photo is kept for 7 days without location data, and a request to say when the upload is done; no render until then.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Make several variations in different styles.",
+      "user_prompt": "Make 2 different pins for https://minimalistbaker.com/easy-vegan-fried-rice/ so I can test which one gets more clicks.",
+      "file_attachment_urls": null,
+      "tools_triggered": "get_quota, extract_url, list_templates, list_styles, render_pin",
+      "expected_output": "Two pins that differ in template and headline angle, each with its image and edit link, and one set of Pinterest title, description and alt text.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Do not trigger for general Pinterest strategy questions.",
+      "user_prompt": "What's the best time of day to post on Pinterest?",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "Answers from general knowledge without calling any InsightPins tool.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not trigger for posting to Pinterest.",
+      "user_prompt": "Log into my Pinterest account and publish my latest pin.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "Explains that InsightPins makes pin images but cannot sign in to or post on Pinterest; no tool is called.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not trigger for unrelated image work.",
+      "user_prompt": "Remove the background from this product photo.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "Handles or declines the request without InsightPins, since it does not edit photos.",
+      "expected_output_url": null
+    }
+  ]
+}
