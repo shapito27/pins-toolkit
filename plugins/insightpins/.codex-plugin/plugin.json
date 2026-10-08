@@ -1,6 +1,6 @@
 {
   "name": "insightpins",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Create, review and optimize Pinterest pins from any article, product or recipe URL, and build or check Pinterest bulk upload CSV files. Renders 1000x1500 pins from InsightPins templates and applies pin design and copywriting best practices.",
   "author": {
     "name": "InsightPins",
@@ -26,7 +26,7 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "InsightPins for Pinterest",
-    "shortDescription": "Make, review and optimize Pinterest pins from any URL",
+    "shortDescription": "Pinterest pins from any link",
     "longDescription": "Turn any article, product or recipe URL into a finished 1000x1500 Pinterest pin with InsightPins templates, colour palettes and fonts, plus a ready-to-paste Pinterest title, description and alt text. Review and score existing pins, remake a pin you like for your own content, make A/B variants of an underperforming pin, and build or check the CSV file for Pinterest's free bulk upload.",
     "developerName": "InsightPins",
     "category": "Creativity",

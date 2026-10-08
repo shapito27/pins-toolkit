@@ -10,8 +10,12 @@ The folder `plugins/insightpins/` is one plugin for both Claude and OpenAI. The 
 | `skills/*/agents/openai.yaml` | Codex and ChatGPT: each skill's display name and starter prompt |
 | `assets/logo.png` | The OpenAI listing's logo (a copy of `.claude-plugin/icon.png`) |
 
-Neither side reads the other's files. The layout follows OpenAI's examples in
-[openai/plugins](https://github.com/openai/plugins).
+Claude doesn't read the OpenAI files. This uses OpenAI's Codex layout (`.codex-plugin/plugin.json`
+plus `.mcp.json`), which their docs list as supported and which the examples in
+[openai/plugins](https://github.com/openai/plugins) use. Their newer "portable" layout (a root
+`plugin.json` with an `extensions.com.openai` block and a root `mcp.json` with
+`"type": "streamable-http"`) is recommended for new packages but not required; move to it only if
+the submission portal asks.
 
 ## Keeping the two in step
 
@@ -23,7 +27,7 @@ Neither side reads the other's files. The layout follows OpenAI's examples in
 - A merge to `main` still goes to Claude directory review through the webhook, even when only the
   OpenAI files changed.
 
-## Checked on 2026-10-08 with Codex CLI 0.161.0
+## Checked on 2026-10-08 with Codex CLI 0.161.0 (1.0.7, and 1.0.8 installed again)
 
 ```bash
 codex plugin marketplace add /path/to/pins-toolkit
@@ -38,38 +42,57 @@ browser. The evals (`claude plugin eval`) only run in Claude.
 
 ## Submitting to OpenAI
 
-There is one submission, not two: the plugin goes in as a ZIP with its MCP server, and OpenAI's
-review covers the server (as the ChatGPT app) and the skills together. Don't submit a skills-only
-version first: OpenAI can't add an MCP server to a plugin that was submitted without one.
+From OpenAI's [submission guide](https://developers.openai.com/plugins/deploy/submission), read on
+2026-10-08. One ZIP holds the skills and the MCP server, and review covers both. Don't submit a
+skills-only version first: OpenAI can't add an MCP server to a plugin submitted without one.
 
-### Before you open the form
+### Before you open the portal
 
-1. **Server changes** (pin-generator-tool), needed before OpenAI scans the tools:
-   - Every tool must set `readOnlyHint`, `openWorldHint` **and** `destructiveHint`; a missing hint
-     blocks the submission. Today the six read-only tools (`extract_url`, `list_templates`,
-     `preview_templates`, `list_styles`, `get_quota`, `get_upload`) have no `destructiveHint`: add
-     `destructiveHint: false` to each.
-   - Domain check: OpenAI shows a token in the form; serve it as plain text at
-     `https://app.insightpins.com/.well-known/openai-apps-challenge`.
+1. **Server** (pin-generator-tool):
+   - Every tool sets `readOnlyHint`, `destructiveHint` and `openWorldHint` (done: pin-generator-tool
+     #127).
+   - Domain check: the portal shows a token. Serve it exactly, as plain text (not JSON), at
+     `https://app.insightpins.com/.well-known/openai-apps-challenge` (the MCP host, or a parent
+     domain OpenAI accepts).
    - Optional: no tool declares an `outputSchema`. OpenAI warns about it but doesn't block.
-2. **Account**: a verified OpenAI platform organization, and the Apps Management role with write
-   access. The developer name in the form must match the verified identity.
-3. **Reviewer sign-in**: the server signs in with Google. The form asks for test credentials; make
-   a separate Google account for the reviewers (not your own), or say in the form that any Google
-   account works.
-4. **The ZIP**: the contents of `plugins/insightpins/`, with `.codex-plugin/plugin.json` at the
-   top level of the ZIP.
+2. **Account**: the organization owner, or a member with Apps Management write access, and a
+   completed individual or business verification. The developer name must match it.
+3. **Reviewer sign-in**: a dedicated test account with some sample data (a few pins made). It must
+   work **without MFA, email or SMS codes, or magic links**. The server signs in only with Google,
+   and Google often asks a new account for a phone or email code on a new device: sign in to the
+   test account from several browsers first, turn off 2-Step Verification, and check it still signs
+   in without a code. If it can't, reviewers can't get in, which is the most common rejection.
+4. **Review material**: a video walkthrough URL reviewers can open (a pin made from a link, from
+   the user's own photo, and the daily limit), and release notes.
+5. **The ZIP**: `python3 scripts/build-openai-zip.py` writes `insightpins-openai-<version>.zip`
+   with `.codex-plugin/plugin.json` at the top and without the Claude manifest. It must not contain
+   `.app.json`, an `apps` entry or hooks: OpenAI can't take those yet (the tests check).
 
-### In the form
+### In the portal
 
-- Choose a plugin **with MCP** and give `https://app.insightpins.com/api/mcp`. The host can't
-  change later without a new submission.
-- Import [`chatgpt-app-submission.json`](chatgpt-app-submission.json): it fills in the app info,
-  a one-sentence reason for each tool's three hints, 5 test prompts and 3 prompts that shouldn't
-  use the app. Its hints match the server once the `destructiveHint` change above is live. Run
-  every test prompt in ChatGPT yourself before submitting.
-- Listing: name, short description, icon, screenshots, privacy policy and terms URLs (the same
-  as the Claude listing).
+1. **Plugins > Upload new or existing plugin**, choose your verified developer identity, upload
+   the ZIP. Fix any metadata or skill-scan findings and upload again (bump the version for each
+   ZIP).
+2. **MCP**: connect the server from the ZIP's `.mcp.json`, pass the domain check, wait for the tool
+   scan and fix its findings (Rescan after a deploy). One MCP server per plugin; changing its URL
+   later needs OpenAI support.
+3. **Review details**: the five test cases and three negative ones, the reviewer account, the
+   video URL and the release notes. [`chatgpt-app-submission.json`](chatgpt-app-submission.json)
+   has the test cases, app info and a one-sentence reason for each tool's hints. Import it if the
+   form offers it, or copy from it. Run every test prompt in ChatGPT yourself first.
+4. **Submit for review**, complete the attestations. Feedback comes by email; after approval,
+   select **Publish plugin**.
+
+Listing limits (tested in `OpenAIManifestTest`): display name and short description 30 characters
+each, long description 4000, up to 3 starter prompts of 128 characters. The website, support,
+privacy and terms URLs must be HTTPS.
+
+### After it's live
+
+- A change to skills, metadata or images needs a new ZIP and a new review. Merging to main here
+  also sends the Claude version to review, so bump both manifests.
+- Server changes are scanned daily (or Rescan). Changed tools that pass go live on their own; a
+  flagged tool keeps its last approved definition until it's approved.
 
 ### Hint choices to be ready to defend
 
@@ -81,9 +104,5 @@ to `true`, which matches the MCP meaning the Claude directory uses:
   never posts to Pinterest. ChatGPT may ask the user to confirm each render because of it. If
   reviewers ask for `false`, change it on the server; the Claude listing doesn't depend on it.
 
-The submission file gives the reason for each. After approval, if OpenAI gives the plugin an app
-ID, add it as `.app.json` (`{"apps": {"insightpins": {"id": "asdk_app_..."}}}`) and
-`"apps": "./.app.json"` in `.codex-plugin/plugin.json`.
-
-Until then, anyone can install the plugin in Codex from this repo with the commands in the
-[README](../README.md#try-it).
+Until it's approved, anyone can install the plugin in Codex from this repo with the commands in
+the [README](../README.md#try-it).
