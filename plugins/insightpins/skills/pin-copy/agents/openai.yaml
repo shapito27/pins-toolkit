@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pin Copy"
+  short_description: "Pinterest headlines, titles, descriptions and alt text"
+  default_prompt: "Write a Pinterest title, description and alt text for this pin"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pin Design"
+  short_description: "Pinterest layout, colour, font and photo best practices"
+  default_prompt: "How do I make my pins more eye-catching?"

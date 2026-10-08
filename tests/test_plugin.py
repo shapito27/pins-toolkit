@@ -351,6 +351,64 @@ class ManifestTest(unittest.TestCase):
         self.assertEqual(server, {"type": "http", "url": "https://app.insightpins.com/api/mcp"})
 
 
+class OpenAIManifestTest(unittest.TestCase):
+    """The same plugin folder is also an OpenAI (ChatGPT and Codex) plugin."""
+
+    def setUp(self):
+        self.claude = json.loads(read(os.path.join(PLUGIN, ".claude-plugin", "plugin.json")))
+        self.openai = json.loads(read(os.path.join(PLUGIN, ".codex-plugin", "plugin.json")))
+        self.ui = self.openai["interface"]
+
+    def test_matches_the_claude_manifest(self):
+        for key in ("name", "version", "description", "author", "homepage", "repository", "license", "keywords"):
+            self.assertEqual(self.openai.get(key), self.claude.get(key), key)
+        self.assertEqual(self.ui["displayName"], self.claude["displayName"])
+        self.assertEqual(self.ui["privacyPolicyURL"], self.claude["privacyPolicyUrl"])
+        self.assertEqual(self.ui["termsOfServiceURL"], self.claude["termsOfServiceUrl"])
+        self.assertEqual(self.ui["supportURL"], self.claude["supportUrl"])
+        self.assertEqual(self.ui["websiteURL"], self.claude["homepage"])
+
+    def test_paths_stay_inside_the_plugin(self):
+        self.assertEqual(self.openai["skills"], "./skills/")
+        self.assertEqual(self.openai["mcpServers"], "./.mcp.json")
+        paths = [self.openai["skills"], self.openai["mcpServers"], self.ui["logo"], self.ui["composerIcon"]]
+        paths += self.ui["screenshots"]
+        for path in paths:
+            self.assertTrue(path.startswith("./"), path)
+            self.assertNotIn("..", path.split("/"), path)
+            self.assertTrue(os.path.exists(os.path.join(PLUGIN, path)), path)
+
+    def test_listing_text(self):
+        for key in ("shortDescription", "longDescription", "developerName", "category"):
+            self.assertTrue(self.ui.get(key), key)
+        self.assertLessEqual(len(self.ui["shortDescription"]), 60)
+        self.assertTrue(1 <= len(self.ui["defaultPrompt"]) <= 3)
+        for prompt in self.ui["defaultPrompt"]:
+            self.assertEqual(prompt, prompt.strip())
+        self.assertEqual(png_size(os.path.join(PLUGIN, self.ui["logo"])),
+                         png_size(os.path.join(PLUGIN, ".claude-plugin", "icon.png")))
+
+    def test_marketplace(self):
+        market = json.loads(read(os.path.join(ROOT, ".agents", "plugins", "marketplace.json")))
+        [entry] = market["plugins"]
+        self.assertEqual(entry["name"], self.openai["name"])
+        self.assertEqual(entry["source"], {"source": "local", "path": "./plugins/insightpins"})
+        self.assertEqual(entry["category"], self.ui["category"])
+
+    def test_every_skill_has_openai_display_text(self):
+        for name in sorted(os.listdir(SKILLS)):
+            path = os.path.join(SKILLS, name, "agents", "openai.yaml")
+            text = read(path)
+            for key in ("display_name", "short_description", "default_prompt"):
+                self.assertRegex(text, rf'(?m)^  {key}: "[^"]+"$', f"{name}: {key}")
+
+    def test_skills_work_outside_claude(self):
+        csv_skill = read(os.path.join(SKILLS, "pinterest-bulk-csv", "SKILL.md"))
+        self.assertIn("Codex", csv_skill.split("${CLAUDE_SKILL_DIR}/scripts", 1)[0])
+        create = read(os.path.join(SKILLS, "create-pin", "SKILL.md"))
+        self.assertIn("connector or plugin settings", create)
+
+
 class PluginFilesTest(unittest.TestCase):
     def test_limits_and_no_junk(self):
         files = list(plugin_files())
@@ -377,11 +435,14 @@ class PluginFilesTest(unittest.TestCase):
             w, h = jpeg_size(full) if ref.endswith(".jpg") else png_size(full)
             self.assertGreater(w, 0)
         assets = {f"assets/{n}" for n in os.listdir(os.path.join(PLUGIN, "assets"))}
-        self.assertEqual(assets, set(refs), "every asset should be used by the README, and only there")
+        self.assertEqual(assets - {"assets/logo.png"}, set(refs),
+                         "every asset but the OpenAI logo should be used by the README")
 
     def test_images_not_referenced_outside_readme(self):
+        # Skills load into the model; only the README and the OpenAI listing show images.
+        allowed = (os.sep + "README.md", os.path.join(".codex-plugin", "plugin.json"))
         for path in plugin_files():
-            if path.endswith((".md", ".py", ".json")) and not path.endswith(os.sep + "README.md"):
+            if path.endswith((".md", ".py", ".json")) and not path.endswith(allowed):
                 self.assertNotIn("assets/", read(path), os.path.relpath(path, PLUGIN))
 
     def test_no_em_or_en_dashes_in_authored_text(self):

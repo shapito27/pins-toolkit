@@ -1,0 +1,4 @@
+interface:
+  display_name: "Pinterest Bulk CSV"
+  short_description: "Build, check and fix Pinterest bulk upload CSV files"
+  default_prompt: "Check my Pinterest bulk upload CSV and fix the errors"

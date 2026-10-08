@@ -19,9 +19,11 @@ publishes and schedules the pins. You never publish anything.
   eye. If you cannot run code, follow `reference.md` by hand and tell the user
   the lengths and dates were checked manually.
 - The scripts are in this skill's `scripts/` folder. Claude Code and Cowork
-  fill in `${CLAUDE_SKILL_DIR}` in the commands below. In chat on claude.ai, the
-  skill folder is copied into the code sandbox: run `scripts/check_csv.py` and
-  `scripts/build_csv.py` relative to this skill's folder there. They use only
+  fill in `${CLAUDE_SKILL_DIR}` in the commands below. Other agents, such as
+  Codex, leave it empty: write the path to this skill's folder in its place.
+  In chat on claude.ai, the skill folder is copied into the code sandbox: run
+  `scripts/check_csv.py` and `scripts/build_csv.py` relative to this skill's
+  folder there. They use only
   Python's standard library, read and write local files only, and make no
   network requests.
 
