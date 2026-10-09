@@ -29,7 +29,15 @@ def plugin_files(root):
 
 def build(out, root=PLUGIN):
     with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
+        folders = set()
         for path, arcname in plugin_files(root):
+            # Folder entries too (as Finder and `zip -r` write them): some readers look for them.
+            parts = arcname.split("/")[:-1]
+            for i in range(1, len(parts) + 1):
+                folder = "/".join(parts[:i]) + "/"
+                if folder not in folders:
+                    folders.add(folder)
+                    zf.writestr(zipfile.ZipInfo(folder), "")
             zf.write(path, arcname)
     return out
 

@@ -420,6 +420,10 @@ class OpenAIManifestTest(unittest.TestCase):
             with zipfile.ZipFile(out) as zf:
                 names = zf.namelist()
         self.assertIn(".codex-plugin/plugin.json", names)
+        self.assertIn(".codex-plugin/", names)
+        self.assertIn("skills/create-pin/", names)
+        # Everything sits at the top of the ZIP, not inside an insightpins/ folder.
+        self.assertFalse([n for n in names if n.startswith("insightpins/")])
         self.assertIn(".mcp.json", names)
         self.assertIn("skills/create-pin/SKILL.md", names)
         self.assertIn("assets/logo.png", names)
