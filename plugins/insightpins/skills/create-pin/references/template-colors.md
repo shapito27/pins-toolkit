@@ -28,7 +28,7 @@ photo, which depends on the photo. Pick the palette from these lists first, then
 | `quote-with-image` | all 20 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, terracotta, berry-blush, rose-gold, warm-earth, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
 | `vine-corners` | all 20 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, cool-mint, terracotta, coral-reef, berry-blush, rose-gold, dusty-rose, warm-earth, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
 | `tulip-frame` | all 20 palettes |  | site name fully readable only on ocean-breeze, midnight, lavender, cool-mint, terracotta, coral-reef, berry-blush, rose-gold, dusty-rose, warm-earth, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
-| `recipe-card` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
+| `recipe-card` | all 20 palettes |  |  |
 | `photo-stack` | all 20 palettes |  | site name fully readable only on midnight, berry-blush, dusty-rose, minimalist, charcoal, deep-navy, forest-night, plum-night, black-gold |
 | `framed-bold` | all 20 palettes |  | site name is faint on every palette (a small brand line; acceptable) |
 | `diagonal-cut` | all 20 palettes |  | site name fully readable only on minimalist, charcoal, black-gold |
