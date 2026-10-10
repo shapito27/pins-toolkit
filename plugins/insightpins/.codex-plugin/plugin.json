@@ -25,7 +25,7 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "InsightPins for Pinterest",
+    "displayName": "Pin Generator for Pinterest",
     "shortDescription": "Pinterest pins from any link",
     "longDescription": "Turn any article, product or recipe URL into a finished 1000x1500 Pinterest pin with InsightPins templates, colour palettes and fonts, plus a ready-to-paste Pinterest title, description and alt text. Review and score existing pins, remake a pin you like for your own content, make A/B variants of an underperforming pin, and build or check the CSV file for Pinterest's free bulk upload.",
     "developerName": "InsightPins",
