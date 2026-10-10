@@ -13,6 +13,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import zipfile
 from datetime import date, timedelta
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -381,10 +382,17 @@ class OpenAIManifestTest(unittest.TestCase):
     def test_listing_text(self):
         for key in ("shortDescription", "longDescription", "developerName", "category"):
             self.assertTrue(self.ui.get(key), key)
-        self.assertLessEqual(len(self.ui["shortDescription"]), 60)
+        # OpenAI's submission limits.
+        self.assertLessEqual(len(self.ui["displayName"]), 30)
+        self.assertLessEqual(len(self.ui["shortDescription"]), 30)
+        self.assertLessEqual(len(self.ui["longDescription"]), 4000)
         self.assertTrue(1 <= len(self.ui["defaultPrompt"]) <= 3)
         for prompt in self.ui["defaultPrompt"]:
             self.assertEqual(prompt, prompt.strip())
+            self.assertLessEqual(len(prompt), 128)
+        # A ZIP with app references can't be submitted.
+        self.assertNotIn("apps", self.openai)
+        self.assertFalse(os.path.exists(os.path.join(PLUGIN, ".app.json")))
         self.assertEqual(png_size(os.path.join(PLUGIN, self.ui["logo"])),
                          png_size(os.path.join(PLUGIN, ".claude-plugin", "icon.png")))
 
@@ -401,6 +409,25 @@ class OpenAIManifestTest(unittest.TestCase):
             text = read(path)
             for key in ("display_name", "short_description", "default_prompt"):
                 self.assertRegex(text, rf'(?m)^  {key}: "[^"]+"$', f"{name}: {key}")
+
+    def test_openai_zip(self):
+        spec = importlib.util.spec_from_file_location(
+            "build_openai_zip", os.path.join(ROOT, "scripts", "build-openai-zip.py"))
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = module.build(os.path.join(tmp, "plugin.zip"))
+            with zipfile.ZipFile(out) as zf:
+                names = zf.namelist()
+        self.assertIn(".codex-plugin/plugin.json", names)
+        self.assertIn(".codex-plugin/", names)
+        self.assertIn("skills/create-pin/", names)
+        # Everything sits at the top of the ZIP, not inside an insightpins/ folder.
+        self.assertFalse([n for n in names if n.startswith("insightpins/")])
+        self.assertIn(".mcp.json", names)
+        self.assertIn("skills/create-pin/SKILL.md", names)
+        self.assertIn("assets/logo.png", names)
+        self.assertFalse([n for n in names if n.startswith(".claude-plugin/") or "__pycache__" in n])
 
     def test_skills_work_outside_claude(self):
         csv_skill = read(os.path.join(SKILLS, "pinterest-bulk-csv", "SKILL.md"))

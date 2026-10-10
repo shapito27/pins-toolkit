@@ -15,7 +15,7 @@
         "destructiveHint": false
       },
       "justifications": {
-        "read_only_justification": "Only fetches the public web page the user names and returns its title, description, images and recipe or product facts; nothing is saved or changed.",
+        "read_only_justification": "Only fetches the public web page the user names and returns its title, description, images and recipe or product facts; it changes nothing on the page or in the user's account.",
         "open_world_justification": "Reads a public page on the open internet chosen by the user, but never posts, submits or changes anything there.",
         "destructive_justification": "Does not delete, overwrite or revoke anything."
       }
@@ -123,7 +123,7 @@
       "user_prompt": "Make a Pinterest pin for this recipe: https://minimalistbaker.com/easy-vegan-fried-rice/",
       "file_attachment_urls": null,
       "tools_triggered": "extract_url, list_templates, list_styles, render_pin",
-      "expected_output": "A 1000x1500 pin image of the fried rice recipe with a short headline, the cook time and servings, plus an edit link, the template, palette and font used, a note that the link expires in 7 days, and a ready-to-paste Pinterest title, description and alt text.",
+      "expected_output": "A 1000x1500 pin image of the fried rice recipe with a short headline (a recipe template can also show the cook time and servings), plus an edit link, the template, palette and font used, a note that the link expires in 7 days, and a ready-to-paste Pinterest title, description and alt text.",
       "expected_output_url": null
     },
     {
@@ -165,7 +165,7 @@
       "user_prompt": "What's the best time of day to post on Pinterest?",
       "file_attachment_urls": null,
       "tools_triggered": null,
-      "expected_output": "Answers from general knowledge without calling any InsightPins tool.",
+      "expected_output": "The request asks for general advice, not a pin, so no InsightPins tool is called; the answer comes from general knowledge.",
       "expected_output_url": null
     },
     {

@@ -23,9 +23,8 @@ publishes and schedules the pins. You never publish anything.
   Codex, leave it empty: write the path to this skill's folder in its place.
   In chat on claude.ai, the skill folder is copied into the code sandbox: run
   `scripts/check_csv.py` and `scripts/build_csv.py` relative to this skill's
-  folder there. They use only
-  Python's standard library, read and write local files only, and make no
-  network requests.
+  folder there. They use only Python's standard library, read and write local
+  files only, and make no network requests.
 
 ## Just checking a file?
 
