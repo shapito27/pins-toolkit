@@ -1,6 +1,7 @@
 # pins-toolkit
 
-Source for the **InsightPins** plugin for Claude, also packaged for OpenAI Codex and ChatGPT: turn
+Source for **Pin Generator for Pinterest**, the InsightPins plugin for Claude, also packaged for
+OpenAI Codex and ChatGPT: turn
 any blog post, product page or recipe into a finished Pinterest pin in one message, with the
 [InsightPins](https://insightpins.com) pin generator and built-in pin design and copywriting best
 practices. It also reviews and improves pins you
@@ -30,6 +31,9 @@ in the [plugin README](plugins/insightpins/README.md).
 | [`scripts/check-bulk-csv-sync.py`](scripts/check-bulk-csv-sync.py) | Checks the plugin's CSV checker against the insightpins.com fixtures |
 | [`scripts/build-openai-zip.py`](scripts/build-openai-zip.py) | Builds the ZIP for OpenAI's plugin submission portal (no Claude manifest inside) |
 | [`scripts/build-template-colors.py`](scripts/build-template-colors.py) | Builds the per-template palette guide from the pin generator's `docs/TEMPLATE_COLOR_ROLES.md` |
+| [`scripts/refresh-eval-dates.py`](scripts/refresh-eval-dates.py) | Moves the reset and expiry times in the eval mocks forward from now; run it before the eval suite |
+| [`docs/superpowers/`](docs/superpowers/) | Design specs and plans for larger changes, with the sample images made while testing |
+| [`.claude/skills/`](.claude/skills/) | A skill for Claude Code sessions in this repo: the text rules plugin files must pass |
 
 ## Try it
 
@@ -50,7 +54,9 @@ codex plugin add insightpins@insightpins
 codex mcp login insightpins
 ```
 
-## Validate and test
+## For maintainers
+
+### Validate and test
 
 ```bash
 claude plugin validate ./plugins/insightpins
@@ -67,7 +73,7 @@ environment", and that the eval graders match what they should.
 `--scaffold` lets two cases copy their fixture into the run's workspace; `--allow-tools Bash` lets the
 bulk CSV case run the checker script.
 
-## The bulk CSV skill has a source of truth elsewhere
+### The bulk CSV skill has a source of truth elsewhere
 
 `plugins/insightpins/skills/pinterest-bulk-csv/` is a copy of `downloads-src/pinterest-bulk-csv/` in the
 `insightpins.com` repo, whose `check_csv.py` also defines the rules of the
@@ -94,7 +100,7 @@ python3 scripts/check-bulk-csv-sync.py ../insightpins.com   # must print "0 mism
 python3 -m unittest discover -s tests                     # must pass
 ```
 
-## The palette guide comes from the pin generator
+### The palette guide comes from the pin generator
 
 `plugins/insightpins/skills/create-pin/references/template-colors.md` is generated from
 `docs/TEMPLATE_COLOR_ROLES.md` in the `pin-generator-tool` repo, which is itself generated from the
