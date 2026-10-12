@@ -53,7 +53,7 @@ Keep these as they are:
 | 20 | Larger preview on request, carousel pins, background removal | Misc | Inferred | Low-Medium | M | Later |
 | 21 | Readable small text: contrast-checked text colors and a `LOW_CONTRAST` warning | Templates | Observed (measured 2026-10-04) | High | S-M | **Done** (#85 colour map; #90 `LOW_CONTRAST` and `readable_palettes`; #91, #95 subtitle colours; #93 darker primaries; checked 2026-10-05). Site name not judged yet: see item 26 |
 | 22 | `render_mockup`: draw a simple image from rows of data | Functions | Observed (2026-10-08: mockups can only be built where the agent has a browser) | High for software pages | M-L | Next |
-| 23 | `extract_url`: `hint: "screenshot"` on interface screenshots | Images | Observed (2026-10-08) | Medium-High | S-M | Next, with or after plugin 1.0.7 |
+| 23 | `extract_url`: `hint: "screenshot"` on interface screenshots | Images | Observed (2026-10-08) | Medium-High | S-M | Next, with or after plugin 1.0.9 |
 | 24 | `list_templates`: the photo panel's size on the pin | Templates | Observed (panel measured by hand, 2026-10-08) | Medium | S | Next |
 | 25 | `render_pin`: an `IMAGE_TEXT_SMALL` warning | Images | Inferred | Medium | M | Later |
 | 26 | `render_pin`: judge the site name (`SITE_NAME_FAINT`), or draw it by contrast | Templates | Observed (measured 2026-10-12) | High for brand pins | S | Next |
@@ -416,7 +416,7 @@ in `template-colors.md`).
 ### 22. `render_mockup` (next)
 
 **Observed (2026-10-08):** a software page's screenshots can't be read on a pin, and some feature
-pages have no image at all. Plugin 1.0.7 draws a mockup instead (`create-pin`'s
+pages have no image at all. Plugin 1.0.9 draws a mockup instead (`create-pin`'s
 `references/ui-mockups.md`), but only where the agent can write an HTML file, capture it with a
 headless browser and upload the result: Claude Code and Cowork. In claude.ai chat it can only say
 a mockup would work best and ask the user for an image.
@@ -439,8 +439,8 @@ file name ("screenshot", "dashboard", "table"). An image with neither is used as
 **Proposal:** mark images that look like interface screenshots (wide, large flat areas, many small
 text runs) with `hint: "screenshot"`. This finishes the open `likely_text` idea in item 3.
 
-- **Release it together with, or after, plugin 1.0.7.** Older plugin versions treat every hint as
-  "never use" and would ask for a photo; 1.0.7 treats this one as "draw a mockup of it".
+- **Release it together with, or after, plugin 1.0.9.** Older plugin versions treat every hint as
+  "never use" and would ask for a photo; 1.0.9 treats this one as "draw a mockup of it".
 
 ### 24. Photo panel size in `list_templates` (next)
 
@@ -543,7 +543,7 @@ such a pin publishes an invented price.
    Then 21 (readable small text), 8, 9 and 11 (template side).
 3. **Before paid plans:** items 10 and 12 (brand kit, quota and plan errors).
 4. **Growth:** 17 (keywords, already planned), 14, 15, 16, then 18 (Pinterest publishing).
-5. **Mockups for software pages** (plugin 1.0.7): 22 (the only way chat users get one), 23, 24,
+5. **Mockups for software pages** (plugin 1.0.9): 22 (the only way chat users get one), 23, 24,
    then 25.
 6. **From the 2026-10-12 session (seven live pins):** 26 and 30 first (small, and both put
    something wrong on a pin), then 27 and 28 (image choice), then 29 (with 22 and 24).

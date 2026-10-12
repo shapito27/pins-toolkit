@@ -1,0 +1,4 @@
+interface:
+  display_name: "Remake Pin"
+  short_description: "Make a better pin in the style of one you like"
+  default_prompt: "Make me a pin like this one for my own post"

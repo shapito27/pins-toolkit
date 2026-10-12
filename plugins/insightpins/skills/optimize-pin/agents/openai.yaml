@@ -1,0 +1,4 @@
+interface:
+  display_name: "Optimize Pin"
+  short_description: "Improve a pin and make variants to A/B test"
+  default_prompt: "Make this pin get more clicks and give me versions to test"

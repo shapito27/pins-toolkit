@@ -17,7 +17,7 @@ Sources: [Plugin structure](https://claude.com/docs/plugins/build),
 | - | - | - |
 | One plugin or two (pins + keywords) | **One plugin**, add the keywords server to `.mcp.json` in a later version | Pin copy and keyword research are one workflow. Skills can use keyword tools when they exist and fall back gracefully when they don't. One listing, one install. |
 | Plugin `name` | `insightpins` (permanent, never change) | Must be your own brand. Putting "pinterest" in `name` risks a **"Name matches a known brand"** reviewer hold. Mention Pinterest only descriptively in `description`/README. |
-| `displayName` | `InsightPins for Pinterest` | Can be changed later. Changed from `InsightPins` because the directory search did not find the plugin by "pinterest". "for Pinterest" is a descriptive use after our own brand, but watch for a brand-match hold; if one comes, revert to `InsightPins`. |
+| `displayName` | `Pin Generator for Pinterest` | Can be changed later. First `InsightPins`, then `InsightPins for Pinterest` because the directory search did not find the plugin by "pinterest", then (1.0.8) `Pin Generator for Pinterest` to lead with the words people search; the brand stays in the developer name and `name`. "for Pinterest" is descriptive use, but watch for a brand-match hold; if one comes, go back to `InsightPins for Pinterest`. Same name in both manifests (tested), at most 30 characters for OpenAI. |
 | Repo layout | Plugin in `plugins/insightpins/`, repo root holds `docs/`, `evals/` and a `marketplace.json` | Users install only the plugin folder, so plan docs, eval fixtures (a shell script and a JPEG) don't ship and can't trigger reviewer holds. The marketplace lets teams install from GitHub before the listing is live. (Changed in Phase 3; was repo root.) |
 | Components | `.mcp.json` + skills + 1-2 commands. **No** hooks, agents, scripts, `bin/` | Skills, commands and remote MCP load on all surfaces (chat, Cowork, Claude Code). `bin/` would block claude.ai/Cowork install entirely. No executable code = no "Scripts the validator couldn't follow" holds and an easy security scan. |
 | License | MIT (or your choice) via `LICENSE` + `license` field | Required to publish. |
@@ -89,7 +89,7 @@ No API keys in any file. Auth must be the server's OAuth flow (users connect fro
 ```json
 {
   "name": "insightpins",
-  "displayName": "InsightPins for Pinterest",
+  "displayName": "Pin Generator for Pinterest",
   "version": "0.1.0",
   "description": "Design and render Pinterest pins from any article, product or recipe URL, with built-in best practices for layout, readable text and search-friendly titles and descriptions.",
   "author": { "name": "InsightPins", "url": "https://insightpins.com" },
@@ -278,7 +278,7 @@ Planned: paid plans with higher limits for renders and keyword lookups. How this
 
 | Risk | Mitigation |
 | - | - |
-| Brand hold for "Pinterest" naming | Keep "Pinterest" out of `name`/`author.name`; `displayName` is "InsightPins for Pinterest" (revert if held) |
+| Brand hold for "Pinterest" naming | Keep "Pinterest" out of `name`/`author.name`; `displayName` is "Pin Generator for Pinterest" (go back to "InsightPins for Pinterest" if held) |
 | Skills duplicate server instructions or conflict with them | Skills reference the server flow and add judgement only; same reporting rules (links, edit_url, 7-day expiry, photo source) |
 | Quota burn from re-renders/variations | `get_quota` before batches; re-render only on defects; prefer `text_size` tweaks |
 | Photo copyright | Always say where the image came from; recommend own images or licensed stock |

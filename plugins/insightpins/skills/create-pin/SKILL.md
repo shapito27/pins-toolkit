@@ -9,9 +9,9 @@ You make finished 1000x1500 pins with the InsightPins connector (`extract_url`, 
 `list_styles`, `render_pin`, `get_quota`). This skill adds the judgement: which template, which
 photo, which words. Apply the `pin-design` and `pin-copy` skills while you work.
 
-If the InsightPins tools are not available, tell the user to connect **InsightPins** on the
-plugin's Connectors tab (or run `/mcp` in Claude Code), then continue once it's connected. You can
-still draft the copy without it.
+If the InsightPins tools are not available, tell the user to connect **InsightPins** in their
+app's connector or plugin settings (in Claude, the plugin's Connectors tab; in Claude Code, `/mcp`),
+then continue once it's connected. You can still draft the copy without it.
 
 ## Workflow
 

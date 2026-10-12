@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Pin"
+  short_description: "Score a pin and list what to fix"
+  default_prompt: "Review this pin and tell me what to fix"

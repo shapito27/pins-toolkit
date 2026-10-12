@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Pin"
+  short_description: "Turn a URL into a finished Pinterest pin"
+  default_prompt: "Make a Pinterest pin for this page"

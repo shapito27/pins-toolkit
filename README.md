@@ -1,8 +1,9 @@
 # pins-toolkit
 
-Source for the **InsightPins** plugin for Claude: turn any blog post, product page or recipe into a
-finished Pinterest pin in one message, with the [InsightPins](https://insightpins.com) pin generator
-and built-in pin design and copywriting best practices. It also reviews and improves pins you
+Source for the **InsightPins** plugin for Claude, also packaged for OpenAI Codex and ChatGPT: turn
+any blog post, product page or recipe into a finished Pinterest pin in one message, with the
+[InsightPins](https://insightpins.com) pin generator and built-in pin design and copywriting best
+practices. It also reviews and improves pins you
 already have, and builds or checks Pinterest bulk upload CSV files.
 
 ![Four pins made with the InsightPins plugin](plugins/insightpins/assets/example-pins.jpg)
@@ -25,7 +26,9 @@ in the [plugin README](plugins/insightpins/README.md).
 | [`docs/SUBMISSION.md`](docs/SUBMISSION.md) | Directory submission checklist and portal answers |
 | [`docs/TEST-REPORT.md`](docs/TEST-REPORT.md), [`docs/MCP-IMPROVEMENTS.md`](docs/MCP-IMPROVEMENTS.md) | Test results and ranked server improvement ideas |
 | `.claude-plugin/marketplace.json` | Lets you install the plugin straight from this repo |
+| `.agents/plugins/marketplace.json`, `plugins/insightpins/.codex-plugin/` | The same plugin for OpenAI Codex and ChatGPT. See [`docs/OPENAI.md`](docs/OPENAI.md). |
 | [`scripts/check-bulk-csv-sync.py`](scripts/check-bulk-csv-sync.py) | Checks the plugin's CSV checker against the insightpins.com fixtures |
+| [`scripts/build-openai-zip.py`](scripts/build-openai-zip.py) | Builds the ZIP for OpenAI's plugin submission portal (no Claude manifest inside) |
 | [`scripts/build-template-colors.py`](scripts/build-template-colors.py) | Builds the per-template palette guide from the pin generator's `docs/TEMPLATE_COLOR_ROLES.md` |
 
 ## Try it
@@ -38,6 +41,14 @@ claude --plugin-dir ./plugins/insightpins
 
 Or add this repo as a marketplace (`/plugin marketplace add shapito27/pins-toolkit`) and install
 `insightpins` from it. On claude.ai, add the repo under **Customize > Plugins > Add > Add marketplace**.
+
+Codex CLI:
+
+```bash
+codex plugin marketplace add shapito27/pins-toolkit
+codex plugin add insightpins@insightpins
+codex mcp login insightpins
+```
 
 ## Validate and test
 
