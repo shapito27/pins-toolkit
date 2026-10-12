@@ -1,0 +1,5 @@
+---
+type: fixed
+---
+
+{"title": "Linen Throws | Oak & Loom", "description": "Stonewashed linen throws woven in small batches. Soft from the first day, in eight colours.", "images": ["https://oakandloom.example/img/linen-throw-sofa-1400x1400.jpg", "https://oakandloom.example/img/linen-throws-stack-1600x1067.jpg"], "siteName": "Oak & Loom", "url": "https://oakandloom.example/collections/linen-throws/", "image_details": [{"url": "https://oakandloom.example/img/linen-throw-sofa-1400x1400.jpg", "width": 1400, "height": 1400, "orientation": "square", "animated": false, "alt": "A grey linen throw folded over the arm of a sofa", "source": "og", "low_resolution": false}, {"url": "https://oakandloom.example/img/linen-throws-stack-1600x1067.jpg", "width": 1600, "height": 1067, "orientation": "landscape", "animated": false, "alt": "A stack of folded linen throws in eight colours", "source": "content", "low_resolution": false}], "primary_image": "https://oakandloom.example/img/linen-throw-sofa-1400x1400.jpg"}

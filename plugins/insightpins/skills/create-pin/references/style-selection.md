@@ -72,7 +72,7 @@ palettes on which its title, subtitle and button all reach 3:1, so a render with
 warns `LOW_CONTRAST`. Pick from it even though it lists every palette today: palettes and templates
 change. [template-colors.md](template-colors.md) is generated from the same colour map and adds
 what that list doesn't judge: where the site name is faint, labels drawn in a light colour, and
-text that sits on the photo. When the site name matters (a brand that wants its domain seen), pick
+text that sits on the photo. When the site name matters (a pin for the user's own site or product, or a brand that wants its domain seen), pick
 a palette its notes name as fully readable.
 
 **If `list_styles` returns different colours**, recompute: contrast = (L1 + 0.05) / (L2 + 0.05),

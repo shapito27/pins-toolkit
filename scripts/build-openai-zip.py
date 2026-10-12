@@ -14,7 +14,7 @@ import zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PLUGIN = os.path.join(HERE, "..", "plugins", "insightpins")
-SKIP_DIRS = {".claude-plugin", "__pycache__", "__MACOSX"}
+SKIP_DIRS = {".claude-plugin", ".claude", "__pycache__", "__MACOSX"}
 SKIP_FILES = {".DS_Store", "Thumbs.db", "desktop.ini"}
 
 

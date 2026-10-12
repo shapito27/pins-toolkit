@@ -1,0 +1,5 @@
+---
+type: fixed
+---
+
+{"title": "Send Time Scheduling: Deliver Each Email When Your Reader Is Awake", "description": "Mailbrook schedules each newsletter by the subscriber's time zone. Pick a local hour once, and every reader gets the email at that hour where they live.", "images": ["https://mailbrook.example/img/mailbrook-logo-800x800.png", "https://mailbrook.example/img/dana-okafor-600x900.jpg"], "siteName": "Mailbrook", "url": "https://mailbrook.example/features/send-time-scheduling/", "image_details": [{"url": "https://mailbrook.example/img/mailbrook-logo-800x800.png", "width": 800, "height": 800, "orientation": "square", "animated": false, "alt": null, "source": "og", "low_resolution": false, "hint": "logo"}, {"url": "https://mailbrook.example/img/dana-okafor-600x900.jpg", "width": 600, "height": 900, "orientation": "portrait", "animated": false, "alt": null, "source": "json-ld", "low_resolution": false, "hint": "author"}], "primary_image": "https://mailbrook.example/img/mailbrook-logo-800x800.png"}

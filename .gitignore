@@ -5,3 +5,10 @@ __MACOSX/
 *.zip
 __pycache__/
 *.pyc
+**/.claude/autoharness/
+.claude/skills/*/.ledger.jsonl
+.claude/skills/*/.sidecar.json
+.claude/skills/*/references/evidence-*.md
+# raw screenshots that show other people's pins and names; kept local
+docs/superpowers/specs/2026-10-08-ui-mockup-pins/source-screenshot.webp
+docs/superpowers/specs/2026-10-08-ui-mockup-pins/pin-before-screenshot.jpg

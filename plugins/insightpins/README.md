@@ -111,7 +111,7 @@ Claude picks the right skill from what you ask.
 
 | Skill | What it does |
 | - | - |
-| `create-pin` | The full workflow from a URL to a finished pin: reads the page, picks the photo (or uploads your own), template and style, renders, checks the result and writes the copy. Also makes sets of variations. |
+| `create-pin` | The full workflow from a URL to a finished pin: reads the page, picks the photo (or uploads your own), template and style, renders, checks the result and writes the copy. Also makes sets of variations. When a page has no image that works on a pin (a software page with only screenshots or a banner share image, or no proper image at all), it draws a mockup of the app screen, the feature or the idea instead, where it can. On a pin for your own site or product it keeps the site name large and readable. |
 | `pin-design` | Visual best practices: readability at phone size, layout, photo choice, color, fonts and branding. Used to choose a design and to spot defects in a preview. |
 | `pin-copy` | Headlines, Pinterest titles, descriptions, alt text, board names and keywords, written for search and clicks. |
 | `review-pin` | Scores an uploaded pin on an 8-point rubric and ranks the fixes by impact. Uses no renders. |

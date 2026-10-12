@@ -33,7 +33,7 @@ Keep these as they are:
 | - | - | - | - | - | - | - |
 | 1 | Verify URL fetching can't reach internal addresses (SSRF) | Security | Inferred | Critical if vulnerable | S | **Done** (deployed 2026-10-03, see below) |
 | 2 | `extract_url`: report blocked and bot-check pages as errors | Functions | Observed | High | S | **Done** (deployed 2026-10-03) |
-| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04; author, logo, banner and infographic `hint`s in #92, #94, checked 2026-10-05; `promo` hint and small declared images kept in #97; roles from embedded page JSON in #99); `likely_text` still open |
+| 3 | `extract_url`: image details and filtering | Images | Observed | High | S-M | **Done** (#56, checked 2026-10-04; author, logo, banner and infographic `hint`s in #92, #94, checked 2026-10-05; `promo` hint and small declared images kept in #97; roles from embedded page JSON in #99); `likely_text` still open, see item 23 |
 | 4 | `render_pin`: crop and focus control for the photo | Images | Observed | High | M | **Done** (#67 controls, #86 `image_focus: "auto"`, #87 `overlay_strength`; checked 2026-10-05) |
 | 5 | Auto-fit text size and render warnings | Templates | Observed | High | M | **Done** (#62 warnings, #79 `text_size: "auto"`, checked 2026-10-04); follow-ups below |
 | 6 | `upload_image` tool | Functions | Observed (blocked two skills) | High | S-M | **Done** (#88: `upload_image`, `create_upload_link`, `get_upload`; checked 2026-10-05) |
@@ -51,7 +51,16 @@ Keep these as they are:
 | 18 | Publish and schedule to Pinterest | Functions | Inferred | Very high | L | Later (big project) |
 | 19 | Batch rendering of variations | Functions | Inferred | Low-Medium | S | Later |
 | 20 | Larger preview on request, carousel pins, background removal | Misc | Inferred | Low-Medium | M | Later |
-| 21 | Readable small text: contrast-checked text colors and a `LOW_CONTRAST` warning | Templates | Observed (measured 2026-10-04) | High | S-M | **Done** (#85 colour map; #90 `LOW_CONTRAST` and `readable_palettes`; #91, #95 subtitle colours; #93 darker primaries; checked 2026-10-05). Site name not judged yet |
+| 21 | Readable small text: contrast-checked text colors and a `LOW_CONTRAST` warning | Templates | Observed (measured 2026-10-04) | High | S-M | **Done** (#85 colour map; #90 `LOW_CONTRAST` and `readable_palettes`; #91, #95 subtitle colours; #93 darker primaries; checked 2026-10-05). Site name not judged yet: see item 26 |
+| 22 | `render_mockup`: draw a simple image from rows of data | Functions | Observed (2026-10-08: mockups can only be built where the agent has a browser) | High for software pages | M-L | Next |
+| 23 | `extract_url`: `hint: "screenshot"` on interface screenshots | Images | Observed (2026-10-08) | Medium-High | S-M | Next, with or after plugin 1.0.9 |
+| 24 | `list_templates`: the photo panel's size on the pin | Templates | Observed (panel measured by hand, 2026-10-08) | Medium | S | Next |
+| 25 | `render_pin`: an `IMAGE_TEXT_SMALL` warning | Images | Inferred | Medium | M | Later |
+| 26 | `render_pin`: judge the site name (`SITE_NAME_FAINT`), or draw it by contrast | Templates | Observed (measured 2026-10-12) | High for brand pins | S | Next |
+| 27 | `extract_url`: `hint: "banner"` on text share images | Images | Observed (3 of 4 software pages, 2026-10-12) | Medium-High | S-M | Next, with item 23 |
+| 28 | `extract_url`: skip site-menu thumbnails, find the category's own images | Images | Observed (2026-10-12) | Medium | S-M | Next |
+| 29 | `image_fit: "contain"` with the image's own edge colour, kept by the editor; "Randomize All" skips templates that can't show the image | Images, website | Observed (2026-10-12) | High for mockups | M | Next |
+| 30 | Website editor: don't fill a template's sample field values into the user's pin | Website | Observed (2026-10-12) | Medium (invented facts) | S | Next |
 
 "Now" means before or alongside directory submission. "Next" means the first improvement round,
 the biggest quality wins. "Later" means growth features.
@@ -404,6 +413,129 @@ the site name and small labels are not judged and need 4.5:1; on most colour-pan
 site name is fully readable only on midnight, berry-blush, dusty-rose and minimalist (see the notes
 in `template-colors.md`).
 
+### 22. `render_mockup` (next)
+
+**Observed (2026-10-08):** a software page's screenshots can't be read on a pin, and some feature
+pages have no image at all. Plugin 1.0.9 draws a mockup instead (`create-pin`'s
+`references/ui-mockups.md`), but only where the agent can write an HTML file, capture it with a
+headless browser and upload the result: Claude Code and Cowork. In claude.ai chat it can only say
+a mockup would work best and ask the user for an image.
+
+**Proposal:** a tool with a few fixed layouts (a keyword list with bars, a table of up to three
+columns, one big number with its label, three steps), taking rows of data and a few brand colours
+and returning an `image_url` for `render_pin`.
+
+- It is the only way chat users get mockups, it keeps them in one style, and it removes the
+  hand-written HTML.
+- The plugin's honesty rules still apply to the data passed in: only labels and numbers from the
+  page, the screenshot or the user.
+- Decide whether it counts against the upload limit, the render limit or neither.
+
+### 23. `hint: "screenshot"` in `extract_url` (next)
+
+**Observed (2026-10-08):** the plugin recognises an interface screenshot only by its `alt` text or
+file name ("screenshot", "dashboard", "table"). An image with neither is used as a photo.
+
+**Proposal:** mark images that look like interface screenshots (wide, large flat areas, many small
+text runs) with `hint: "screenshot"`. This finishes the open `likely_text` idea in item 3.
+
+- **Release it together with, or after, plugin 1.0.9.** Older plugin versions treat every hint as
+  "never use" and would ask for a photo; 1.0.9 treats this one as "draw a mockup of it".
+
+### 24. Photo panel size in `list_templates` (next)
+
+**Observed (2026-10-08):** a made-to-fit image needs the panel's exact shape. The plugin's figure
+for `checklist` (about 904x744 with six items, 904x868 with four) was measured by hand from a
+rendered pin, and other templates are estimated from their preview.
+
+**Proposal:** per template, the photo panel's size on the 1000x1500 pin, for example
+`photo_box: {width, height}`. Where the panel changes with the amount of text, give the range or
+return the actual box in the `render_pin` result.
+
+### 25. `IMAGE_TEXT_SMALL` warning in `render_pin` (later)
+
+**Inferred:** whether a screenshot's text survives on the pin is judged today from the ~200x300
+preview, which is easy to get wrong.
+
+**Proposal:** a warning when the photo has a lot of small text after scaling, with a message that
+crop settings won't fix it. A backstop for item 23, so lower priority.
+
+### 26. Judge the site name (next)
+
+**Observed (2026-10-12):** on `split-horizontal` with `coral-reef` the site name measured about
+2.1:1 (pale pink on red) and about 18 px tall on the 1000 px pin, roughly 4 px in the feed. The
+render returned no warning, and the user asked why their own domain was barely visible. This is the
+part of item 21 that is still open: `LOW_CONTRAST` judges the title, subtitle and button only.
+
+**Proposal:**
+- Draw the site name in whichever of the palette's colours has the highest contrast with what is
+  behind it, at full opacity, with 4.5:1 as the target.
+- Until then, add a `SITE_NAME_FAINT` warning with the measured ratio and the palettes on which
+  the template's site name reads (the same lists the plugin has in `template-colors.md`).
+- Consider a larger default size: the plugin now sends `site_name_size` 130-150 for the user's
+  own site.
+
+The plugin works around it: for the user's own site or product it picks a palette from the
+template's "site name fully readable" notes and raises `site_name_size`.
+
+### 27. `hint: "banner"` on text share images (next)
+
+**Observed (2026-10-12):** three of four software home pages had one image only, their share image
+(`source: "og"`, 1200x630): a dark card with a wordmark, a tagline and a few small figures. None
+had a `hint`, and the `alt` was the product name or missing, so nothing marked it as unusable. One
+banner also carried sample figures (a score going from 61 to 98) that the page's text never states.
+
+**Proposal:** mark a share image that is mostly flat colour with runs of text as `hint: "banner"`
+(the same detector as item 23 would do). The plugin now treats an unhinted 1200x630 share image on
+a software page as a banner, but only by its shape.
+
+### 28. Menu thumbnails on category pages (next)
+
+**Observed (2026-10-12):** for a shop's category page (home decorating accessories) `extract_url`
+returned ten images, all of them the site menu's department thumbnails (`mega-sleep-thumb.jpg`,
+`mega-bath-thumb.jpg`, `mega-pet-thumb.jpg` and so on), with `primary_image` set to the bedroom
+one. The category's own banner (a CSS background image) and its product photos (lazy-loaded) were
+not in the list.
+
+**Proposal:**
+- Leave out images inside `nav`, `header` and menu containers, or mark them `hint: "nav"`.
+- Read CSS background images of the page's hero or category header, and lazy-load attributes
+  (`data-src`, `data-lazy-src`, `srcset`) on product tiles.
+- When a page has no share image, don't promote a menu image to `primary_image`.
+
+### 29. Mockups in other templates: fit, editor and "Randomize All" (next)
+
+**Observed (2026-10-12):** a mockup made for one template's panel was opened in the editor and
+"Randomize All" put it in every template. Four kinds of failure: cropped in panels of another shape
+(`recipe-card`, `arch-window`, `price-tag` cut the left edge), blown up in `full-bleed` templates
+until only parts of words showed (`grid-lines`, `vertical-title`), repeated in `multi` templates
+(`fitness-grid`, `photo-quad`), and shrunk to a dot in `text-focus`.
+
+**Proposal:**
+- `image_fit: "contain"` fills the bars with the palette's secondary colour, which clashes with a
+  mockup's background. Add a way to fill them with the image's own edge colour (for example
+  `image_fit: "contain"` with `image_background: "auto"`). A flat-background image then fits every
+  single-photo panel uncropped.
+- Let an upload be marked as a graphic (for example `kind: "graphic"` on the upload or on
+  `render_pin`), carry it and the fit setting in `edit_url`, and have the editor keep them when
+  the template changes.
+- "Randomize All" skips `full-bleed`, `multi` and small-accent templates for a graphic.
+
+This belongs with item 22 (`render_mockup`) and item 24 (panel sizes). The plugin now names the
+templates a mockup may use, offers a safe-zone layout, and tells the user in the report that other
+templates may crop or repeat the mockup.
+
+### 30. Sample field values in the editor (next)
+
+**Observed (2026-10-12):** in the same editor session, templates the pin's data has no values for
+showed their samples: "$29.99" on `price-tag`, "30 min" and "4 servings" on `recipe-card`,
+"10 FEATURED" on `fitness-grid`. The page was a free resume tool with no price, cook time or count.
+`render_pin` already leaves out fields that aren't passed; the editor does not.
+
+**Proposal:** when a pin is opened from an `edit_url` (or whenever the user's own content is
+loaded), leave empty fields empty, as `render_pin` does, and hide the element. A user who downloads
+such a pin publishes an invented price.
+
 ## Suggested order of work
 
 1. ~~**This week:** item 1 (security check) and item 2 (bot-check errors).~~ Done 2026-10-03.
@@ -411,6 +543,10 @@ in `template-colors.md`).
    Then 21 (readable small text), 8, 9 and 11 (template side).
 3. **Before paid plans:** items 10 and 12 (brand kit, quota and plan errors).
 4. **Growth:** 17 (keywords, already planned), 14, 15, 16, then 18 (Pinterest publishing).
+5. **Mockups for software pages** (plugin 1.0.9): 22 (the only way chat users get one), 23, 24,
+   then 25.
+6. **From the 2026-10-12 session (seven live pins):** 26 and 30 first (small, and both put
+   something wrong on a pin), then 27 and 28 (image choice), then 29 (with 22 and 24).
 
 When an item ships, the plugin skills can be simplified. For example, once `extract_url` returns
 image dimensions, the skill no longer needs to guess orientation from file names. Tell me which

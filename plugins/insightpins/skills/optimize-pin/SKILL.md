@@ -96,6 +96,7 @@ the InsightPins connector. Each variant tests one change, so the user learns wha
 You can still re-render with a photo URL the user provides, or with their original photo (the one
 without text), uploaded as described in `create-pin`'s `references/user-photos.md` (and tell them
 it is kept on InsightPins for 7 days). Never upload the old pin itself: its text is baked in and
-would show under the new text. If no usable photo is
+would show under the new text. When the pin is about software and its photo is a screenshot nobody
+can read, a mockup of that screen is the fix: see `create-pin`'s `references/ui-mockups.md`. If no usable photo is
 available, deliver the review, the improved copy and the exact template/palette/font settings so
 the user can apply them on insightpins.com.
