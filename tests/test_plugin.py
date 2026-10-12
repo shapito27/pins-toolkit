@@ -429,6 +429,103 @@ class UserPhotosTest(unittest.TestCase):
         self.assertTrue(pattern.search("curl -sS -F file=@photo.jpg https://x/api/uploads/link"))
 
 
+class UiMockupsTest(unittest.TestCase):
+    """Pages with no image that works on a pin: recommend a mockup, build it where possible, keep it honest."""
+
+    GUIDE = os.path.join(SKILLS, "create-pin", "references", "ui-mockups.md")
+
+    def test_guide_covers_the_rules(self):
+        text = read(self.GUIDE)
+        for needle in ("Three kinds of mockup", "**App screen**", "**Feature**", "**Concept**",
+                       "The page has no proper image", "Photo-led content", "Never draw a dish",
+                       "Look for a real screen first", "invented interface",
+                       "Recommend the mockup, then build it", "without waiting for an answer",
+                       "Can you build it?", "Only real content", "Never invent",
+                       "Zoom in instead of shrinking", "drawn precisely", "browser bar",
+                       "A plain card, not a pretend app", "No fake controls",
+                       "No other people's content", 'hint: "screenshot"', "isn't about software",
+                       "without asking again", "user-photos.md", "create_upload_link", "904x744",
+                       "one upload", "7 days",
+                       "Which templates a mockup fits", "Or a safe zone", "central 70%",
+                       "Choose the background and the palette together",
+                       "Not from a promo banner", "Live counts are dated",
+                       "must look like the\n  real one", "stand-ins",
+                       "other templates in the editor may crop or repeat it"):
+            self.assertIn(needle, text)
+
+    def test_guide_names_templates_that_fit(self):
+        section = read(self.GUIDE).split("## Which templates a mockup fits", 1)[1].split("\n## ", 1)[0]
+        use, never = section.split("**Never**", 1)
+        never = never.split("\n- The user can open", 1)[0]
+        fields = {e["id"]: e for e in list_templates_mock()}
+        fits = re.findall(r"`([a-z-]+)`", use.split("**Use a single-photo `panel` template**", 1)[1])
+        fits = [t for t in fits if t in fields]
+        self.assertGreaterEqual(len(fits), 5)
+        for tid in fits:
+            self.assertEqual(fields[tid]["photo_area"], "panel", tid)
+            self.assertFalse(fields[tid]["uses_extra_images"], tid)
+            self.assertNotIn(f"`{tid}`", never, tid)
+        for tid in ("text-focus", "arch-window", "vertical-title"):
+            self.assertIn(f"`{tid}`", never)
+            self.assertNotIn(tid, fits)
+        software = next(line for line in read(os.path.join(
+            SKILLS, "create-pin", "references", "template-selection.md")).splitlines()
+            if line.startswith("| Software, app or tool page |"))
+        for tid in re.findall(r"`([a-z-]+)`", software.split("|")[2]):
+            self.assertIn(tid, fits, tid)
+
+    def test_guide_has_nothing_the_scan_could_hold(self):
+        text = read(self.GUIDE)
+        for pattern in (r"<script", r"https?://", r"--headless", r"\bgoogle-chrome\b", r"\bchromium\b"):
+            self.assertIsNone(re.search(pattern, text, re.I), pattern)
+
+    def test_create_pin_sends_these_pages_to_the_guide(self):
+        create = read(os.path.join(SKILLS, "create-pin", "SKILL.md"))
+        self.assertIn("references/ui-mockups.md", create)
+        self.assertIn("Software screenshots are their own case", create)
+        self.assertIn("No proper image at all", create)
+        self.assertIn("except `screenshot`", create)
+        self.assertIn("software or tool", create)
+        self.assertIn("Never draw", create)
+        self.assertIn("A share image that is a banner", create)
+        self.assertIn("Menu thumbnails", create)
+        self.assertIn("other templates in the editor may crop or repeat it", create)
+
+    def test_create_pin_makes_the_site_name_readable(self):
+        create = read(os.path.join(SKILLS, "create-pin", "SKILL.md"))
+        self.assertIn("When the pin is for the user's own site or product", create)
+        self.assertIn("site name fully readable", create)
+        self.assertGreaterEqual(create.count("`site_name_size`"), 3)
+        self.assertIn("`renders_remaining_today`", create)
+        colors = read(os.path.join(SKILLS, "create-pin", "references", "template-colors.md"))
+        self.assertIn("site name fully readable only on", colors)
+        skip = create.split("Skip photos whose `alt` or file name", 1)[1].split("\n   - ", 1)[0]
+        self.assertNotIn('"screenshot"', skip)
+
+    def test_other_skills_point_to_the_guide(self):
+        for skill in ("pin-design", "optimize-pin", "remake-pin"):
+            self.assertIn("references/ui-mockups.md", read(os.path.join(SKILLS, skill, "SKILL.md")), skill)
+
+    def test_template_guide_has_a_software_row(self):
+        guide = read(os.path.join(SKILLS, "create-pin", "references", "template-selection.md"))
+        row = next(line for line in guide.splitlines() if line.startswith("| Software, app or tool page |"))
+        self.assertIn("ui-mockups.md", row)
+        fields = {e["id"]: e["photo_area"] for e in list_templates_mock()}
+        for tid in re.findall(r"`([a-z-]+)`", row.split("|")[2]):
+            self.assertEqual(fields[tid], "panel", tid)
+
+    def test_design_and_review_know_the_defect(self):
+        design = read(os.path.join(SKILLS, "pin-design", "SKILL.md"))
+        self.assertIn("A software screenshot as the photo", design)
+        self.assertIn("no controls the product", design)
+        self.assertIn("passed off as a photo", design)
+        checklist = read(os.path.join(SKILLS, "pin-design", "references", "design-checklist.md"))
+        self.assertIn("Not a full software screenshot", checklist)
+        rubric = read(os.path.join(SKILLS, "review-pin", "references", "scoring-rubric.md"))
+        self.assertIn("a full software screenshot whose text can't be read", rubric)
+        self.assertIn("**Software pins:**", rubric)
+
+
 class McpMocksTest(unittest.TestCase):
     def test_tools_match_the_server(self):
         tools = json.loads(read(os.path.join(EVALS, "mocks", "insightpins", "_tools.json")))["tools"]
@@ -650,6 +747,68 @@ class EvalSuiteTest(unittest.TestCase):
             self.assertFalse(re.search(hinted, render_input(image_url=url)), url)
             self.assertTrue(re.search(page, render_input(image_url=url)), url)
 
+
+    def test_mockup_case_graders(self):
+        for case, hints in (("screenshot-image", [None, "screenshot", "logo"]),
+                            ("no-photo-feature", ["logo", "author"])):
+            _, never, _ = grader(case, "no-page-image-on-pin")
+            _, body = strip_frontmatter(read(os.path.join(EVALS, case, "mocks", "insightpins", "extract_url.md")))
+            page = json.loads(body)
+            details = page["image_details"]
+            self.assertEqual([d.get("hint") for d in details], hints, case)
+            self.assertNotIn("structured", page, case)
+            for d in details:
+                self.assertTrue(re.search(never, render_input(image_url=d["url"])), d["url"])
+                self.assertTrue(re.search(never, render_input(image_url="https://x.example/a.jpg",
+                                                              additional_image_urls=[d["url"]])), d["url"])
+            self.assertFalse(re.search(never, render_input(template_id="centered-quote", title="5 Reports")))
+            self.assertFalse(re.search(never, render_input(
+                image_url="https://pins.insightpins.com/mcp/uploads/2026-10-08/abc.jpg")))
+        _, body = strip_frontmatter(read(os.path.join(EVALS, "screenshot-image", "mocks", "insightpins",
+                                                      "extract_url.md")))
+        first = json.loads(body)["image_details"][0]
+        # the first screenshot can only be recognised by its alt text and file name
+        self.assertRegex(first["alt"] + first["url"], r"(?i)screenshot|dashboard")
+
+    def test_banner_case(self):
+        _, never, _ = grader("banner-share-image", "no-page-image-on-pin")
+        _, body = strip_frontmatter(read(os.path.join(EVALS, "banner-share-image", "mocks", "insightpins",
+                                                      "extract_url.md")))
+        page = json.loads(body)
+        (only,) = page["image_details"]
+        # nothing but its shape and source marks it as a banner
+        self.assertNotIn("hint", only)
+        self.assertEqual((only["source"], only["width"], only["height"]), ("og", 1200, 630))
+        self.assertNotRegex(only["alt"] + only["url"], r"(?i)banner|screenshot|logo|infographic")
+        self.assertTrue(re.search(never, render_input(image_url=only["url"])))
+        self.assertFalse(re.search(never, render_input(
+            image_url="https://pins.insightpins.com/mcp/uploads/2026-10-12/abc.jpg")))
+
+    def test_own_site_name_graders(self):
+        _, palette, _ = grader("own-site-name", "readable-site-name-palette")
+        _, size, _ = grader("own-site-name", "larger-site-name")
+        colors = read(os.path.join(SKILLS, "create-pin", "references", "template-colors.md"))
+        rows = 0
+        for line in colors.splitlines():
+            m = re.match(r"\| `([a-z-]+)` \|", line)
+            if not m:
+                continue
+            rows += 1
+            tid, note = m.group(1), line.split("|")[4]
+            listed = re.search(r"site name fully readable only on ([a-z, -]+)", note)
+            if "site name is faint on every palette" in note:
+                readable = set()
+            elif listed:
+                readable = {p.strip() for p in listed.group(1).split(",")}
+            else:
+                readable = set(palettes())
+            for pid in palettes():
+                # the grader must follow the table whichever way the keys are ordered
+                for fields in ({"template_id": tid, "palette_id": pid}, {"palette_id": pid, "template_id": tid}):
+                    self.assertEqual(bool(re.search(palette, json.dumps(fields))), pid in readable, (tid, pid))
+        self.assertEqual(rows, len(list_templates_mock()))
+        for value, ok in ((100, False), (115, False), (120, True), (140, True), (150, True)):
+            self.assertEqual(bool(re.search(size, render_input(site_name_size=value))), ok, value)
 
     def test_photo_shape_graders_follow_the_catalog(self):
         templates = list_templates_mock()

@@ -5,3 +5,4 @@ __MACOSX/
 *.zip
 __pycache__/
 *.pyc
+**/.claude/autoharness/

@@ -52,7 +52,8 @@ still draft the copy without it.
      (location and camera data removed) and that anyone with its link can open it.
 
 2. **Classify the content**: how-to/blog post, listicle (has a number), product, recipe, quote,
-   travel/destination, or lifestyle/inspiration. Pull out facts the templates can show: the list
+   travel/destination, lifestyle/inspiration, or software or tool (an app, extension or dashboard;
+   its images are often screenshots, see step 6). Pull out facts the templates can show: the list
    number, price, cook time, servings, category. `structured` gives them directly when the page
    publishes them:
    - `Recipe`: `cook_time` for `cookTime`; if there is only a `total_time`, write it with "total"
@@ -100,6 +101,13 @@ still draft the copy without it.
    palette, but if theirs isn't in the template's `readable_palettes`, choose a template whose list
    has it, or one where `template-colors.md` lists it under "Also without a button" and send
    `show_cta: false` (tell the user in one line why the button is off).
+   **When the pin is for the user's own site or product**, the site name is their brand, so it has
+   to be read: pick the palette from the ones the template's notes in `template-colors.md` name as
+   "site name fully readable" (the server doesn't judge the site name, so no warning will tell
+   you), and raise `site_name_size` (step 8). If the notes say the site name is faint on every
+   palette, pick another template; where they say nothing about the site name, check it in the
+   preview. If a brand palette the user named isn't on that list, keep
+   theirs and say in one line that the domain will be faint.
 
 6. **Pick the photo.** You can't see the images before rendering, so use `image_details`: each entry
    has `width`, `height`, `orientation` (portrait, landscape, square), `animated`, `alt` text,
@@ -109,13 +117,45 @@ still draft the copy without it.
    - `primary_image` is the page's share image. It is a good default, but not always the best photo:
      check its `alt` and shape like any other.
    - **Never use an image with a `hint`** (such as `author`, `logo`, `promo`, `banner` or
-     `infographic`; the list can grow): the server marks images that are probably not a photo for
+     `infographic`; the list can grow; except `screenshot`, see below): the server marks images that are probably not a photo for
      the pin and lists them after the real ones. This beats every other rule here, including the photo shape: a portrait author headshot is not
      a pin photo. If only hinted images are left (even `primary_image`), ask the user for a photo or
-     use a template with `uses_photo: false`.
+     use a template with `uses_photo: false`. On a software, tool or feature page, don't render yet:
+     follow "No image that works" below first.
    - Skip photos whose `alt` or file name points to text or a person rather than the subject:
-     "infographic", "chart", "before and after", "screenshot", "quote", author headshots and logos
+     "infographic", "chart", "before and after", "quote", author headshots and logos
      (the server doesn't catch them all).
+   - **A share image that is a banner.** A software or tool page often has one image only: its
+     share image (`source: "og"`, landscape, about 1200x630), with no `hint` and an `alt` that is
+     just the product's name or slogan. It is usually a banner of words (a logo, a tagline, a few
+     small figures), not a photo: treat it like a hinted `banner`. If you can open images, look at
+     it first. Don't copy figures that appear only on such a banner onto the pin: use what the
+     page's text states.
+   - **Menu thumbnails.** On a shop's category page the images are sometimes the site menu's
+     pictures (file names with "mega", "menu", "nav" or "thumb", `alt` empty, one per department)
+     and not the category's own photos. They are about other parts of the shop: don't use one. If
+     you can read the page yourself, look in it for the category's banner or its product photos;
+     otherwise ask the user for a photo.
+   - **No image that works? Consider a mockup.** Two cases, both covered by
+     [references/ui-mockups.md](references/ui-mockups.md):
+     - *Software screenshots are their own case.* When the page is about an app, tool, extension or
+       dashboard and the image is a screenshot of its interface (its `alt` or file name says
+       "screenshot", "dashboard", "interface" or "table", it has `hint: "screenshot"`, or the user
+       hands you one), don't put it on the pin as it is and don't drop it silently. It won't read
+       at pin size: a simplified, zoomed-in mockup of that screen will.
+     - *No proper image at all* (none, only hinted or low-resolution ones, or none that shows what
+       the page is about), on a page whose point can be drawn from its text: a tool, a feature, a
+       workflow, a comparison, key numbers. A mockup of the app screen, of the feature, or a plain
+       concept card can stand in for the photo. A mockup of a screen needs a real screen to copy:
+       with none, it is a concept card from the page's text, never an invented interface.
+
+     In short: if you can build an image, say in one line why the page's images won't work and
+     that you are making a mockup from the page's real labels and numbers, and build it without
+     waiting. If you can't (or a step of the build is refused), say a mockup would work best,
+     offer an image from the user, the screenshot as it is (if the page has one) or a text-only
+     pin, and wait for the answer before rendering. Never draw
+     photo-led subjects (food, rooms, places, physical products): ask for a photo or go text-only. On a
+     page that isn't about software, skip a stray screenshot like any other text image.
    - If a page gives no `image_details` (older responses), judge by file name: a size like
      `689x1024` hints at orientation, and `.gif`, `pixel`, `logo` or `200x200` mean skip.
    **Match the photo to the template:** `list_templates` gives each template's `photo_area`
@@ -136,6 +176,9 @@ still draft the copy without it.
 
 7. **Check quota before more than one render.** Call `get_quota` when making variations or when a
    render failed for limits. Tell the user how many renders a plan will use if they're running low.
+   When the user asks for one pin after another in the same chat, read `renders_remaining_today`
+   in each render result: at 2 or fewer, say so in that report, and stop spending renders on
+   anything but a real defect.
 
 8. **Render** with `render_pin`: template, palette, font, headline as `title`, subtitle as
    `description` (only on templates that support it, and not where the notes in
@@ -150,6 +193,8 @@ still draft the copy without it.
    instead only when the user asks for all the text to be bigger or smaller, or when the subtitle and
    button need to grow too: 130-160 for short headlines, 120-140 for 8-12 words, 100-110 for very
    long text (or shorten it). On templates with a subtitle, keep `description_size` at 100-115.
+   The site name is the smallest text on the pin (about 18 px on the 1000 px pin, 4 px in the
+   feed): for the user's own site or product set `site_name_size` to 130-150 on the first render.
    **Photo controls**, for single-photo templates: `image_focus` keeps a part in view when the photo
    is cropped (`top`, `bottom`, `left`, `right`, `center`, or `{ "x": 0.3, "y": 0.2 }`, 0 to 1 from
    left/top); `image_zoom` 100-200 enlarges a small product in a big frame (it softens a small
@@ -173,13 +218,17 @@ still draft the copy without it.
    read the result's `warnings` (see [references/render-warnings.md](references/render-warnings.md)
    for what each code means and what to do). Re-render only for a real defect:
    unreadable or cut-off text (`TITLE_CLAMPED`, `DESCRIPTION_CUT`), a photo cropped so the subject is
-   lost, a wrong photo, or a field showing a value that isn't true. `LOW_CONTRAST` means the title,
+   lost, a wrong photo, or a field showing a value that isn't true. A software screenshot whose text
+   can't be read in the preview is also a real defect, but crop settings won't fix it: stop and
+   follow `references/ui-mockups.md`. `LOW_CONTRAST` means the title,
    subtitle or button is hard to read on the chosen palette: re-render once with a palette its
    message names. If the user chose the palette, keep it and hide what fails instead (the button with
    `show_cta: false`, the subtitle with `show_description: false`), or switch to a template whose
    `readable_palettes` has it, and say why in one line. The server doesn't judge the site name, small
-   labels or text on the photo, so check them in the preview: a faint site name is acceptable unless
-   the user wants their domain seen (then use a palette `template-colors.md` names for it), and text
+   labels or text on the photo, so check them in the preview: a faint site name is acceptable on a
+   pin for someone else's page, but on the user's own site or product it is a real defect (fix it
+   with `fix_of`: a palette `template-colors.md` names for the site name and a larger
+   `site_name_size`; both are free changes), and text
    on the photo needs a calmer, darker part of the photo (`image_focus`). Some
    warnings describe the pin rather than a defect: `IMAGE_CROPPED` says how much of the photo shows;
    setting `image_focus` doesn't change that, it only chooses which part. Re-render for it only when
@@ -194,6 +243,9 @@ still draft the copy without it.
     - the link expires in 7 days, so download the image;
     - where the photo came from, and that they need the right to publish it; for an uploaded photo,
       that it is kept for 7 days, so the `edit_url` stops showing it after that;
+    - for a mockup: that the image is a mockup made for the pin, which kind, and where its labels
+      and numbers came from; which figures are live counts that will change; and that it was made
+      for this template, so other templates in the editor may crop or repeat it;
     - ready to paste: **Pinterest title**, **description**, **alt text**, **suggested board**,
       and the destination link (the source URL).
 

@@ -48,6 +48,9 @@ A pin competes in a crowded grid, mostly on phones, where each pin is shown smal
   defect: template default text sizes are often too small for short headlines).
 - A big empty area with small text in it (raise the text size to fill it).
 - Text baked into the photo (captions in GIFs or screenshots) showing through or cut off by the crop.
+- A software screenshot as the photo: its text is far too small at thumbnail size, or the crop cuts
+  off half the screen. Crop and zoom settings don't fix it; a simplified, zoomed-in mockup does
+  (see the `create-pin` skill's `references/ui-mockups.md`).
 - Text over a busy or same-colored part of the photo.
 - A field showing a value that isn't true for the content (a guessed price, count or cook time).
 - Photo cropped badly: subject cut in half, heads cut off, product off-frame (fix with
@@ -67,5 +70,8 @@ and keep the rest. The render result's `warnings` point at most of these defects
 - No misleading images or headlines (a photo that isn't what the page delivers). Pinterest limits
   misleading and spammy content, and it loses trust and clicks anyway.
 - No fake play icons, fake app controls or "click here" gimmicks. A small button-style label that
-  names what the click gives ("Get the Recipe", "Read the Guide") is fine.
+  names what the click gives ("Get the Recipe", "Read the Guide") is fine. So is a mockup of a
+  product's real screen, zoomed in, with its real labels and numbers and no controls the product
+  doesn't have, or a plain concept card drawn from the page's text. An invented screen, invented
+  numbers, or a drawing passed off as a photo of food, a room, a place or a physical product is misleading.
 - No walls of text. If it needs a paragraph, it belongs in the description.

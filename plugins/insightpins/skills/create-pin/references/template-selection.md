@@ -16,6 +16,7 @@ October 2026 and chosen here from their descriptions, not yet tested.
 | How-to / blog post / guide | `bold-title`, `minimal-clean`, `split-horizontal`, `magazine-cover`, `text-focus` | Headline does the work; pick a template with a subtitle if the benefit needs explaining |
 | Listicle ("17 ideas", "10 tips") | `number-badge`, `travel-overlay`, `side-panels`, `fitness-grid`, `blog-card` | Put the real number in `listNumber`; the number is the hook |
 | Step-by-step / checklist | `numbered-steps`, `checklist` | Pass the page's real steps as `list_items` (`extract_url` often gives them in `structured`: `steps`, `ingredients` or `items`, to shorten): one short line each, in order, unnumbered (the template adds its own numbers or ticks), best 3-6 items of up to about 45 characters (`list_templates` gives the limits: up to 7 of 80). Don't combine `list_items` with `show_description: false`. If the tool refuses `list_items` (an app with older tool definitions), put the steps in `description` instead, one per line. With neither, the pin shows no list |
+| Software, app or tool page | `split-horizontal`, `checklist`, `numbered-steps`, `minimal-clean` | A single-photo `panel` template, never `full-bleed` or `multi`. A screenshot of the interface won't read at pin size, and some of these pages have no image at all: follow `ui-mockups.md` and draw a mockup for the panel (it lists the templates a mockup can't go in, such as `text-focus` and `arch-window`). On `checklist` and `numbered-steps` the list carries the content, so the image only has to show what the product looks like |
 | Product | `product-spotlight`, `price-tag`, `side-rail` (new) | Use `price-tag` only with a real price (`structured.price`); clean product photo on a plain background works best. A square product photo sits small in `product-spotlight`: `image_zoom` 130-160 enlarges it |
 | Recipe | `recipe-card`, `split-horizontal`, `photo-stack` (new; only with 4 different matching photos: the main one plus 3 in `additional_image_urls`. With fewer it repeats them, and one photo fills all four slots), `bold-title` | Fill `cookTime` and `servings` from `structured`; food photo carries the pin |
 | Quote / mindset / saying | `vine-corners` (new), `tulip-frame` (new), `centered-quote`, `quote-with-image` | Keep the quote under ~20 words. `vine-corners` and `tulip-frame` are text-only with a subtitle for the attribution; `centered-quote` has no subtitle, so put the attribution at the end of the title ("... - Thoreau"). Use a heavy font (`classic-serif`, `bold-impact`, `professional`); thin fonts fade on light backgrounds |
@@ -40,7 +41,8 @@ October 2026 and chosen here from their descriptions, not yet tested.
 - **Weak or small photo**: use a typography-led template (`text-focus`, `split-horizontal`) so the photo is small.
 - **No photo at all**: use a template with `uses_photo: false` (`centered-quote`, `vine-corners`,
   `tulip-frame`). Every other template needs a photo: ask the user for an image URL or their own
-  photo first (see `user-photos.md`).
+  photo first (see `user-photos.md`). On a software, tool or feature page, a mockup drawn for the
+  pin can stand in for the photo: see `ui-mockups.md`. Never for food, rooms, places or physical products.
 - **A `full-bleed` template with a landscape photo**: if it must be full-bleed, set `image_focus` on
   the subject (for example `left` or `top`, or `"auto"` when you don't know where it is), or
   `image_fit: "contain"` to show the whole photo with bars. A panel template is usually better.

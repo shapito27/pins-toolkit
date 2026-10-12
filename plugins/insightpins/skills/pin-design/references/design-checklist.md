@@ -34,6 +34,8 @@ Each item is a yes/no question. A "no" on any item marked **(critical)** is wort
 - [ ] Bright, well lit, natural colors.
 - [ ] Subject well cropped (no cut-off heads or products).
 - [ ] No text, watermark or logo baked into the photo (other than a product's own label).
+- [ ] Not a full software screenshot: interface text is unreadable at thumbnail size. A simplified
+      mockup of one part of the screen, with the product's real labels and numbers, works instead.
 - [ ] The user has the right to publish it (own photo, licensed stock, or permission).
 
 ## Color
