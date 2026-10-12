@@ -1,5 +1,7 @@
 # InsightPins for Claude
 
+*Named **Pin Generator for Pinterest** in plugin directories.*
+
 **Turn any blog post, product page or recipe into a Pinterest pin that gets noticed and clicked,
 in one message.**
 
